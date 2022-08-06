@@ -1,6 +1,12 @@
 package testMain;
 
+import engine.Engine;
+import engine.TechSpecs;
+import engine.TheEngine;
+import engine.stock.Stock;
+import enigmaMachine.keyBoard.KeyBoard;
 import schema.generated.CTEEnigma;
+import schema.generated.CTEMachine;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -11,21 +17,13 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class Main {
-    private final static String JAXB_XML_GAME_PACKAGE_NAME = "schema.generated";
 
     public static void main(String[] args) {
-        try {
-            InputStream inputStream = new FileInputStream(new File("C:\\Users\\micha\\IdeaProjects\\CrackingTheEnigma\\engine\\src\\resources\\ex1-sanity-small.xml"));
-            CTEEnigma enigma = deserializeFrom(inputStream);
-            System.out.println("#rotors: " + enigma.getCTEMachine().getRotorsCount());
-        } catch (JAXBException | FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+        Engine engine = new TheEngine();
+        engine.loadDataFromXML("C:\\Downloads\\ex1-sanity-small.xml");
+        TechSpecs ts = engine.showTechSpecs();
+        System.out.println(ts.getTotalRotors());
+        System.out.println(ts.getNotchLocation());
 
-    private static CTEEnigma deserializeFrom(InputStream in) throws JAXBException {
-        JAXBContext jc = JAXBContext.newInstance(JAXB_XML_GAME_PACKAGE_NAME);
-        Unmarshaller u = jc.createUnmarshaller();
-        return (CTEEnigma) u.unmarshal(in);
     }
 }

@@ -14,11 +14,11 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        KeyBoard keyboard = new KeyBoard();
+        KeyBoard keyboard = new KeyBoard("abcdef");
         Plugs plugBoard = new PlugBoard();
-        Rotor rotor1 = new TheRotor(3, 1, "fedcba", "abcdef");
+        Rotor rotor1 = new TheRotor(3, 1, "fedcba", keyboard);
         rotor1.setInitialPosition(2);
-        Rotor rotor2 = new TheRotor(0, 2, "ebdfca", "abcdef");
+        Rotor rotor2 = new TheRotor(0, 2, "ebdfca", keyboard);
         rotor2.setInitialPosition(2);
 
         List<Rotor> rotors = new LinkedList<>();
@@ -28,7 +28,7 @@ public class Main {
         Reflecting reflector = new Reflector();
 
         Secret secret = new Secret(rotors, reflector, plugBoard);
-        Machine machine = new Machine(secret, keyboard);
+        Machine machine = new Machine(secret, keyboard, 2);
         ///for(char c: keyboard.getAsCharList()){
         ///   System.out.println(c+" -> " + machine.process(c));
         ///}

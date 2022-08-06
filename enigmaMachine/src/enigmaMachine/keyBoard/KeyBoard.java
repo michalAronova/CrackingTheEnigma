@@ -9,21 +9,28 @@ public class KeyBoard {
     public KeyBoard() {
         keyBoard = "abcdef";
     }
+    public KeyBoard(String abc) {
+        keyBoard = abc;
+    }
 
     public boolean isInKeyBoard(Character c) {
         return keyBoard.contains(c.toString());
     }
 
-    public int getIndex(char c){
+    public int indexOf(char c){
         return keyBoard.indexOf(c);
     }
 
-    public char getChar(int index) {
+    public char charAt(int index) {
         return keyBoard.charAt(index);
+    }
+    public int length() {
+        return keyBoard.length();
     }
     public List<Character> getAsCharList() {
         return keyBoard.chars()
                 .mapToObj(e->(char)e).collect(Collectors.toList());
     }
+
 }
 
