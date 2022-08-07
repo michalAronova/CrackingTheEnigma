@@ -7,23 +7,31 @@ public class TheRotor implements Rotor {
     private final int id;
     private int initialPosition;
     private int currentPosition;
-    private final KeyBoard alphabet;
-    private final String rotorPermutation;
+    private final String leftPermutation;
+    private final String rightPermutation;
+
     private AdvanceSelf next;
 
-    public TheRotor(int id, int notch, String rotorPermutation, KeyBoard alphabet) {
+    public TheRotor(int id, int notch, String leftPermutation, String rightPermutation) {
         this.id = id;
         this.notch = notch;
-        this.currentPosition = 2;
-        this.initialPosition = 2;
-        this.rotorPermutation = rotorPermutation;
-        this.alphabet = alphabet;
+        this.leftPermutation = leftPermutation;
+        this.rightPermutation = rightPermutation;
+    }
+    public TheRotor(int id, int notch, String[] permutations) {
+        this.id = id;
+        this.notch = notch;
+        this.leftPermutation = permutations[0];
+        this.rightPermutation = permutations[1];
     }
 
     @Override
     public void setInitialPosition(int index){
         this.initialPosition = index;
         this.currentPosition = index;
+    }
+    public void setInitialPosition(char let){
+        setInitialPosition(rightPermutation.indexOf(let));
     }
     public void reset(){
         this.currentPosition = this.initialPosition;
@@ -50,24 +58,24 @@ public class TheRotor implements Rotor {
     @Override
     public int rightToLeftReturnIndex(int index) {
         //finds the char on base 0 of the char in the index location in the alphabet
-        char curChar = alphabet.charAt(Math.floorMod((index + currentPosition), alphabet.length()));
+        char curChar = rightPermutation.charAt(Math.floorMod((index + currentPosition), rightPermutation.length()));
         //finds the index of curChar in the permutation
-        int permutatedIndex = rotorPermutation.indexOf(curChar);
+        int permutatedIndex = leftPermutation.indexOf(curChar);
         //finds the index in currentPosition base of the char
-        int indexOut = Math.floorMod((permutatedIndex - currentPosition), alphabet.length());
+        int indexOut = Math.floorMod((permutatedIndex - currentPosition), rightPermutation.length());
         return indexOut;
     }
     @Override
     public int leftToRightReturnIndex(int index) {
-        char curChar = rotorPermutation.charAt(Math.floorMod((index + currentPosition), alphabet.length()));
-        int alphabetIndex = alphabet.indexOf(curChar);
-        int indexOut = Math.floorMod((alphabetIndex - currentPosition), alphabet.length());
+        char curChar = leftPermutation.charAt(Math.floorMod((index + currentPosition), rightPermutation.length()));
+        int alphabetIndex = rightPermutation.indexOf(curChar);
+        int indexOut = Math.floorMod((alphabetIndex - currentPosition), rightPermutation.length());
         return indexOut;
     }
 
     @Override
     public void advance() {
-        currentPosition = Math.floorMod((currentPosition + 1), alphabet.length());
+        currentPosition = Math.floorMod((currentPosition + 1), rightPermutation.length());
         if (currentPosition == notch && next != null){
             next.advance();
         }

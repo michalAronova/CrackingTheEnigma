@@ -16,9 +16,9 @@ public class Main {
     public static void main(String[] args) {
         KeyBoard keyboard = new KeyBoard("abcdef");
         Plugs plugBoard = new PlugBoard();
-        Rotor rotor1 = new TheRotor(3, 1, "fedcba", keyboard);
+        Rotor rotor1 = new TheRotor(3, 1, "fedcba", "abcdef");
         rotor1.setInitialPosition(2);
-        Rotor rotor2 = new TheRotor(0, 2, "ebdfca", keyboard);
+        Rotor rotor2 = new TheRotor(0, 2, "ebdfca", "abcdef");
         rotor2.setInitialPosition(2);
 
         List<Rotor> rotors = new LinkedList<>();

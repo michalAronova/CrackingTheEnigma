@@ -7,6 +7,7 @@ import enigmaMachine.rotor.Rotor;
 import enigmaMachine.secret.Secret;
 import org.jetbrains.annotations.NotNull;
 
+
 import java.util.Collections;
 import java.util.List;
 public class Machine {

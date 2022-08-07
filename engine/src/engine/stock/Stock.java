@@ -29,22 +29,28 @@ public class Stock {
     }
 
     private void fillRotorsMap(List<CTERotor> CTERotors) {
-        CTERotors.forEach(r -> rotorMap.put(r.getId(), new TheRotor(r.getId(), r.getNotch(), getPermutation(r.getCTEPositioning()), keyBoard)));
+        CTERotors.forEach(r -> rotorMap.put(r.getId(), new TheRotor(r.getId(), r.getNotch(), getPermutation(r.getCTEPositioning()))));
     }
-    private String getPermutation(List<CTEPositioning> positionings) {
-        String permutation = "";
+    private String[] getPermutation(List<CTEPositioning> positionings) {
+        String[] permutations = new String[2];
+        String permutationL = "";
+        String permutationR = "";
         for(CTEPositioning pos : positionings) {
-            permutation = permutation.concat(pos.getLeft());
+            permutationL = permutationL.concat(pos.getLeft());
+            permutationR = permutationR.concat(pos.getRight());
         }
-        return permutation;
+        permutations[0] = permutationL;
+        permutations[1] = permutationR;
+        return permutations;
     }
     private void fillReflectorsMap(List<CTEReflector> CTEReflectors) {
         CTEReflectors.forEach(r -> reflectorMap.put(r.getId(), new Reflector(r.getId(), reflectionListToMap(r.getCTEReflect()))));
     }
+    //getting pairs in base 1 and return map in base 0
     private Map<Integer, Integer> reflectionListToMap(List<CTEReflect> reflectionList) {
         Map<Integer, Integer> int2int = new HashMap<>();
-        reflectionList.forEach(r -> { int2int.put(r.getInput(), r.getOutput());
-                                      int2int.put(r.getOutput(), r.getInput());
+        reflectionList.forEach(r -> { int2int.put((r.getInput()-1), (r.getOutput()-1));
+                                      int2int.put((r.getOutput()-1), (r.getInput()-1));
                                 });
         return int2int;
     }
