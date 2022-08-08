@@ -6,7 +6,7 @@ import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
 
 public interface Engine {
-    void loadDataFromXML(String path) throws JAXBException, FileNotFoundException;
+    boolean loadDataFromXML(String path);
     TechSpecs showTechSpecs();
 
 }

@@ -5,15 +5,19 @@ import exceptions.XMLException.InvalidXMLException;
 import exceptions.XMLException.XMLExceptionMsg;
 import schema.generated.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MachineValidator implements Validator{
     CTEMachine machine;
+    String processedABC;
 
     public MachineValidator(CTEMachine machine){
+
         this.machine = machine;
+        this.processedABC = machine.getABC().trim().toUpperCase();
     }
 
     @Override
@@ -28,7 +32,7 @@ public class MachineValidator implements Validator{
         List<CTERotor> rotors = machine.getCTERotors().getCTERotor();
         int rotorsCount = machine.getRotorsCount();
         if(rotorsCount > rotors.size() || rotorsCount > 99 || rotorsCount < 2) {
-            throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "invalid rotorCount");
+            throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "invalid rotor count");
         }
         boolean[] rotorsCheckers = new boolean[rotors.size() + 1];
         for(CTERotor r : rotors){
@@ -40,17 +44,18 @@ public class MachineValidator implements Validator{
                 throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "more than one rotor with same ID");
             }
             rotorsCheckers[id] = true;
-            if(r.getNotch() > machine.getABC().trim().length() || r.getNotch() <= 0) {
+            if(r.getNotch() > processedABC.length() || r.getNotch() <= 0) {
                 throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "notch location out of range");
             }
             checkPositioning(r); //throws exception if not valid positioning
         }
     }
+    //must call validateABC before this method
     private void validateReflectors(){
         List<CTEReflector> reflectors = machine.getCTEReflectors().getCTEReflector();
         Map<String, Integer> ID2Cnt = new HashMap<>();
         for(CTEReflector r : reflectors){
-            if(ID2Cnt.getOrDefault(r.getId(), 0) == 0 || checkValidReflectorID(r.getId())) {
+            if(ID2Cnt.getOrDefault(r.getId(), 0) == 0 && checkValidReflectorID(r.getId())) {
                 ID2Cnt.put(r.getId(), 1);
             }
             else{
@@ -61,7 +66,7 @@ public class MachineValidator implements Validator{
                 if(reflection.getInput() == reflection.getOutput()) {
                     throw new InvalidXMLException(XMLExceptionMsg.INVALIDREFLECTOR, "self reflecting");
                 }
-                int abcLen = machine.getABC().trim().length();
+                int abcLen = processedABC.length();
                 if(reflection.getInput() > abcLen || reflection.getOutput() > abcLen) {
                     throw new InvalidXMLException(XMLExceptionMsg.INVALIDREFLECTOR, "reflection value out of range");
                 }
@@ -69,11 +74,10 @@ public class MachineValidator implements Validator{
         }
     }
     private void validateABC(){
-        String abc = machine.getABC().trim();
-        if(abc.length()%2 == 1) {
+        if(processedABC.length()%2 == 1) {
             throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "odd abc");
         }
-        if(!checkUniqueString(abc)){
+        if(!checkUniqueString(processedABC)){
             throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "abc not unique");
         }
     }
@@ -94,12 +98,12 @@ public class MachineValidator implements Validator{
         Map<String, Integer> char2CntRIGHT = new HashMap<>();
         List<CTEPositioning> rotorPermutations = r.getCTEPositioning();
         for(CTEPositioning p : rotorPermutations) {
-            String left = p.getLeft();
-            String right = p.getRight();
+            String left = p.getLeft().toUpperCase();
+            String right = p.getRight().toUpperCase();
             if(left.length() != 1 || right.length() != 1){
                 throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "not a single character in positioning");
             }
-            if(!machine.getABC().trim().contains(left) || !machine.getABC().trim().contains(right)){
+            if(!processedABC.contains(left) || !processedABC.contains(right)){
                 throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "positioning value not in abc");
             }
             if(char2CntLEFT.getOrDefault(left,0) == 0) {
@@ -116,9 +120,9 @@ public class MachineValidator implements Validator{
             }
         }
     }
-
     private boolean checkValidReflectorID(String ID) {
-        for(ReflectorID r : ReflectorID.values()){
+        for(int i=0 ; i < machine.getCTEReflectors().getCTEReflector().size() ; i++){
+            ReflectorID r = ReflectorID.values()[i];
             if (r.name().equals(ID)) {
                 return true;
             }

@@ -6,6 +6,7 @@ import engine.validator.MachineValidator;
 import engine.validator.Validator;
 import enigmaMachine.keyBoard.KeyBoard;
 import exceptions.XMLException.InvalidXMLException;
+import exceptions.XMLException.XMLExceptionMsg;
 import schema.generated.CTEEnigma;
 import schema.generated.CTEMachine;
 import DTO.techSpecs.TechSpecs;
@@ -25,12 +26,10 @@ public class TheEngine implements Engine {
     private final static String JAXB_XML_PACKAGE_NAME = "schema.generated";
 
     @Override
-    public void loadDataFromXML(String path) throws JAXBException, FileNotFoundException {
+    public boolean loadDataFromXML(String path) {
         try {
-            boolean valid = true;
             if(!path.endsWith(".xml")) {
-                //throw not an XML
-                valid = false;
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDFILE, "not an XML");
             }
             File file = new File(path);
             InputStream inputStream = new FileInputStream(file);
@@ -41,11 +40,12 @@ public class TheEngine implements Engine {
                 validator.validate();
                 stock = new Stock(machine.getCTERotors().getCTERotor(), machine.getCTEReflectors().getCTEReflector(),
                         new KeyBoard(machine.getABC().trim()), machine.getRotorsCount());
+                return true;
             } catch (InvalidXMLException e) {
                 throw e;
             }
         } catch (JAXBException | FileNotFoundException e) {
-            throw e;
+            throw new InvalidXMLException(XMLExceptionMsg.INVALIDFILE, "file not found");
         }
     }
     private CTEEnigma deserializeFrom(InputStream in) throws JAXBException {
