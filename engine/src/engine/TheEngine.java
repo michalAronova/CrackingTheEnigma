@@ -5,6 +5,7 @@ import engine.stock.Stock;
 import engine.validator.MachineValidator;
 import engine.validator.Validator;
 import enigmaMachine.keyBoard.KeyBoard;
+import exceptions.XMLException.InvalidXMLException;
 import schema.generated.CTEEnigma;
 import schema.generated.CTEMachine;
 import DTO.techSpecs.TechSpecs;
@@ -24,7 +25,7 @@ public class TheEngine implements Engine {
     private final static String JAXB_XML_PACKAGE_NAME = "schema.generated";
 
     @Override
-    public void loadDataFromXML(String path) {
+    public void loadDataFromXML(String path) throws JAXBException, FileNotFoundException {
         try {
             boolean valid = true;
             if(!path.endsWith(".xml")) {
@@ -40,12 +41,11 @@ public class TheEngine implements Engine {
                 validator.validate();
                 stock = new Stock(machine.getCTERotors().getCTERotor(), machine.getCTEReflectors().getCTEReflector(),
                         new KeyBoard(machine.getABC().trim()), machine.getRotorsCount());
-            } catch (Exception e) {/*----------*/
-                throw new RuntimeException(e);/*-------------*/
+            } catch (InvalidXMLException e) {
+                throw e;
             }
         } catch (JAXBException | FileNotFoundException e) {
-            //change treatment of those exceptions!!!!!!!!!!!!!!!!!!!
-            e.printStackTrace();
+            throw e;
         }
     }
     private CTEEnigma deserializeFrom(InputStream in) throws JAXBException {

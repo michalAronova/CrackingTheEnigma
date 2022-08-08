@@ -10,5 +10,6 @@
     <orderEntry type="library" name="jetbrains.annotations" level="project" />
     <orderEntry type="module" module-name="enigmaMachine" />
     <orderEntry type="module" module-name="DTO" />
+    <orderEntry type="module" module-name="exceptions" />
   </component>
 </module>

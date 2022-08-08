@@ -1,5 +1,8 @@
 package engine.validator;
 
+import enigmaMachine.reflector.ReflectorID;
+import exceptions.XMLException.InvalidXMLException;
+import exceptions.XMLException.XMLExceptionMsg;
 import schema.generated.*;
 
 import java.util.HashMap;
@@ -15,11 +18,9 @@ public class MachineValidator implements Validator{
 
     @Override
     public boolean validate() {
-        /*machine.getCTERotors().getCTERotor(), machine.getCTEReflectors().getCTEReflector(),
-                        new KeyBoard(machine.getABC().trim()), machine.getRotorsCount()*/
         validateABC();
         validateRotorsAndCount(); // continue to this method only if abc is valid :)
-        validateReflectors();
+        validateReflectors(); // continue to this method only if abc is valid :)
         return true;
     }
     //must call validateABC before this method
@@ -27,29 +28,22 @@ public class MachineValidator implements Validator{
         List<CTERotor> rotors = machine.getCTERotors().getCTERotor();
         int rotorsCount = machine.getRotorsCount();
         if(rotorsCount > rotors.size() || rotorsCount > 99 || rotorsCount < 2) {
-            //throws invalid rotorCount
-            int y = 4;
+            throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "invalid rotorCount");
         }
         boolean[] rotorsCheckers = new boolean[rotors.size() + 1];
         for(CTERotor r : rotors){
             int id = r.getId();
             if(id > rotors.size() || id <= 0) {
-                //throws invalid rotor id
-                int m = 1;
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "id out of range");
             }
             if(rotorsCheckers[id]) {
-                //throws not unique id
-                int a = 0;
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "more than one rotor with same ID");
             }
             rotorsCheckers[id] = true;
             if(r.getNotch() > machine.getABC().trim().length() || r.getNotch() <= 0) {
-                //throws invalid notch location
-                int b = 4;
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "notch location out of range");
             }
-            if(!checkUniquePositioning(r)){
-                //throws not unique permutation
-                int y=8;
-            }
+            checkPositioning(r); //throws exception if not valid positioning
         }
     }
     private void validateReflectors(){
@@ -57,23 +51,19 @@ public class MachineValidator implements Validator{
         Map<String, Integer> ID2Cnt = new HashMap<>();
         for(CTEReflector r : reflectors){
             if(ID2Cnt.getOrDefault(r.getId(), 0) == 0 || checkValidReflectorID(r.getId())) {
-                //need to implement checkValidReflectorID!!!
                 ID2Cnt.put(r.getId(), 1);
             }
             else{
-                //throws invalid id reflector
-                int m = 1 ;
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDREFLECTOR, "invalid reflector ID");
             }
             List<CTEReflect> reflector = r.getCTEReflect();
             for(CTEReflect reflection : reflector) {
                 if(reflection.getInput() == reflection.getOutput()) {
-                    //throws invalid reflector (reflect to itself)
-                    int m = 1;
+                    throw new InvalidXMLException(XMLExceptionMsg.INVALIDREFLECTOR, "self reflecting");
                 }
-                int abcLen = machine.getABC().length();
+                int abcLen = machine.getABC().trim().length();
                 if(reflection.getInput() > abcLen || reflection.getOutput() > abcLen) {
-                    //throws invalid reflector (out of range)
-                    int m = 1 ;
+                    throw new InvalidXMLException(XMLExceptionMsg.INVALIDREFLECTOR, "reflection value out of range");
                 }
             }
         }
@@ -81,12 +71,10 @@ public class MachineValidator implements Validator{
     private void validateABC(){
         String abc = machine.getABC().trim();
         if(abc.length()%2 == 1) {
-            //throws odd abc
-            int x = 5; //to delete
+            throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "odd abc");
         }
         if(!checkUniqueString(abc)){
-            //throws invalid abc
-            int z = 1; //to delete
+            throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "abc not unique");
         }
     }
     private boolean checkUniqueString(String s) {
@@ -101,7 +89,7 @@ public class MachineValidator implements Validator{
         }
         return true;
     }
-    private boolean checkUniquePositioning(CTERotor r){
+    private void checkPositioning(CTERotor r){
         Map<String, Integer> char2CntLEFT = new HashMap<>();
         Map<String, Integer> char2CntRIGHT = new HashMap<>();
         List<CTEPositioning> rotorPermutations = r.getCTEPositioning();
@@ -109,28 +97,32 @@ public class MachineValidator implements Validator{
             String left = p.getLeft();
             String right = p.getRight();
             if(left.length() != 1 || right.length() != 1){
-                return false;
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "not a single character in positioning");
+            }
+            if(!machine.getABC().trim().contains(left) || !machine.getABC().trim().contains(right)){
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "positioning value not in abc");
             }
             if(char2CntLEFT.getOrDefault(left,0) == 0) {
                 char2CntLEFT.put(left, 1);
             }
             else {
-                //throws not unique permutatuin
-                return false;
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "double mapping");
             }
             if(char2CntRIGHT.getOrDefault(right,0) == 0) {
                 char2CntRIGHT.put(right, 1);
             }
             else {
-                //throws not unique permutatuin
-                return false;
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "double mapping");
             }
         }
-        return true;
     }
 
     private boolean checkValidReflectorID(String ID) {
-        //need to implemet!!!!!!!!!!!!!!!!!!!!!!!!!!
-        return true;
+        for(ReflectorID r : ReflectorID.values()){
+            if (r.name().equals(ID)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
