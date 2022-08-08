@@ -30,7 +30,11 @@ public class TheRotor implements Rotor {
         this.initialPosition = index;
         this.currentPosition = index;
     }
-    public void setInitialPosition(char let){
+    public String getRightPermutation(){
+        return rightPermutation;
+    }
+    @Override
+    public void setInitialPosition(Character let){
         setInitialPosition(rightPermutation.indexOf(let));
     }
     public void reset(){

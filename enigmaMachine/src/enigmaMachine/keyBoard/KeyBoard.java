@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 public class KeyBoard {
     private final String keyBoard;
-
     public KeyBoard() {
         keyBoard = "abcdef";
     }

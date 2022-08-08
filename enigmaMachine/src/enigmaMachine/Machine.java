@@ -17,6 +17,10 @@ public class Machine {
     private Reflecting reflector;
     private Plugs plugBoard;
 
+    public Machine(KeyBoard keyboard, int rotorCount){
+        this.keyboard = keyboard;
+        this.rotorCount = rotorCount;
+    }
     public Machine(KeyBoard keyboard, List<Rotor> rotors, Reflecting reflector, Plugs plugBoard, int rotorCount) {
         this.keyboard = keyboard;
         this.rotors = rotors;

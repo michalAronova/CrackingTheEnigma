@@ -11,6 +11,13 @@ public class PlugBoard implements Plugs {
     private final Map<Character, Character> plugBoard;
     private final KeyBoard keyBoard;
 
+    public PlugBoard(@NotNull List<Pair<Character, Character>> plugs, KeyBoard keyBoard) {
+        this.keyBoard = keyBoard;
+        plugBoard = new HashMap<>();
+        clearAllPlugs();
+        setAllPlugs(plugs);
+    }
+
     public PlugBoard() {
         this.keyBoard = new KeyBoard();
         List<Character> keys = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f');
@@ -20,16 +27,9 @@ public class PlugBoard implements Plugs {
         plugBoard.replace('c', 'b');
     }
 
-    public PlugBoard(@NotNull LinkedList<Pair<Character, Character>> plugs) {
+    public PlugBoard(@NotNull List<Pair<Character, Character>> plugs) {
         this.keyBoard = new KeyBoard();
         List<Character> keys = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f');
-        plugBoard = new HashMap<>();
-        clearAllPlugs();
-        setAllPlugs(plugs);
-    }
-
-    public PlugBoard(@NotNull List<Pair<Character, Character>> plugs, List<Character> keys, KeyBoard keyBoard) {
-        this.keyBoard = keyBoard;
         plugBoard = new HashMap<>();
         clearAllPlugs();
         setAllPlugs(plugs);
