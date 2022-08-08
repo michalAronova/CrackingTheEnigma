@@ -15,6 +15,14 @@ public class KeyBoard {
     public boolean isInKeyBoard(Character c) {
         return keyBoard.contains(c.toString());
     }
+    public boolean isInKeyBoard(String s) {
+        for(Character c : s.toCharArray()) {
+            if(!isInKeyBoard(c) && c != ' ') {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public int indexOf(char c){
         return keyBoard.indexOf(c);

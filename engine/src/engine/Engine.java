@@ -13,4 +13,5 @@ public interface Engine {
     TechSpecs showTechSpecs();
     CodeObj autoGenerateCodeObj();
     void SetMachine(CodeObj machineCode);
+    String processMsg(String msg);
 }

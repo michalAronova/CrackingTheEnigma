@@ -13,6 +13,7 @@ import enigmaMachine.reflector.Reflector;
 import enigmaMachine.reflector.ReflectorID;
 import enigmaMachine.rotor.Rotor;
 import enigmaMachine.secret.Secret;
+import exceptions.InputException.InputException;
 import exceptions.XMLException.InvalidXMLException;
 import exceptions.XMLException.XMLExceptionMsg;
 import javafx.util.Pair;
@@ -50,7 +51,7 @@ public class TheEngine implements Engine {
             try{
                 validator.validate();
                 stock = new Stock(machine.getCTERotors().getCTERotor(), machine.getCTEReflectors().getCTEReflector(),
-                        new KeyBoard(machine.getABC().trim()), machine.getRotorsCount());
+                        new KeyBoard(machine.getABC().trim().toUpperCase()), machine.getRotorsCount());
                 this.machine = new Machine(stock.getKeyBoard(), stock.getRotorsCount());
                 return true;
             } catch (InvalidXMLException e) {
@@ -78,6 +79,27 @@ public class TheEngine implements Engine {
         Plugs plugBoard = new PlugBoard(machineCode.getPlugs(), stock.getKeyBoard());
         return new Secret(rotors, reflector, plugBoard);
     }
+
+    @Override
+    public String processMsg(String msg){
+        msg = msg.toUpperCase();
+        StringBuilder sb = new StringBuilder();
+        if(!stock.getKeyBoard().isInKeyBoard(msg)) {
+            //edit the exception: able to get the invalid character and tell user which char wasnt in the abc
+            //msg to user will be like "char <x> not recognized in machine"...
+            throw new InputException("Invalid input: not a recognized character");
+        }
+        for(Character c : msg.toCharArray()){
+            if(c == ' '){
+                sb.append(c);
+            }
+            else {
+                sb.append(machine.process(c));
+            }
+        }
+        return sb.toString();
+    }
+
     public CodeObj autoGenerateCodeObj(){
         String reflectorID = raffleReflector();
         List<Pair<Character, Character>> plugs = rafflePlugs();

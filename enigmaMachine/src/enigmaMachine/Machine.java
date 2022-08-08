@@ -66,6 +66,7 @@ public class Machine {
         return passedIndex;
     }
     public Character process(Character input) {
+        input = Character.toUpperCase(input);
         rotors.get(0).advance();
         Character pluggedOutput = plugBoard.passThroughPlugBoard(input);
         int rotorsInput = keyboard.indexOf(pluggedOutput);

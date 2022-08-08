@@ -29,7 +29,7 @@ public class Stock {
     }
 
     private void fillRotorsMap(List<CTERotor> CTERotors) {
-        CTERotors.forEach(r -> rotorMap.put(r.getId(), new TheRotor(r.getId(), r.getNotch(), getPermutation(r.getCTEPositioning()))));
+        CTERotors.forEach(r -> rotorMap.put(r.getId(), new TheRotor(r.getId(), r.getNotch()-1, getPermutation(r.getCTEPositioning()))));
     }
     private String[] getPermutation(List<CTEPositioning> positionings) {
         String[] permutations = new String[2];
