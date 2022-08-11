@@ -86,6 +86,10 @@ public class TheRotor implements Rotor {
     }
     @Override
     public int getNotch() {
-        return notch;
+        return notch + 1;
+    }
+
+    public int getRelativeNotch() {
+        return Math.floorMod((notch - currentPosition), rightPermutation.length());
     }
 }

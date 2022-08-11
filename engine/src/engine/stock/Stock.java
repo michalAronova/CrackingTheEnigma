@@ -56,7 +56,7 @@ public class Stock {
     }
     public Map<Integer, Integer> getNotches() {
         Map<Integer, Integer> id2notch = new HashMap<>();
-        rotorMap.forEach((id, r) -> id2notch.put(id, r.getNotch()));
+        rotorMap.forEach((id, r) -> id2notch.put(id, r.getRelativeNotch()));
         return id2notch;
     }
     public Map<Integer, Rotor> getRotorMap() {

@@ -38,6 +38,13 @@ public class KeyBoard {
         return keyBoard.chars()
                 .mapToObj(e->(char)e).collect(Collectors.toList());
     }
+    public List<Object> getAsObjList() {
+        return keyBoard.chars()
+                .mapToObj(e->(char)e).collect(Collectors.toList());
+    }
+    public String getKeyBoardString() {
+        return keyBoard;
+    }
 
 }
 

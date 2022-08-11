@@ -16,4 +16,5 @@ public interface Rotor extends AdvanceSelf {
     void reset();
 
     int getNotch();
+    int getRelativeNotch();
 }
