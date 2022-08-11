@@ -16,6 +16,7 @@ public class KeyBoard {
         return keyBoard.contains(c.toString());
     }
     public boolean isInKeyBoard(String s) {
+        s = s.toUpperCase();
         for(Character c : s.toCharArray()) {
             if(!isInKeyBoard(c) && c != ' ') {
                 return false;
