@@ -11,13 +11,16 @@ import java.util.List;
 import java.util.Map;
 
 public class MachineValidator implements Validator{
-    CTEMachine machine;
-    String processedABC;
+    private final CTEMachine machine;
+    private final String processedABC;
+    private final int minimumRotorsCount;
+    private final int maximumRotorsCount;
 
-    public MachineValidator(CTEMachine machine){
-
+    public MachineValidator(CTEMachine machine, int minimumRotorsCount, int maximumRotorsCount){
         this.machine = machine;
         this.processedABC = machine.getABC().trim().toUpperCase();
+        this.minimumRotorsCount = minimumRotorsCount;
+        this.maximumRotorsCount = maximumRotorsCount;
     }
 
     @Override
@@ -27,11 +30,12 @@ public class MachineValidator implements Validator{
         validateReflectors(); // continue to this method only if abc is valid :)
         return true;
     }
+
     //must call validateABC before this method
     private void validateRotorsAndCount(){
         List<CTERotor> rotors = machine.getCTERotors().getCTERotor();
         int rotorsCount = machine.getRotorsCount();
-        if(rotorsCount > rotors.size() || rotorsCount > 99 || rotorsCount < 2) {
+        if(rotorsCount > rotors.size() || rotorsCount > maximumRotorsCount || rotorsCount < minimumRotorsCount) {
             throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "invalid rotor count");
         }
         boolean[] rotorsCheckers = new boolean[rotors.size() + 1];
@@ -50,6 +54,7 @@ public class MachineValidator implements Validator{
             checkPositioning(r); //throws exception if not valid positioning
         }
     }
+
     //must call validateABC before this method
     private void validateReflectors(){
         List<CTEReflector> reflectors = machine.getCTEReflectors().getCTEReflector();
@@ -73,6 +78,7 @@ public class MachineValidator implements Validator{
             }
         }
     }
+
     private void validateABC(){
         if(processedABC.length()%2 == 1) {
             throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "odd abc");
@@ -81,6 +87,7 @@ public class MachineValidator implements Validator{
             throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "abc not unique");
         }
     }
+
     private boolean checkUniqueString(String s) {
         Map<Character, Integer> char2cnt = new HashMap<>();
         for(Character c : s.toCharArray()){
@@ -93,6 +100,7 @@ public class MachineValidator implements Validator{
         }
         return true;
     }
+
     private void checkPositioning(CTERotor r){
         Map<String, Integer> char2CntLEFT = new HashMap<>();
         Map<String, Integer> char2CntRIGHT = new HashMap<>();
@@ -120,6 +128,7 @@ public class MachineValidator implements Validator{
             }
         }
     }
+
     private boolean checkValidReflectorID(String ID) {
         for(int i=0 ; i < machine.getCTEReflectors().getCTEReflector().size() ; i++){
             ReflectorID r = ReflectorID.values()[i];

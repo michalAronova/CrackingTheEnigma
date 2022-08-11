@@ -6,13 +6,12 @@ import java.util.Map;
 
 public class TechSpecs {
 
-    private int totalRotors;
-    private int rotorsInUse;
-    private Map<Integer, Integer> notchLocation;
-    private int reflectorsCount;
-    private int processedMsg;
-    //change to CodeObj
-    private CodeObj currentCode;
+    private final int totalRotors;
+    private final int rotorsInUse;
+    private final Map<Integer, Integer> notchLocation;
+    private final int reflectorsCount;
+    private final int processedMsg;
+    private final CodeObj currentCode;
 
     public TechSpecs(int totalRotors, int rotorsInUse, Map<Integer, Integer> notchLocation, int reflectorsCount, int processedMsg, CodeObj currentCode) {
         this.totalRotors = totalRotors;

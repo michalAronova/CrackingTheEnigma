@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 public class KeyBoard {
     private final String keyBoard;
+
     public KeyBoard() {
         keyBoard = "abcdef";
     }
@@ -15,6 +16,7 @@ public class KeyBoard {
     public boolean isInKeyBoard(Character c) {
         return keyBoard.contains(c.toString());
     }
+
     public boolean isInKeyBoard(String s) {
         s = s.toUpperCase();
         for(Character c : s.toCharArray()) {
@@ -32,9 +34,11 @@ public class KeyBoard {
     public char charAt(int index) {
         return keyBoard.charAt(index);
     }
+
     public int length() {
         return keyBoard.length();
     }
+
     public List<Character> getAsCharList() {
         return keyBoard.chars()
                 .mapToObj(e->(char)e).collect(Collectors.toList());

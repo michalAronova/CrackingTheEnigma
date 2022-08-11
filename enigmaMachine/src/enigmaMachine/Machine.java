@@ -6,10 +6,9 @@ import enigmaMachine.reflector.Reflecting;
 import enigmaMachine.rotor.Rotor;
 import enigmaMachine.secret.Secret;
 import org.jetbrains.annotations.NotNull;
-
-
 import java.util.Collections;
 import java.util.List;
+
 public class Machine {
     private final KeyBoard keyboard;
     private final int rotorCount;
@@ -21,6 +20,7 @@ public class Machine {
         this.keyboard = keyboard;
         this.rotorCount = rotorCount;
     }
+
     public Machine(KeyBoard keyboard, List<Rotor> rotors, Reflecting reflector, Plugs plugBoard, int rotorCount) {
         this.keyboard = keyboard;
         this.rotors = rotors;
@@ -28,6 +28,7 @@ public class Machine {
         this.plugBoard = plugBoard;
         this.rotorCount = rotorCount;
     }
+
     public Machine(Secret settings, KeyBoard keyboard, int rotorCount) {
         this.keyboard = keyboard;
         this.rotorCount = rotorCount;
@@ -41,14 +42,17 @@ public class Machine {
         this.reflector = settings.getReflector();
         this.plugBoard = settings.getPlugBoard();
     }
+
     private void setRotors() {
         for(int i = 0; i < rotors.size() - 1 ; i++){
             rotors.get(i).setNextRotor(rotors.get(i + 1));
         }
     }
+
     public void resetRotorsToInitial(){
         rotors.forEach(Rotor::reset);
     }
+
     private int passThroughRotorsR2L(int index) {
         int passedIndex = index;
         for(Rotor r : rotors) {
@@ -56,6 +60,7 @@ public class Machine {
         }
         return passedIndex;
     }
+
     private int passThroughRotorsL2R(int index) {
         int passedIndex = index;
         Collections.reverse(rotors);
@@ -65,6 +70,7 @@ public class Machine {
         Collections.reverse(rotors);
         return passedIndex;
     }
+
     public Character process(Character input) {
         input = Character.toUpperCase(input);
         rotors.get(0).advance();

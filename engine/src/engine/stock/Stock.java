@@ -15,10 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Stock {
-    Map<Integer,Rotor> rotorMap;
-    Map<String, Reflecting> reflectorMap;
-    KeyBoard keyBoard;
-    int rotorsCount;
+    private Map<Integer,Rotor> rotorMap;
+    private Map<String, Reflecting> reflectorMap;
+    private KeyBoard keyBoard;
+    private final int rotorsCount;
+
     public Stock(List<CTERotor> rotors, List<CTEReflector> reflectors, KeyBoard keyBoard, int rotorsCount) {
         rotorMap = new HashMap<>();
         reflectorMap = new HashMap<>();
@@ -31,6 +32,7 @@ public class Stock {
     private void fillRotorsMap(List<CTERotor> CTERotors) {
         CTERotors.forEach(r -> rotorMap.put(r.getId(), new TheRotor(r.getId(), r.getNotch()-1, getPermutation(r.getCTEPositioning()))));
     }
+
     private String[] getPermutation(List<CTEPositioning> positionings) {
         String[] permutations = new String[2];
         String permutationL = "";
@@ -43,9 +45,11 @@ public class Stock {
         permutations[1] = permutationR;
         return permutations;
     }
+
     private void fillReflectorsMap(List<CTEReflector> CTEReflectors) {
         CTEReflectors.forEach(r -> reflectorMap.put(r.getId(), new Reflector(r.getId(), reflectionListToMap(r.getCTEReflect()))));
     }
+
     //getting pairs in base 1 and return map in base 0
     private Map<Integer, Integer> reflectionListToMap(List<CTEReflect> reflectionList) {
         Map<Integer, Integer> int2int = new HashMap<>();
@@ -54,11 +58,13 @@ public class Stock {
                                 });
         return int2int;
     }
+
     public Map<Integer, Integer> getNotches() {
         Map<Integer, Integer> id2notch = new HashMap<>();
         rotorMap.forEach((id, r) -> id2notch.put(id, r.getRelativeNotch()));
         return id2notch;
     }
+
     public Map<Integer, Rotor> getRotorMap() {
         return rotorMap;
     }
@@ -73,5 +79,9 @@ public class Stock {
 
     public int getRotorsCount() {
         return rotorsCount;
+    }
+
+    public Reflecting getReflector(String ID){
+        return reflectorMap.get(ID);
     }
 }

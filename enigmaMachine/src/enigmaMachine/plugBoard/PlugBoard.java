@@ -3,13 +3,12 @@ package enigmaMachine.plugBoard;
 import enigmaMachine.keyBoard.KeyBoard;
 import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 
 public class PlugBoard implements Plugs {
 
-    private final Map<Character, Character> plugBoard;
-    private final KeyBoard keyBoard;
+    private Map<Character, Character> plugBoard;
+    private KeyBoard keyBoard;
 
     public PlugBoard(@NotNull List<Pair<Character, Character>> plugs, KeyBoard keyBoard) {
         this.keyBoard = keyBoard;
@@ -44,6 +43,7 @@ public class PlugBoard implements Plugs {
     public void clearAllPlugs() {
         keyBoard.getAsCharList().forEach(c -> plugBoard.put(c, c));
     }
+
     @Override
     public void setAllPlugs(List<Pair<Character, Character>> plugs) {
         plugs.forEach(p -> {

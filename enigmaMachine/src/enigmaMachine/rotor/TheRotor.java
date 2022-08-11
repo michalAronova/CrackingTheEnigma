@@ -1,7 +1,5 @@
 package enigmaMachine.rotor;
 
-import enigmaMachine.keyBoard.KeyBoard;
-
 public class TheRotor implements Rotor {
     private final int notch;
     private final int id;
@@ -9,7 +7,6 @@ public class TheRotor implements Rotor {
     private int currentPosition;
     private final String leftPermutation;
     private final String rightPermutation;
-
     private AdvanceSelf next;
 
     public TheRotor(int id, int notch, String leftPermutation, String rightPermutation) {
@@ -18,6 +15,7 @@ public class TheRotor implements Rotor {
         this.leftPermutation = leftPermutation;
         this.rightPermutation = rightPermutation;
     }
+
     public TheRotor(int id, int notch, String[] permutations) {
         this.id = id;
         this.notch = notch;
@@ -30,13 +28,16 @@ public class TheRotor implements Rotor {
         this.initialPosition = index;
         this.currentPosition = index;
     }
+
     public String getRightPermutation(){
         return rightPermutation;
     }
+
     @Override
     public void setInitialPosition(Character let){
         setInitialPosition(rightPermutation.indexOf(let));
     }
+
     public void reset(){
         this.currentPosition = this.initialPosition;
     }
@@ -69,6 +70,7 @@ public class TheRotor implements Rotor {
         int indexOut = Math.floorMod((permutatedIndex - currentPosition), rightPermutation.length());
         return indexOut;
     }
+
     @Override
     public int leftToRightReturnIndex(int index) {
         char curChar = leftPermutation.charAt(Math.floorMod((index + currentPosition), rightPermutation.length()));
@@ -84,6 +86,7 @@ public class TheRotor implements Rotor {
             next.advance();
         }
     }
+
     @Override
     public int getNotch() {
         return notch + 1;
