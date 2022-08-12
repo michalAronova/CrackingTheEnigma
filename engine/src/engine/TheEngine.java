@@ -65,6 +65,9 @@ public class TheEngine implements Engine {
                 stock = new Stock(machine.getCTERotors().getCTERotor(), machine.getCTEReflectors().getCTEReflector(),
                         new KeyBoard(machine.getABC().trim().toUpperCase()), machine.getRotorsCount());
                 this.machine = new Machine(stock.getKeyBoard(), stock.getRotorsCount());
+                this.currentCode = null; //new machine - no code yet!
+                this.processedMsgsCnt = 0; //new machine - new count!
+                this.codesHistories.clear(); //new machine - new histories!
                 return true;
             } catch (InvalidXMLException e) {
                 throw e;
@@ -106,14 +109,9 @@ public class TheEngine implements Engine {
             throw new InputException("Invalid input: not a recognized character");
         }
         for(Character c : msg.toCharArray()){
-            if(c == ' '){
-                sb.append(c);
-            }
-            else {
-                sb.append(machine.process(c));
-            }
+            sb.append(machine.process(c));
         }
-
+        processedMsgsCnt++;
         codesHistories.getLast().addTranslation(msg, sb.toString(), processTime);
         return sb.toString();
     }
@@ -122,7 +120,8 @@ public class TheEngine implements Engine {
         String reflectorID = raffleReflector();
         List<Pair<Character, Character>> plugs = rafflePlugs();
         List<Pair<Integer, Character>> rotorsID2Position = raffleRotors();
-        return new CodeObj(rotorsID2Position,reflectorID, plugs);
+        Map<Integer, Integer> noches = raffleNoches(rotorsID2Position);
+        return new CodeObj(rotorsID2Position, noches, reflectorID, plugs);
     }
 
     @Override
@@ -177,6 +176,13 @@ public class TheEngine implements Engine {
             raffledRotors.add(new Pair<>(rotorID, startingChar));
         }
         return raffledRotors;
+    }
+//mimi
+    private Map<Integer, Integer> raffleNoches(List<Pair<Integer, Character>> rotorsID2Position) {
+        Map<Integer, Integer> rotorID2Noche = new HashMap<>();
+        Random random = new Random();
+        rotorsID2Position.forEach(r -> rotorID2Noche.put(r.getKey(), random.nextInt(stock.getKeyBoard().length())));
+        return rotorID2Noche;
     }
 
     private CTEEnigma deserializeFrom(InputStream in) throws JAXBException {
@@ -242,11 +248,11 @@ public class TheEngine implements Engine {
     }
     @Override
     public void validateAndSetRotors(CodeObj underConstructionCode, String rotors) {
-        if (!rotors.matches("[0-9 ]+")) {
+        if (!rotors.matches("[0-9,]+")) {
             throw new InputException("Rotors IDs are only numbers");
         }
         List<Integer> elements = Arrays
-                                    .stream(rotors.split(" "))
+                                    .stream(rotors.split(","))
                                     .map(Integer::valueOf)
                                     .collect(Collectors.toList());
 
@@ -285,4 +291,24 @@ public class TheEngine implements Engine {
 
     @Override
     public List<CodeHistory> showCodeHistory() { return codesHistories; }
+    @Override
+    public int getProcessedMsgsCnt() {
+        return processedMsgsCnt;
+    }
+    @Override
+    public CodeObj getCurrentCode() {
+        return currentCode;
+    }
+    @Override
+    public CodeObj getUpdatedCode() {
+        List<Pair<Integer, Character>> updatedPosList = new LinkedList<>();
+        Integer ID;
+        char pos;
+        for(Pair<Integer, Character> p : currentCode.getID2PositionList()){
+            ID = p.getKey();
+            pos = stock.getRotorMap().get(ID).getCurrentPositionChar();
+            updatedPosList.add(new Pair<>(ID, pos));
+        }
+        return new CodeObj(updatedPosList, currentCode);
+    }
 }

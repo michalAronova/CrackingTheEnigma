@@ -1,6 +1,7 @@
 package enigmaMachine.keyBoard;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class KeyBoard {
@@ -20,7 +21,7 @@ public class KeyBoard {
     public boolean isInKeyBoard(String s) {
         s = s.toUpperCase();
         for(Character c : s.toCharArray()) {
-            if(!isInKeyBoard(c) && c != ' ') {
+            if(!isInKeyBoard(c)) {
                 return false;
             }
         }
@@ -51,5 +52,22 @@ public class KeyBoard {
         return keyBoard;
     }
 
+    @Override
+    public String toString() {
+        return "KeyBoard{" + keyBoard + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        KeyBoard keyBoard1 = (KeyBoard) o;
+        return Objects.equals(keyBoard, keyBoard1.keyBoard);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(keyBoard);
+    }
 }
 

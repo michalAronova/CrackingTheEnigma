@@ -8,6 +8,7 @@ import enigmaMachine.secret.Secret;
 import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Machine {
     private final KeyBoard keyboard;
@@ -82,5 +83,32 @@ public class Machine {
         Character pluggedInput = keyboard.charAt(pluggedInputIndex);
         pluggedOutput = plugBoard.passThroughPlugBoard(pluggedInput);
         return Character.toUpperCase(pluggedOutput);
+    }
+    public List<Rotor> getRotors() {
+        return rotors;
+    }
+
+    @Override
+    public String toString() {
+        return "Machine{" +
+                "keyboard=" + keyboard +
+                ", rotorCount=" + rotorCount +
+                ", rotors=" + rotors +
+                ", reflector=" + reflector +
+                ", plugBoard=" + plugBoard +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Machine machine = (Machine) o;
+        return rotorCount == machine.rotorCount && Objects.equals(keyboard, machine.keyboard) && Objects.equals(rotors, machine.rotors) && Objects.equals(reflector, machine.reflector) && Objects.equals(plugBoard, machine.plugBoard);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(keyboard, rotorCount, rotors, reflector, plugBoard);
     }
 }

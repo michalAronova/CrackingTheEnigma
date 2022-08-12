@@ -52,5 +52,21 @@ public class PlugBoard implements Plugs {
         });
     }
 
+    @Override
+    public String toString() { //mimi- return only non default plugs?
+        return "PlugBoard{" + plugBoard + '}';
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlugBoard plugBoard1 = (PlugBoard) o;
+        return Objects.equals(plugBoard, plugBoard1.plugBoard) && Objects.equals(keyBoard, plugBoard1.keyBoard);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(plugBoard, keyBoard);
+    }
 }

@@ -1,5 +1,7 @@
 package enigmaMachine.rotor;
 
+import java.util.Objects;
+
 public class TheRotor implements Rotor {
     private final int notch;
     private final int id;
@@ -24,21 +26,21 @@ public class TheRotor implements Rotor {
     }
 
     @Override
-    public void setInitialPosition(int index){
+    public void setInitialPosition(int index) {
         this.initialPosition = index;
         this.currentPosition = index;
     }
 
-    public String getRightPermutation(){
+    public String getRightPermutation() {
         return rightPermutation;
     }
 
     @Override
-    public void setInitialPosition(Character let){
+    public void setInitialPosition(Character let) {
         setInitialPosition(rightPermutation.indexOf(let));
     }
 
-    public void reset(){
+    public void reset() {
         this.currentPosition = this.initialPosition;
     }
 
@@ -82,7 +84,7 @@ public class TheRotor implements Rotor {
     @Override
     public void advance() {
         currentPosition = Math.floorMod((currentPosition + 1), rightPermutation.length());
-        if (currentPosition == notch && next != null){
+        if (currentPosition == notch && next != null) {
             next.advance();
         }
     }
@@ -94,5 +96,40 @@ public class TheRotor implements Rotor {
 
     public int getRelativeNotch() {
         return Math.floorMod((notch - currentPosition), rightPermutation.length());
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    @Override
+    public char getCurrentPositionChar() {
+        return rightPermutation.charAt(getCurrentPosition());
+    }
+
+    @Override
+    public String toString() {
+        return "Rotor Details{" +
+                "id=" + id +
+                ", notch=" + notch +
+                ", initialPosition=" + initialPosition +
+                ", currentPosition=" + currentPosition +
+                ", leftPermutation='" + leftPermutation + '\'' +
+                ", rightPermutation='" + rightPermutation + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TheRotor theRotor = (TheRotor) o;
+        return notch == theRotor.notch && id == theRotor.id && initialPosition == theRotor.initialPosition && currentPosition == theRotor.currentPosition && Objects.equals(leftPermutation, theRotor.leftPermutation) && Objects.equals(rightPermutation, theRotor.rightPermutation) && Objects.equals(next, theRotor.next);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(notch, id, initialPosition, currentPosition, leftPermutation, rightPermutation, next);
     }
 }
