@@ -82,6 +82,7 @@ public class TheEngine implements Engine {
         codesHistories.add(new CodeHistory(machineCode));
         currentCode = machineCode;
         machine.updateBySecret(secretFromCodeObj(currentCode));
+        currentCode.setNotchRelativeLocation(getRelativeNotchesMap(currentCode.getID2PositionList()));
     }
 
     private Secret secretFromCodeObj(CodeObj machineCode){
@@ -122,8 +123,15 @@ public class TheEngine implements Engine {
         String reflectorID = raffleReflector();
         List<Pair<Character, Character>> plugs = rafflePlugs();
         List<Pair<Integer, Character>> rotorsID2Position = raffleRotors();
-        Map<Integer, Integer> noches = raffleNoches(rotorsID2Position);
-        return new CodeObj(rotorsID2Position, noches, reflectorID, plugs);
+        return new CodeObj(rotorsID2Position, reflectorID, plugs);
+    }
+
+    private Map<Integer, Integer> getRelativeNotchesMap(List<Pair<Integer, Character>> rotorsID2Position){
+        Map<Integer,Integer> relativeNotchesMap = new HashMap<>();
+        rotorsID2Position.forEach(p ->
+                relativeNotchesMap.put(p.getKey(),
+                stock.getRotorMap().get(p.getKey()).getRelativeNotch()));
+        return relativeNotchesMap;
     }
 
     @Override
@@ -188,7 +196,7 @@ public class TheEngine implements Engine {
     }
 
     public TechSpecs showTechSpecs() {
-        return new TechSpecs(stock.getRotorMap().size(), stock.getRotorsCount(), stock.getNotches(),
+        return new TechSpecs(stock.getRotorMap().size(), stock.getRotorsCount(),
                 stock.getReflectorMap().size(), processedMsgsCnt, currentCode, getUpdatedCode());
     }
 
@@ -311,7 +319,6 @@ public class TheEngine implements Engine {
         return new CodeObj(updatedPosList, currentCode,
                 getRelativeNotchesMap(currentCode.getID2PositionList()));
     }
-
 
     @Override
     public String toString() {

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class CodeObj {
     private List<Pair<Integer, Character>> ID2PositionList;
-    private Map<Integer, Integer> notchLocation; //mimi- removed final
+    private Map<Integer, Integer> notchRelativeLocation; //mimi- removed final
     private String reflectorID;
     private List<Pair<Character, Character>> plugs;
     boolean updatedRotorIds = false;
@@ -33,7 +33,6 @@ public class CodeObj {
     public CodeObj(List<Pair<Integer, Character>> ID2PositionList,
                    String reflectorID, List<Pair<Character, Character>> plugs){
         this.ID2PositionList = ID2PositionList;
-        this.notchLocation = notchLocation;
         this.reflectorID = reflectorID;
         this.plugs = plugs;
         updatedRotorIds = true;
@@ -50,6 +49,12 @@ public class CodeObj {
         return reflectorID;
     }
 
+    public Map<Integer, Integer> getNotchRelativeLocation(){ return notchRelativeLocation; }
+
+    public void setNotchRelativeLocation(Map<Integer, Integer> notchRelativeLocation){
+        this.notchRelativeLocation = notchRelativeLocation;
+    }
+
     public List<Pair<Character, Character>> getPlugs() {
         return plugs;
     }
@@ -61,7 +66,7 @@ public class CodeObj {
         for(int i = ID2PositionList.size() - 1; i >= 0; i--){
             int ID = ID2PositionList.get(i).getKey();
             sb.append(ID2PositionList.get(i).getKey());
-            sb.append(String.format("(%d)", (Integer)notchLocation.get(ID)));
+            sb.append(String.format("(%d)", (Integer) notchRelativeLocation.get(ID)));
             sb.append(",");
         }
         sb.replace(sb.length() - 1, sb.length(),">");
@@ -134,11 +139,11 @@ public class CodeObj {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CodeObj codeObj = (CodeObj) o;
-        return updatedRotorIds == codeObj.updatedRotorIds && updatedRotorPos == codeObj.updatedRotorPos && updatedReflector == codeObj.updatedReflector && updatedPlugs == codeObj.updatedPlugs && Objects.equals(ID2PositionList, codeObj.ID2PositionList) && Objects.equals(notchLocation, codeObj.notchLocation) && Objects.equals(reflectorID, codeObj.reflectorID) && Objects.equals(plugs, codeObj.plugs);
+        return updatedRotorIds == codeObj.updatedRotorIds && updatedRotorPos == codeObj.updatedRotorPos && updatedReflector == codeObj.updatedReflector && updatedPlugs == codeObj.updatedPlugs && Objects.equals(ID2PositionList, codeObj.ID2PositionList) && Objects.equals(notchRelativeLocation, codeObj.notchRelativeLocation) && Objects.equals(reflectorID, codeObj.reflectorID) && Objects.equals(plugs, codeObj.plugs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID2PositionList, notchLocation, reflectorID, plugs, updatedRotorIds, updatedRotorPos, updatedReflector, updatedPlugs);
+        return Objects.hash(ID2PositionList, notchRelativeLocation, reflectorID, plugs, updatedRotorIds, updatedRotorPos, updatedReflector, updatedPlugs);
     }
 }

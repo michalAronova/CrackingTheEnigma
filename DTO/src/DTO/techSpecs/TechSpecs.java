@@ -49,15 +49,10 @@ public class TechSpecs {
 
     @Override
     public String toString() {
-        return "TechSpecs{" +
-                "totalRotors=" + totalRotors +
-                ", rotorsInUse=" + rotorsInUse +
-                ", noches=" + noches +
-                ", reflectorsCount=" + reflectorsCount +
-                ", processedMsg=" + processedMsg +
-                ", currentMachineCode=" + currentCode +
-                ", updatedMachineCode=" + updatedCode +
-                '}';
+        return String.format("Total rotors/Rotors in use: %d/%d%nReflector count: %d%n" +
+                        "Total processed messages: %d%nInitial code: %s%nCurrent code: %s",
+                        rotorsInUse, totalRotors, reflectorsCount, processedMsg, currentCode, updatedCode);
+
     }
 
     @Override
