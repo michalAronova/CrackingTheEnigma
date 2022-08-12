@@ -20,9 +20,9 @@ public class CodeObj {
     public CodeObj() {
         ID2PositionList = new ArrayList<>();
     }
-    public CodeObj(List<Pair<Integer,Character>> ID2PositionList, CodeObj currentCode){
+    public CodeObj(List<Pair<Integer,Character>> ID2PositionList, CodeObj currentCode, Map<Integer, Integer> relativeNotchesLocation){
         this.ID2PositionList = ID2PositionList;
-        notchLocation = currentCode.notchLocation;
+        notchRelativeLocation = relativeNotchesLocation;
         reflectorID = currentCode.reflectorID;
         plugs = currentCode.plugs;
         updatedRotorIds = currentCode.updatedRotorIds;
@@ -30,7 +30,7 @@ public class CodeObj {
         updatedReflector = currentCode.updatedReflector;
         updatedPlugs = currentCode.updatedPlugs;
     }
-    public CodeObj(List<Pair<Integer, Character>> ID2PositionList, Map<Integer, Integer> notchLocation,
+    public CodeObj(List<Pair<Integer, Character>> ID2PositionList,
                    String reflectorID, List<Pair<Character, Character>> plugs){
         this.ID2PositionList = ID2PositionList;
         this.notchLocation = notchLocation;
@@ -56,8 +56,6 @@ public class CodeObj {
 
     @Override
     public String toString(){
-        //<בחירת וסידור גלגלים בחריצים><בחירת מיקום גלגלים ראשוני><מספר משקף בספרות רומיות><צמדי תקעים>
-        //<45,27,94><AO!><III><A|Z,D|E>
         StringBuilder sb = new StringBuilder();
         sb.append("<");
         for(int i = ID2PositionList.size() - 1; i >= 0; i--){

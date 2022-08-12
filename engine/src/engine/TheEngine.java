@@ -179,13 +179,7 @@ public class TheEngine implements Engine {
         }
         return raffledRotors;
     }
-    //mimi
-    private Map<Integer, Integer> raffleNoches(List<Pair<Integer, Character>> rotorsID2Position) {
-        Map<Integer, Integer> rotorID2Noche = new HashMap<>();
-        Random random = new Random();
-        rotorsID2Position.forEach(r -> rotorID2Noche.put(r.getKey(), random.nextInt(stock.getKeyBoard().length())));
-        return rotorID2Noche;
-    }
+
 
     private CTEEnigma deserializeFrom(InputStream in) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(JAXB_XML_PACKAGE_NAME);
@@ -314,7 +308,8 @@ public class TheEngine implements Engine {
             pos = stock.getRotorMap().get(ID).getCurrentPositionChar();
             updatedPosList.add(new Pair<>(ID, pos));
         }
-        return new CodeObj(updatedPosList, currentCode);
+        return new CodeObj(updatedPosList, currentCode,
+                getRelativeNotchesMap(currentCode.getID2PositionList()));
     }
 
 

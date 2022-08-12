@@ -32,7 +32,7 @@ public class Translation {
                 sb.append(output);
                 sb.append("> (");
                 sb.append(time);
-                sb.append(")");
+                sb.append(" nano-seconds)");
                 return sb.toString();
         }
 
