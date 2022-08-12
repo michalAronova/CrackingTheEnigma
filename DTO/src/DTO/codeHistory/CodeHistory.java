@@ -15,7 +15,7 @@ public class CodeHistory {
         this.code = code;
     }
 
-    public void addTranslation(String input, String output, double time){
+    public void addTranslation(String input, String output, long time){
         inputOutput.add(new Translation(input, output, time));
     }
 

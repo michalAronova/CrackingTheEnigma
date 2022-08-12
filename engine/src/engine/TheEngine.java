@@ -99,8 +99,6 @@ public class TheEngine implements Engine {
 
     @Override
     public String processMsg(String msg){
-        double processTime = 0;
-        //time = calculateTime(); ?
         msg = msg.toUpperCase();
         StringBuilder sb = new StringBuilder();
         if(!stock.getKeyBoard().isInKeyBoard(msg)) {
@@ -109,11 +107,14 @@ public class TheEngine implements Engine {
             throw new ObjectInputException("Invalid input: not a recognized character",
                                                     stock.getKeyBoard().getAsObjList());
         }
+        long startTime = System.nanoTime();
         for(Character c : msg.toCharArray()){
             sb.append(machine.process(c));
         }
+        long endTime = System.nanoTime();
+        long timeElapsed = endTime - startTime;
         processedMsgsCnt++;
-        codesHistories.getLast().addTranslation(msg, sb.toString(), processTime);
+        codesHistories.getLast().addTranslation(msg, sb.toString(), timeElapsed);
         return sb.toString();
     }
 

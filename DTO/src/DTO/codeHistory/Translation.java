@@ -5,9 +5,9 @@ import java.util.Objects;
 public class Translation {
         private String input;
         private String output;
-        private double time;
+        private long time;
 
-        public Translation(String input, String output, double time) {
+        public Translation(String input, String output, long time) {
                 this.input = input;
                 this.output = output;
                 this.time = time;
