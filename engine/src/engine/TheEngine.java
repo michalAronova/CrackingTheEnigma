@@ -106,7 +106,8 @@ public class TheEngine implements Engine {
         if(!stock.getKeyBoard().isInKeyBoard(msg)) {
             //edit the exception: able to get the invalid character and tell user which char wasnt in the abc
             //msg to user will be like "char <x> not recognized in machine"...
-            throw new InputException("Invalid input: not a recognized character");
+            throw new ObjectInputException("Invalid input: not a recognized character",
+                                                    stock.getKeyBoard().getAsObjList());
         }
         for(Character c : msg.toCharArray()){
             sb.append(machine.process(c));
@@ -193,7 +194,7 @@ public class TheEngine implements Engine {
 
     public TechSpecs showTechSpecs() {
         return new TechSpecs(stock.getRotorMap().size(), stock.getRotorsCount(), stock.getNotches(),
-                stock.getReflectorMap().size(), processedMsgsCnt, currentCode);
+                stock.getReflectorMap().size(), processedMsgsCnt, currentCode, getUpdatedCode());
     }
 
     @Override
@@ -202,10 +203,11 @@ public class TheEngine implements Engine {
     }
 
     @Override
-    public void validateAndSetReflector(CodeObj underConstructionCode, String wantedReflectorID){
+    public void validateAndSetReflector(CodeObj underConstructionCode, int wantedReflectorID){
 
-        if(stock.getReflector(wantedReflectorID) != null) {
-            underConstructionCode.setReflectorID(wantedReflectorID);
+        String IDRome = ReflectorID.getRomeByInteger(wantedReflectorID);
+        if(stock.getReflector(IDRome) != null) {
+            underConstructionCode.setReflectorID(IDRome);
         }
         else{
             throw new ObjectInputException("Invalid Reflector input ",
@@ -270,6 +272,7 @@ public class TheEngine implements Engine {
             }
             element2count.put(id,1);
         }
+        Collections.reverse(elements);
         underConstructionCode.setRotorIDs(elements);
     }
 
@@ -286,6 +289,7 @@ public class TheEngine implements Engine {
                                                                 stock.getKeyBoard().getAsObjList());
             }
         }
+        Collections.reverse(rotorPositions);
         underConstructionCode.setRotorPos(rotorPositions);
     }
 

@@ -14,6 +14,14 @@ public enum ReflectorID {
     public int getId() {
         return id;
     }
+    public static String getRomeByInteger(int id){
+        for(ReflectorID ID: ReflectorID.values()){
+            if(ID.getId() == id){
+                return ID.name();
+            }
+        }
+        return null;
+    }
     @Override
     public String toString() {
         return name();

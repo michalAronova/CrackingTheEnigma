@@ -8,18 +8,23 @@ public class TechSpecs {
 
     private final int totalRotors;
     private final int rotorsInUse;
-    private final Map<Integer, Integer> notchLocation;
+
+    private Map<Integer, Integer> noches;
     private final int reflectorsCount;
     private final int processedMsg;
     private final CodeObj currentCode;
+    private final CodeObj updatedCode;
 
-    public TechSpecs(int totalRotors, int rotorsInUse, Map<Integer, Integer> notchLocation, int reflectorsCount, int processedMsg, CodeObj currentCode) {
+    //mimi
+    public TechSpecs(int totalRotors, int rotorsInUse, Map<Integer, Integer> noches, int reflectorsCount,
+                     int processedMsg, CodeObj currentCode, CodeObj updatedCode) {
         this.totalRotors = totalRotors;
         this.rotorsInUse = rotorsInUse;
-        this.notchLocation = notchLocation;
+        this.noches = noches;//mimi
         this.reflectorsCount = reflectorsCount;
         this.processedMsg = processedMsg;
         this.currentCode = currentCode;
+        this.updatedCode = updatedCode;
     }
 
     public int getTotalRotors() {
@@ -28,10 +33,6 @@ public class TechSpecs {
 
     public int getRotorsInUse() {
         return rotorsInUse;
-    }
-
-    public Map<Integer, Integer> getNotchLocation() {
-        return notchLocation;
     }
 
     public int getReflectorsCount() {
@@ -45,4 +46,7 @@ public class TechSpecs {
     public CodeObj getCurrentCode() {
         return currentCode;
     }
+
+    public CodeObj getUpdatedCode() { return updatedCode; }
+
 }

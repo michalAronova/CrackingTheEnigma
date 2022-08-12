@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class CodeObj {
     private List<Pair<Integer, Character>> ID2PositionList;
+    private Map<Integer, Integer> notchLocation; //mimi- removed final
     private String reflectorID;
     private List<Pair<Character, Character>> plugs;
     boolean updatedRotorIds = false;
@@ -18,9 +19,20 @@ public class CodeObj {
     public CodeObj() {
         ID2PositionList = new ArrayList<>();
     }
-
-    public CodeObj(List<Pair<Integer, Character>> ID2PositionList, String reflectorID, List<Pair<Character, Character>> plugs){
+    public CodeObj(List<Pair<Integer,Character>> ID2PositionList, CodeObj currentCode){
         this.ID2PositionList = ID2PositionList;
+        notchLocation = currentCode.notchLocation;
+        reflectorID = currentCode.reflectorID;
+        plugs = currentCode.plugs;
+        updatedRotorIds = currentCode.updatedRotorIds;
+        updatedRotorPos = currentCode.updatedRotorPos;
+        updatedReflector = currentCode.updatedReflector;
+        updatedPlugs = currentCode.updatedPlugs;
+    }
+    public CodeObj(List<Pair<Integer, Character>> ID2PositionList, Map<Integer, Integer> notchLocation,
+                   String reflectorID, List<Pair<Character, Character>> plugs){
+        this.ID2PositionList = ID2PositionList;
+        this.notchLocation = notchLocation;
         this.reflectorID = reflectorID;
         this.plugs = plugs;
         updatedRotorIds = true;
@@ -48,7 +60,9 @@ public class CodeObj {
         StringBuilder sb = new StringBuilder();
         sb.append("<");
         for(int i = ID2PositionList.size() - 1; i >= 0; i--){
+            int ID = ID2PositionList.get(i).getKey();
             sb.append(ID2PositionList.get(i).getKey());
+            sb.append(String.format("(%d)", (Integer)notchLocation.get(ID)));
             sb.append(",");
         }
         sb.replace(sb.length() - 1, sb.length(),">");
