@@ -5,10 +5,7 @@ import exceptions.XMLException.InvalidXMLException;
 import exceptions.XMLException.XMLExceptionMsg;
 import schema.generated.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MachineValidator implements Validator{
     private final CTEMachine machine;
@@ -137,5 +134,28 @@ public class MachineValidator implements Validator{
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "MachineValidator{" +
+                "machine=" + machine +
+                ", ABC='" + processedABC + '\'' +
+                ", minimumRotorsCount=" + minimumRotorsCount +
+                ", maximumRotorsCount=" + maximumRotorsCount +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MachineValidator that = (MachineValidator) o;
+        return minimumRotorsCount == that.minimumRotorsCount && maximumRotorsCount == that.maximumRotorsCount && Objects.equals(machine, that.machine) && Objects.equals(processedABC, that.processedABC);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(machine, processedABC, minimumRotorsCount, maximumRotorsCount);
     }
 }

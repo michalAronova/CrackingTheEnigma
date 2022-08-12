@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class CodeObj {
     private List<Pair<Integer, Character>> ID2PositionList;
@@ -128,5 +129,18 @@ public class CodeObj {
 
     public boolean isValidCode(){
         return updatedRotorIds && updatedRotorPos && updatedReflector && updatedPlugs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CodeObj codeObj = (CodeObj) o;
+        return updatedRotorIds == codeObj.updatedRotorIds && updatedRotorPos == codeObj.updatedRotorPos && updatedReflector == codeObj.updatedReflector && updatedPlugs == codeObj.updatedPlugs && Objects.equals(ID2PositionList, codeObj.ID2PositionList) && Objects.equals(notchLocation, codeObj.notchLocation) && Objects.equals(reflectorID, codeObj.reflectorID) && Objects.equals(plugs, codeObj.plugs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID2PositionList, notchLocation, reflectorID, plugs, updatedRotorIds, updatedRotorPos, updatedReflector, updatedPlugs);
     }
 }

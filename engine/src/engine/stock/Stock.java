@@ -13,6 +13,7 @@ import schema.generated.CTERotor;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Stock {
     private Map<Integer,Rotor> rotorMap;
@@ -83,5 +84,28 @@ public class Stock {
 
     public Reflecting getReflector(String ID){
         return reflectorMap.get(ID);
+    }
+
+    @Override
+    public String toString() {
+        return "Stock{" +
+                "rotors=" + rotorMap +
+                ", reflectors=" + reflectorMap +
+                ", keyBoard=" + keyBoard +
+                ", rotorsCount=" + rotorsCount +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stock stock = (Stock) o;
+        return rotorsCount == stock.rotorsCount && Objects.equals(rotorMap, stock.rotorMap) && Objects.equals(reflectorMap, stock.reflectorMap) && Objects.equals(keyBoard, stock.keyBoard);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rotorMap, reflectorMap, keyBoard, rotorsCount);
     }
 }

@@ -315,4 +315,29 @@ public class TheEngine implements Engine {
         }
         return new CodeObj(updatedPosList, currentCode);
     }
+
+
+    @Override
+    public String toString() {
+        return "TheEngine{" +
+                "stock=" + stock +
+                ", machine=" + machine +
+                ", currentCode=" + currentCode +
+                ", processedMsgsCnt=" + processedMsgsCnt +
+                ", codesHistories=" + codesHistories +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TheEngine theEngine = (TheEngine) o;
+        return processedMsgsCnt == theEngine.processedMsgsCnt && Objects.equals(stock, theEngine.stock) && Objects.equals(machine, theEngine.machine) && Objects.equals(currentCode, theEngine.currentCode) && Objects.equals(codesHistories, theEngine.codesHistories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stock, machine, currentCode, processedMsgsCnt, codesHistories);
+    }
 }

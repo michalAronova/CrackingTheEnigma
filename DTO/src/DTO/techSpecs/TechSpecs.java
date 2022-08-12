@@ -3,6 +3,7 @@ package DTO.techSpecs;
 import DTO.codeObj.CodeObj;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class TechSpecs {
 
@@ -49,4 +50,29 @@ public class TechSpecs {
 
     public CodeObj getUpdatedCode() { return updatedCode; }
 
+    @Override
+    public String toString() {
+        return "TechSpecs{" +
+                "totalRotors=" + totalRotors +
+                ", rotorsInUse=" + rotorsInUse +
+                ", noches=" + noches +
+                ", reflectorsCount=" + reflectorsCount +
+                ", processedMsg=" + processedMsg +
+                ", currentMachineCode=" + currentCode +
+                ", updatedMachineCode=" + updatedCode +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TechSpecs techSpecs = (TechSpecs) o;
+        return totalRotors == techSpecs.totalRotors && rotorsInUse == techSpecs.rotorsInUse && reflectorsCount == techSpecs.reflectorsCount && processedMsg == techSpecs.processedMsg && Objects.equals(noches, techSpecs.noches) && Objects.equals(currentCode, techSpecs.currentCode) && Objects.equals(updatedCode, techSpecs.updatedCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(totalRotors, rotorsInUse, noches, reflectorsCount, processedMsg, currentCode, updatedCode);
+    }
 }

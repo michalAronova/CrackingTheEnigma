@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class CodeHistory {
     private CodeObj code;
@@ -26,5 +27,18 @@ public class CodeHistory {
             sb.append(String.format("      %d. %s%n", i+1, inputOutput.get(i).toString()));
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CodeHistory that = (CodeHistory) o;
+        return Objects.equals(code, that.code) && Objects.equals(inputOutput, that.inputOutput);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code, inputOutput);
     }
 }
