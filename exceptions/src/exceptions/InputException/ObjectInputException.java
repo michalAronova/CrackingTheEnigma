@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObjectInputException extends InputException {
-    private List<Object> validValues;
+    private final List<Object> validValues;
 
     public ObjectInputException(String message, int value){
         super(message);
@@ -22,6 +22,10 @@ public class ObjectInputException extends InputException {
     @Override
     public String toString(){
         return super.toString() + " | The valid values are: " + validValues;
+    }
+    @Override
+    public String getMessage(){
+        return this.toString();
     }
 
     public Object getValidValuesList(){ return validValues; }

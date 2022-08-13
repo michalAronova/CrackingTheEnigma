@@ -14,7 +14,7 @@ public class Main {
         Engine engine = new TheEngine();
         try{
             //return bool if loading succeed, later should notify ui for printing msg accordingly (success!)
-            if(engine.loadDataFromXML("C:\\Downloads\\ex1-sanity-small.xml")) {
+            if(engine.loadDataFromXML("C:\\Users\\micha\\IdeaProjects\\CrackingTheEnigma\\engine\\src\\resources\\ex1-sanity-small.xml")) {
                 //TechSpecs ts = engine.showTechSpecs();
                 //System.out.println(ts.getTotalRotors());
                 //System.out.println(ts.getNotchLocation());
@@ -31,12 +31,12 @@ public class Main {
         CodeObj underConstruction = new CodeObj();
         engine.validateAndSetRotors(underConstruction, "2,1");
         engine.validateAndSetRotorPositions(underConstruction, "cc");
-        engine.validateAndSetReflector(underConstruction, 7);
+        engine.validateAndSetReflector(underConstruction, 1);
         engine.validateAndSetPlugs(underConstruction, "af");
         engine.setMachine(underConstruction);
 
         //input:
-        String myString = "AAAAAAA";
+        String myString = "AA";
         String result = engine.processMsg(myString);
 
         //show result:

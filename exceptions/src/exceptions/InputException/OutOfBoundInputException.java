@@ -1,8 +1,8 @@
 package exceptions.InputException;
 
 public class OutOfBoundInputException extends InputException {
-    private int minimum;
-    private int maximum;
+    private final int minimum;
+    private final int maximum;
 
     public OutOfBoundInputException(String message, int minimum, int maximum){
         super(message);
@@ -13,5 +13,10 @@ public class OutOfBoundInputException extends InputException {
     @Override
     public String toString(){
         return super.toString() + String.format(" out of bound, value must be between %d - %d", minimum, maximum);
+    }
+
+    @Override
+    public String getMessage(){
+        return this.toString();
     }
 }

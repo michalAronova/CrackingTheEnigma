@@ -10,7 +10,6 @@ import enigmaMachine.keyBoard.KeyBoard;
 import enigmaMachine.plugBoard.PlugBoard;
 import enigmaMachine.plugBoard.Plugs;
 import enigmaMachine.reflector.Reflecting;
-import enigmaMachine.reflector.Reflector;
 import enigmaMachine.reflector.ReflectorID;
 import enigmaMachine.rotor.Rotor;
 import enigmaMachine.secret.Secret;
@@ -31,14 +30,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class TheEngine implements Engine {
     private Stock stock;
     private Machine machine;
-    private CodeObj currentCode;
+    private CodeObj initialCode;
     private int processedMsgsCnt;
     private LinkedList<CodeHistory> codesHistories = new LinkedList<>();
     private final static String JAXB_XML_PACKAGE_NAME = "schema.generated";
@@ -46,7 +44,7 @@ public class TheEngine implements Engine {
     private final static int MAX_ROTOR_COUNT = 99;
 
     public TheEngine(){
-        currentCode = new CodeObj();
+        initialCode = new CodeObj();
     }
 
     @Override
@@ -65,7 +63,7 @@ public class TheEngine implements Engine {
                 stock = new Stock(machine.getCTERotors().getCTERotor(), machine.getCTEReflectors().getCTEReflector(),
                         new KeyBoard(machine.getABC().trim().toUpperCase()), machine.getRotorsCount());
                 this.machine = new Machine(stock.getKeyBoard(), stock.getRotorsCount());
-                this.currentCode = null; //new machine - no code yet!
+                this.initialCode = null; //new machine - no code yet!
                 this.processedMsgsCnt = 0; //new machine - new count!
                 this.codesHistories.clear(); //new machine - new histories!
                 return true;
@@ -80,9 +78,9 @@ public class TheEngine implements Engine {
     @Override
     public void setMachine(CodeObj machineCode){
         codesHistories.add(new CodeHistory(machineCode));
-        currentCode = machineCode;
-        machine.updateBySecret(secretFromCodeObj(currentCode));
-        currentCode.setNotchRelativeLocation(getRelativeNotchesMap(currentCode.getID2PositionList()));
+        initialCode = machineCode;
+        machine.updateBySecret(secretFromCodeObj(initialCode));
+        initialCode.setNotchRelativeLocation(getRelativeNotchesMap(initialCode.getID2PositionList()));
     }
 
     private Secret secretFromCodeObj(CodeObj machineCode){
@@ -140,9 +138,6 @@ public class TheEngine implements Engine {
         setMachine(generatedCode);
     }
 
-    @Override
-    public CodeObj getMachineCode(){ return currentCode; }
-
     private String raffleReflector() {
         int reflectorCount = stock.getReflectorMap().size();
         Random random = new Random();
@@ -197,7 +192,7 @@ public class TheEngine implements Engine {
 
     public TechSpecs showTechSpecs() {
         return new TechSpecs(stock.getRotorMap().size(), stock.getRotorsCount(),
-                stock.getReflectorMap().size(), processedMsgsCnt, currentCode, getUpdatedCode());
+                stock.getReflectorMap().size(), processedMsgsCnt, initialCode, getUpdatedCode());
     }
 
     @Override
@@ -303,21 +298,28 @@ public class TheEngine implements Engine {
         return processedMsgsCnt;
     }
     @Override
-    public CodeObj getCurrentCode() {
-        return currentCode;
+    public CodeObj getInitialCode() {
+        return initialCode;
     }
     @Override
     public CodeObj getUpdatedCode() {
+        if(initialCode == null){
+            return null;
+        }
         List<Pair<Integer, Character>> updatedPosList = new LinkedList<>();
         Integer ID;
         char pos;
-        for(Pair<Integer, Character> p : currentCode.getID2PositionList()){
+        for(Pair<Integer, Character> p : initialCode.getID2PositionList()){
             ID = p.getKey();
             pos = stock.getRotorMap().get(ID).getCurrentPositionChar();
             updatedPosList.add(new Pair<>(ID, pos));
         }
-        return new CodeObj(updatedPosList, currentCode,
-                getRelativeNotchesMap(currentCode.getID2PositionList()));
+        return new CodeObj(updatedPosList, initialCode,
+                getRelativeNotchesMap(initialCode.getID2PositionList()));
+    }
+
+    public int getRotorsCount(){
+        return stock.getRotorsCount();
     }
 
     @Override
@@ -325,7 +327,7 @@ public class TheEngine implements Engine {
         return "TheEngine{" +
                 "stock=" + stock +
                 ", machine=" + machine +
-                ", currentCode=" + currentCode +
+                ", initialCode=" + initialCode +
                 ", processedMsgsCnt=" + processedMsgsCnt +
                 ", codesHistories=" + codesHistories +
                 '}';
@@ -336,11 +338,11 @@ public class TheEngine implements Engine {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TheEngine theEngine = (TheEngine) o;
-        return processedMsgsCnt == theEngine.processedMsgsCnt && Objects.equals(stock, theEngine.stock) && Objects.equals(machine, theEngine.machine) && Objects.equals(currentCode, theEngine.currentCode) && Objects.equals(codesHistories, theEngine.codesHistories);
+        return processedMsgsCnt == theEngine.processedMsgsCnt && Objects.equals(stock, theEngine.stock) && Objects.equals(machine, theEngine.machine) && Objects.equals(initialCode, theEngine.initialCode) && Objects.equals(codesHistories, theEngine.codesHistories);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(stock, machine, currentCode, processedMsgsCnt, codesHistories);
+        return Objects.hash(stock, machine, initialCode, processedMsgsCnt, codesHistories);
     }
 }

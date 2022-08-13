@@ -49,10 +49,16 @@ public class TechSpecs {
 
     @Override
     public String toString() {
-        return String.format("Total rotors/Rotors in use: %d/%d%nReflector count: %d%n" +
-                        "Total processed messages: %d%nInitial code: %s%nCurrent code: %s",
-                        rotorsInUse, totalRotors, reflectorsCount, processedMsg, currentCode, updatedCode);
-
+        String ret = String.format("Total rotors/Rotors in use: %d/%d%nReflector count: %d%n" +
+                        "Total processed messages: %d%n,",
+                        rotorsInUse, totalRotors, reflectorsCount, processedMsg);
+        if(currentCode != null){
+            ret = ret.concat(String.format("Initial code: %s%nCurrent code: %s", currentCode, updatedCode));
+        }
+        else{
+            ret = ret.concat(String.format("Initial code: No code yet %nCurrent code: No code yet"));
+        }
+        return ret;
     }
 
     @Override
