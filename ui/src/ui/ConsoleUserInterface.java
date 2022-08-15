@@ -258,6 +258,7 @@ public class ConsoleUserInterface implements UserInterface{
                 plugs = s.nextLine();
                 engine.validateAndSetPlugs(underConstructionCode, plugs);
                 actionCompleted = true;
+                System.out.println("Rotor IDs set successfully.");
             }
             catch(InputException e) {
                 System.out.println(e.getMessage());
