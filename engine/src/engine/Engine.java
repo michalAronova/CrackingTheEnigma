@@ -37,6 +37,8 @@ public interface Engine extends Serializable {
 
     int getProcessedMsgsCnt();
 
+    List<Character> getKeyBoardList();
+
     CodeObj getUpdatedCode();
 
     int getRotorsCount();

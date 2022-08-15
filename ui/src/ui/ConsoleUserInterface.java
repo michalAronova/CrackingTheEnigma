@@ -30,16 +30,16 @@ public class ConsoleUserInterface implements UserInterface {
     private final static String NO_CODE_MESSAGE = "You haven't set the machine by code yet... Please do that before performing this action!";
 
     @Override
-    public void run(){
+    public void run() {
         System.out.println(String.format("%nWelcome to the enigma machine simulator"));
         manageMenu();
     }
 
-    private void manageMenu(){
+    private void manageMenu() {
         showMenuByEnum(MenuChoice.values());
         int choice = getValidChoice(MenuChoice.values().length);
         MenuChoice menuChoice = MenuChoice.valueByInt(choice);
-        switch(menuChoice){
+        switch (menuChoice) {
             case LOAD_XML:
                 loadDataFromXML();
                 manageMenu();
@@ -82,28 +82,28 @@ public class ConsoleUserInterface implements UserInterface {
         }
     }
 
-    private boolean wantsToRetry(){
+    private boolean wantsToRetry() {
         Scanner s = new Scanner(System.in);
         System.out.println("press 'Q' to return to the main menu, or any other character to retry");
         return !(s.nextLine().toUpperCase().contains("Q"));
     }
 
-    private boolean containsNumbersOnly(String s){
-        if(s == null || s.equals("")){
+    private boolean containsNumbersOnly(String s) {
+        if (s == null || s.equals("")) {
             return false;
         }
-        for (Character c: s.toCharArray()) {
-            if(!Character.isDigit(c)){
+        for (Character c : s.toCharArray()) {
+            if (!Character.isDigit(c)) {
                 return false;
             }
         }
         return true;
     }
 
-    private <T extends Enum> void showMenuByEnum(T[] enumValues){
+    private <T extends Enum> void showMenuByEnum(T[] enumValues) {
         System.out.println(String.format("Please specify your choice by number (1 - %d)", enumValues.length));
         int index = 1;
-        for (T enumVal: enumValues) {
+        for (T enumVal : enumValues) {
             System.out.println(String.format("%d. %s", index, enumVal));
             ++index;
         }
@@ -126,17 +126,17 @@ public class ConsoleUserInterface implements UserInterface {
         Scanner s = new Scanner(System.in);
         String choice;
 
-        do{
+        do {
             choice = s.nextLine();
             receivedValid = containsNumbersOnly(choice);
-            if(!receivedValid){
+            if (!receivedValid) {
                 System.out.println("Invalid choice. Choice must be a number.");
             } else if (Integer.parseInt(choice) < 1 || Integer.parseInt(choice) > maxChoiceNumber) {
                 System.out.println(String.format("Invalid choice. " +
                         "Valid choices are a number between 1 - %d", maxChoiceNumber));
                 receivedValid = false;
             }
-        }while(!receivedValid);
+        } while (!receivedValid);
         return Integer.parseInt(choice);
     }
 
@@ -144,29 +144,28 @@ public class ConsoleUserInterface implements UserInterface {
     public void loadDataFromXML() {
         Scanner s = new Scanner(System.in);
         String path;
-        do{
-            try{
+        do {
+            try {
                 System.out.println("Please enter a full path to your desired XML to load the machine.");
                 path = s.nextLine();
                 engine.loadDataFromXML(path);
                 XMLLoaded = true;
                 codeLoaded = false; //new XML - previous code is KAPOOT
-            }
-            catch(InvalidXMLException e) {
+            } catch (InvalidXMLException e) {
                 System.out.println(e.getMessage());
-                if(!wantsToRetry()){
+                if (!wantsToRetry()) {
                     break;
                 }
             }
-        }while(!XMLLoaded);
-        if(XMLLoaded){
+        } while (!XMLLoaded);
+        if (XMLLoaded) {
             System.out.println("Machine loaded successfully from XML.");
         }
     }
 
     @Override
     public void showMachineDetails() {
-        if(!XMLLoaded){
+        if (!XMLLoaded) {
             System.out.println(NO_XML_MESSAGE);
             return;
         }
@@ -177,7 +176,7 @@ public class ConsoleUserInterface implements UserInterface {
 
     @Override
     public void manuallySetMachineCode() {
-        if(!XMLLoaded){
+        if (!XMLLoaded) {
             System.out.println(NO_XML_MESSAGE);
             return;
         }
@@ -187,26 +186,26 @@ public class ConsoleUserInterface implements UserInterface {
         if (!validateAndSetRotors(underConstructionCode)) {
             return;
         }
-        if(!validateAndSetRotorPositions(underConstructionCode)){
+        if (!validateAndSetRotorPositions(underConstructionCode)) {
             return;
         }
         if (!validateAndSetReflector(underConstructionCode)) {
             return;
         }
-        if(!validateAndSetPlugs(underConstructionCode)){
+        if (!validateAndSetPlugs(underConstructionCode)) {
             return;
         }
         engine.setMachine(underConstructionCode);
         announceCodeMachineSet();
     }
 
-    private boolean validateAndSetRotors(CodeObj underConstructionCode){
+    private boolean validateAndSetRotors(CodeObj underConstructionCode) {
         boolean actionCompleted = false;
         Scanner s = new Scanner(System.in);
         String rotorIDs;
 
-        do{
-            try{
+        do {
+            try {
                 System.out.println(String.format("Setting your rotor IDs: please choose %d rotors by ID, " +
                         "from left to right, seperated by a comma.", engine.getRotorsCount()));
                 System.out.println("For example, rotor 3 on the left and rotor 1 on the right should be entered as: 3,1");
@@ -215,39 +214,38 @@ public class ConsoleUserInterface implements UserInterface {
                 engine.validateAndSetRotors(underConstructionCode, rotorIDs);
                 actionCompleted = true;
                 System.out.println("Rotor IDs set successfully.");
-            }
-            catch(InputException e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
-                if(!wantsToRetry()){
+                if (!wantsToRetry()) {
                     break;
                 }
             }
-        }while(!actionCompleted);
+        } while (!actionCompleted);
 
         return actionCompleted;
     }
 
-    private boolean validateAndSetRotorPositions(CodeObj underConstructionCode){
+    private boolean validateAndSetRotorPositions(CodeObj underConstructionCode) {
         boolean actionCompleted = false;
         Scanner s = new Scanner(System.in);
         String rotorPositions;
 
-        do{
-            try{
+        do {
+            try {
                 System.out.println(String.format("Setting your rotor positions: please choose %d rotor positions by character, from left to right.", engine.getRotorsCount()));
                 System.out.println("For example, position C on the left A on the right should be entered as: CA");
+                System.out.println(String.format("Valid options: %s", engine.getKeyBoardList()));
                 rotorPositions = s.nextLine();
                 engine.validateAndSetRotorPositions(underConstructionCode, rotorPositions);
                 actionCompleted = true;
                 System.out.println("Rotor positions set successfully.");
-            }
-            catch(InputException e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
-                if(!wantsToRetry()){
+                if (!wantsToRetry()) {
                     break;
                 }
             }
-        }while(!actionCompleted);
+        } while (!actionCompleted);
 
         return actionCompleted;
     }
@@ -264,10 +262,9 @@ public class ConsoleUserInterface implements UserInterface {
                 engine.validateAndSetReflector(underConstructionCode, reflector);
                 actionCompleted = true;
                 System.out.println("Reflector set successfully.");
-            }
-            catch(InputException e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
-                if(!wantsToRetry()){
+                if (!wantsToRetry()) {
                     break;
                 }
             } catch (NumberFormatException numberException) {
@@ -281,13 +278,13 @@ public class ConsoleUserInterface implements UserInterface {
         return actionCompleted;
     }
 
-    private boolean validateAndSetPlugs(CodeObj underConstructionCode){
+    private boolean validateAndSetPlugs(CodeObj underConstructionCode) {
         boolean actionCompleted = false;
         Scanner s = new Scanner(System.in);
         String plugs;
 
-        do{
-            try{
+        do {
+            try {
                 System.out.println("Setting your plugs: enter a continuous string of the pairs you wish to plug.");
                 System.out.println("For example, the pairs <A|F,B|C> should be entered as: AFBC");
                 System.out.println("For no plugs, press ENTER");
@@ -298,18 +295,18 @@ public class ConsoleUserInterface implements UserInterface {
                 System.out.println("Plugs set successfully.");
             } catch (InputException e) {
                 System.out.println(e.getMessage());
-                if(!wantsToRetry()){
+                if (!wantsToRetry()) {
                     break;
                 }
             }
-        }while(!actionCompleted);
+        } while (!actionCompleted);
 
         return actionCompleted;
     }
 
     @Override
     public void autoSetMachineCode() {
-        if(!XMLLoaded){
+        if (!XMLLoaded) {
             System.out.println(NO_XML_MESSAGE);
             return;
         }
@@ -317,18 +314,18 @@ public class ConsoleUserInterface implements UserInterface {
         announceCodeMachineSet();
     }
 
-    private void announceCodeMachineSet(){
+    private void announceCodeMachineSet() {
         System.out.println(String.format("Machine set successfully. Code is: %n%s%n", engine.getInitialCode()));
         codeLoaded = true;
     }
 
     @Override
     public void processInput() {
-        if(!XMLLoaded){
+        if (!XMLLoaded) {
             System.out.println(NO_XML_MESSAGE);
             return;
         }
-        if(!codeLoaded){
+        if (!codeLoaded) {
             System.out.println(NO_CODE_MESSAGE);
             return;
         }
@@ -342,24 +339,23 @@ public class ConsoleUserInterface implements UserInterface {
                 input = s.nextLine();
                 output = engine.processMsg(input);
                 validInput = true;
-            }
-            catch(InputException e) {
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
-                if(!wantsToRetry()){
+                if (!wantsToRetry()) {
                     break;
                 }
             }
-        }while(!validInput);
-        System.out.println(String.format("Processed message: %n%s%n",output));
+        } while (!validInput);
+        System.out.println(String.format("Processed message: %n%s%n", output));
     }
 
     @Override
     public void resetMachine() {
-        if(!XMLLoaded){
+        if (!XMLLoaded) {
             System.out.println(NO_XML_MESSAGE);
             return;
         }
-        if(!codeLoaded){
+        if (!codeLoaded) {
             System.out.println(NO_CODE_MESSAGE);
             return;
         }
@@ -370,12 +366,12 @@ public class ConsoleUserInterface implements UserInterface {
 
     @Override
     public void showHistoryAndStatistics() {
-        if(!XMLLoaded){
+        if (!XMLLoaded) {
             System.out.println(NO_XML_MESSAGE);
             return;
         }
         List<CodeHistory> histories = engine.showCodeHistory();
-        if(histories.isEmpty()){
+        if (histories.isEmpty()) {
             System.out.println("No codes set on this machine yet, no history to show.");
             return;
         }

@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 public class TheEngine implements Engine {
     private Stock stock;
     private Machine machine;
