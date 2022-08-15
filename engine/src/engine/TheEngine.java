@@ -100,11 +100,12 @@ public class TheEngine implements Engine {
     public String processMsg(String msg){
         msg = msg.toUpperCase();
         StringBuilder sb = new StringBuilder();
-        if(!stock.getKeyBoard().isInKeyBoard(msg)) {
+        List<Character> invalid = stock.getKeyBoard().findCharacterNotInKeyBoard(msg);
+        if( invalid != null) {
             //edit the exception: able to get the invalid character and tell user which char wasnt in the abc
             //msg to user will be like "char <x> not recognized in machine"...
             throw new ObjectInputException("Invalid input: not a recognized character",
-                                                    stock.getKeyBoard().getAsObjList());
+                                                    stock.getKeyBoard().getAsObjList(), new ArrayList<Object>(invalid));
         }
         long startTime = System.nanoTime();
         for(Character c : msg.toCharArray()){
@@ -219,8 +220,9 @@ public class TheEngine implements Engine {
             throw new InputException("Error: You entered an odd number of characters. Expecting two characters for each plug");
         }
         plugs = plugs.toUpperCase();
-        if(!stock.getKeyBoard().isInKeyBoard(plugs)) {
-            throw new ObjectInputException("Error: invalid values for plugs. ",stock.getKeyBoard().getAsObjList());
+        List<Character> invalid = stock.getKeyBoard().findCharacterNotInKeyBoard(plugs);
+        if(invalid != null) {
+            throw new ObjectInputException("Error: invalid values for plugs. ",stock.getKeyBoard().getAsObjList(), new ArrayList<Object>(invalid));
         }
         Map<Character, Integer> char2count = new HashMap<>();
         for(Character c : plugs.toCharArray()){

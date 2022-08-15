@@ -10,7 +10,9 @@ import exceptions.InputException.InputException;
 import exceptions.InputException.ObjectInputException;
 import exceptions.InputException.OutOfBoundInputException;
 import exceptions.XMLException.InvalidXMLException;
+import enigmaMachine.reflector.ReflectorID;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,42 +25,47 @@ public class ConsoleUserInterface implements UserInterface{
         this.engine = new TheEngine();
     }
 
-    private final static String NO_XML_MESSAGE = "Oops! You haven't loaded an XML yet... Please do that before performing this action!";
-    private final static String NO_CODE_MESSAGE = "Oops! You haven't set the machine by code yet... Please do that before performing this action!";
+    private final static String NO_XML_MESSAGE = "You haven't loaded an XML yet... Please do that before performing this action!";
+    private final static String NO_CODE_MESSAGE = "You haven't set the machine by code yet... Please do that before performing this action!";
+
     @Override
     public void run(){
         System.out.println(String.format("%nWelcome to the enigma machine simulator"));
+        manageMenu();
+    }
+
+    private void manageMenu(){
         showMenuByEnum(MenuChoice.values());
         int choice = getValidChoice(MenuChoice.values().length);
         MenuChoice menuChoice = MenuChoice.valueByInt(choice);
         switch(menuChoice){
             case LOAD_XML:
                 loadDataFromXML();
-                run();
+                manageMenu();
                 break;
             case SHOW_DETAILS:
                 showMachineDetails();
-                run();
+                manageMenu();
                 break;
             case MANUAL_SET:
                 manuallySetMachineCode();
-                run();
+                manageMenu();
                 break;
             case AUTO_SET:
                 autoSetMachineCode();
-                run();
+                manageMenu();
                 break;
             case PROCESS:
                 processInput();
-                run();
+                manageMenu();
                 break;
             case RESET:
                 resetMachine();
-                run();
+                manageMenu();
                 break;
             case HISTORY_AND_STATISTICS:
                 showHistoryAndStatistics();
-                run();
+                manageMenu();
                 break;
             case EXIT:
                 exit();
@@ -84,10 +91,12 @@ public class ConsoleUserInterface implements UserInterface{
         return true;
     }
 
-    private void showMenuByEnum(Enum[] enumValues){
+    private <T extends Enum> void showMenuByEnum(T[] enumValues){
         System.out.println(String.format("Please specify your choice by number (1 - %d)", enumValues.length));
-        for (Enum enumVal: enumValues) {
-            System.out.println(enumVal);
+        int index = 1;
+        for (T enumVal: enumValues) {
+            System.out.println(String.format("%d. %s", index, enumVal));
+            ++index;
         }
     }
 
@@ -154,7 +163,7 @@ public class ConsoleUserInterface implements UserInterface{
         CodeObj underConstructionCode = new CodeObj();
 
         //for each step, the user may choose to "forfeit" and go back to main menu without setting a new code.
-        //if such occurs, the validate methods will return false, thus we will simply return upon getting false.
+
         if(!validateAndSetRotors(underConstructionCode)){
             return;
         }
@@ -180,10 +189,11 @@ public class ConsoleUserInterface implements UserInterface{
             try{
                 System.out.println(String.format("Setting your rotor IDs: please choose %d rotors by ID, " +
                         "from left to right, seperated by a comma.", engine.getRotorsCount()));
-                System.out.println("For example, rotor 3 on the left and rotor 1 on the right should be entered as '3,1'");
+                System.out.println("For example, rotor 3 on the left and rotor 1 on the right should be entered as: 3,1");
                 rotorIDs = s.nextLine();
-                engine.validateAndSetPlugs(underConstructionCode, rotorIDs);
+                engine.validateAndSetRotors(underConstructionCode, rotorIDs);
                 actionCompleted = true;
+                System.out.println("Rotor IDs set successfully.");
             }
             catch(InputException e) {
                 System.out.println(e.getMessage());
@@ -204,10 +214,11 @@ public class ConsoleUserInterface implements UserInterface{
         do{
             try{
                 System.out.println(String.format("Setting your rotor positions: please choose %d rotor positions by character, from left to right.", engine.getRotorsCount()));
-                System.out.println("For example, position C on the left A on the right should be entered as 'CA'");
+                System.out.println("For example, position C on the left A on the right should be entered as: CA");
                 rotorPositions = s.nextLine();
-                engine.validateAndSetPlugs(underConstructionCode, rotorPositions);
+                engine.validateAndSetRotorPositions(underConstructionCode, rotorPositions);
                 actionCompleted = true;
+                System.out.println("Rotor positions set successfully.");
             }
             catch(InputException e) {
                 System.out.println(e.getMessage());
@@ -225,15 +236,15 @@ public class ConsoleUserInterface implements UserInterface{
         boolean actionCompleted = false;
         Scanner s = new Scanner(System.in);
         String reflector;
-        int reflectorID = 1;
+        int reflectorID;
         do{
             try{
                 System.out.println("Setting your reflector: ");
-                //showMenuByEnum(ReflectorID.values());
-                reflector = s.nextLine();
-                //reflectorID = getValidChoice(ReflectorID.values().length)
+                showMenuByEnum(ReflectorID.values());
+                reflectorID = getValidChoice(ReflectorID.values().length);
                 engine.validateAndSetReflector(underConstructionCode, reflectorID);
                 actionCompleted = true;
+                System.out.println("Reflector set successfully.");
             }
             catch(InputException e) {
                 System.out.println(e.getMessage());
@@ -254,7 +265,8 @@ public class ConsoleUserInterface implements UserInterface{
         do{
             try{
                 System.out.println("Setting your plugs: enter a continuous string of the pairs you wish to plug.");
-                System.out.println("For example, the pairs <A|F,B|C> should be entered as 'AFBC'");
+                System.out.println("For example, the pairs <A|F,B|C> should be entered as: AFBC");
+                System.out.println("For no plugs, press ENTER");
                 plugs = s.nextLine();
                 engine.validateAndSetPlugs(underConstructionCode, plugs);
                 actionCompleted = true;
@@ -314,7 +326,7 @@ public class ConsoleUserInterface implements UserInterface{
                 }
             }
         }while(!validInput);
-        System.out.println("Processed message: "+ output);
+        System.out.println(String.format("Processed message: %n%s%n",output));
     }
 
     @Override
@@ -343,9 +355,7 @@ public class ConsoleUserInterface implements UserInterface{
             System.out.println("No codes set on this machine yet, no history to show.");
             return;
         }
-        for (CodeHistory codeHistory: histories) {
-            System.out.println(codeHistory);
-        }
+        histories.forEach(System.out::println);
     }
 
     @Override

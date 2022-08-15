@@ -1,5 +1,6 @@
 package enigmaMachine.keyBoard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -26,6 +27,20 @@ public class KeyBoard {
             }
         }
         return true;
+    }
+
+    public List<Character> findCharacterNotInKeyBoard(String s){
+        List<Character> invalids = new ArrayList<>();
+        s = s.toUpperCase();
+        for(Character c : s.toCharArray()) {
+            if(!isInKeyBoard(c)) {
+                invalids.add(c);
+            }
+        }
+        if(invalids.isEmpty()) {
+            return null;
+        }
+        return invalids;
     }
 
     public int indexOf(char c){

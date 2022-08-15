@@ -35,6 +35,6 @@ public enum MenuChoice {
 
     @Override
     public String toString(){
-        return String.format("%d. %s", menuNumber, description);
+        return description;
     }
 }
