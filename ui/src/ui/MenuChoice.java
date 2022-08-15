@@ -8,7 +8,9 @@ public enum MenuChoice {
     PROCESS(5, "Process a message"),
     RESET(6, "Reset machine to initial code"),
     HISTORY_AND_STATISTICS(7, "Show machine history and statistics"),
-    EXIT(8, "Exit");
+    SAVE_MACHINE_TO_FILE(8, "Save machine to file"),
+    LOAD_MACHINE_FROM_FILE(9, "Load machine from file"),
+    EXIT(10, "Exit");
     private final int menuNumber;
     private final String description;
     private MenuChoice(int menuNumber, String description){

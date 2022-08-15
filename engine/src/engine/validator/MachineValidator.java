@@ -33,20 +33,24 @@ public class MachineValidator implements Validator{
         List<CTERotor> rotors = machine.getCTERotors().getCTERotor();
         int rotorsCount = machine.getRotorsCount();
         if(rotorsCount > rotors.size() || rotorsCount > maximumRotorsCount || rotorsCount < minimumRotorsCount) {
-            throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "invalid rotor count");
+            throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR,
+                    String.format("invalid rotor count, range is %d - %d",
+                            minimumRotorsCount, Math.min(rotors.size(), maximumRotorsCount)));
         }
         boolean[] rotorsCheckers = new boolean[rotors.size() + 1];
         for(CTERotor r : rotors){
             int id = r.getId();
             if(id > rotors.size() || id <= 0) {
-                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "id out of range");
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR,
+                        String.format("id out of range (%d - %d)", 0, rotors.size()));
             }
             if(rotorsCheckers[id]) {
                 throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "more than one rotor with same ID");
             }
             rotorsCheckers[id] = true;
             if(r.getNotch() > processedABC.length() || r.getNotch() <= 0) {
-                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR, "notch location out of range");
+                throw new InvalidXMLException(XMLExceptionMsg.INVALIDROTOR,
+                        String.format("notch location out of range (%d - %d)", 1, processedABC.length()));
             }
             checkPositioning(r); //throws exception if not valid positioning
         }

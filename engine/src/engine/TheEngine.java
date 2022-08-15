@@ -38,7 +38,7 @@ public class TheEngine implements Engine {
     private Machine machine;
     private CodeObj initialCode;
     private int processedMsgsCnt;
-    private LinkedList<CodeHistory> codesHistories = new LinkedList<>();
+    private final LinkedList<CodeHistory> codesHistories = new LinkedList<>();
     private final static String JAXB_XML_PACKAGE_NAME = "schema.generated";
     private final static int MIN_ROTOR_COUNT = 2;
     private final static int MAX_ROTOR_COUNT = 99;
@@ -102,10 +102,10 @@ public class TheEngine implements Engine {
         StringBuilder sb = new StringBuilder();
         List<Character> invalid = stock.getKeyBoard().findCharacterNotInKeyBoard(msg);
         if( invalid != null) {
-            //edit the exception: able to get the invalid character and tell user which char wasnt in the abc
+            //edit the exception: able to get the invalid character and tell user which char wasn't in the abc
             //msg to user will be like "char <x> not recognized in machine"...
             throw new ObjectInputException("Invalid input: not a recognized character",
-                                                    stock.getKeyBoard().getAsObjList(), new ArrayList<Object>(invalid));
+                                                    stock.getKeyBoard().getAsObjList(), new ArrayList<>(invalid));
         }
         long startTime = System.nanoTime();
         for(Character c : msg.toCharArray()){
@@ -192,7 +192,8 @@ public class TheEngine implements Engine {
     }
 
     public TechSpecs showTechSpecs() {
-        return new TechSpecs(stock.getRotorMap().size(), stock.getRotorsCount(),
+        int rotorsInUse = initialCode == null ? 0: stock.getRotorsCount(); //if there isn't a code configuration, no rotors are in use
+        return new TechSpecs(stock.getRotorMap().size(), rotorsInUse,
                 stock.getReflectorMap().size(), processedMsgsCnt, initialCode, getUpdatedCode());
     }
 
@@ -202,9 +203,9 @@ public class TheEngine implements Engine {
     }
 
     @Override
-    public void validateAndSetReflector(CodeObj underConstructionCode, int wantedReflectorID){
-
-        String IDRome = ReflectorID.getRomeByInteger(wantedReflectorID);
+    public void validateAndSetReflector(CodeObj underConstructionCode, String wantedReflectorID){
+        int wantedReflectorIDParseInt = Integer.parseInt(wantedReflectorID);
+        String IDRome = ReflectorID.getRomeByInteger(wantedReflectorIDParseInt);
         if(stock.getReflector(IDRome) != null) {
             underConstructionCode.setReflectorID(IDRome);
         }
@@ -222,7 +223,7 @@ public class TheEngine implements Engine {
         plugs = plugs.toUpperCase();
         List<Character> invalid = stock.getKeyBoard().findCharacterNotInKeyBoard(plugs);
         if(invalid != null) {
-            throw new ObjectInputException("Error: invalid values for plugs. ",stock.getKeyBoard().getAsObjList(), new ArrayList<Object>(invalid));
+            throw new ObjectInputException("Error: invalid values for plugs. ",stock.getKeyBoard().getAsObjList(), new ArrayList<>(invalid));
         }
         Map<Character, Integer> char2count = new HashMap<>();
         for(Character c : plugs.toCharArray()){
@@ -250,11 +251,13 @@ public class TheEngine implements Engine {
     }
     @Override
     public void validateAndSetRotors(CodeObj underConstructionCode, String rotors) {
-        if (!rotors.matches("[0-9,]+")) {
+        if (!rotors.matches("[0-9, ]+")) {
             throw new InputException("Rotors IDs are only numbers");
         }
         List<Integer> elements = Arrays
                                     .stream(rotors.split(","))
+                                    .filter(s -> !s.equals(""))
+                                    .map(String::trim)
                                     .map(Integer::valueOf)
                                     .collect(Collectors.toList());
 
@@ -282,13 +285,16 @@ public class TheEngine implements Engine {
             throw new ObjectInputException("Error: invalid rotor positions amount", stock.getRotorsCount());
         }
         positionsOfRotors = positionsOfRotors.toUpperCase();
-        List<Character> rotorPositions = positionsOfRotors.chars().mapToObj(e->(char)e).collect(Collectors.toList());
-        for(Character pos : rotorPositions) {
-            if(!stock.getKeyBoard().isInKeyBoard(pos)){
-                throw new  ObjectInputException(String.format("Error: character %c not in keyBoard", pos),
-                                                                stock.getKeyBoard().getAsObjList());
-            }
+        List<Character> invalid = stock.getKeyBoard().findCharacterNotInKeyBoard(positionsOfRotors);
+        if(invalid != null) {
+            throw new ObjectInputException("Error: invalid values for positions. ",
+                    stock.getKeyBoard().getAsObjList(), new ArrayList<>(invalid));
         }
+        List<Character> rotorPositions = positionsOfRotors
+                                                    .chars()
+                                                    .mapToObj(e->(char)e)
+                                                    .collect(Collectors.toList());
+
         Collections.reverse(rotorPositions);
         underConstructionCode.setRotorPos(rotorPositions);
     }
@@ -323,7 +329,11 @@ public class TheEngine implements Engine {
     public int getRotorsCount(){
         return stock.getRotorsCount();
     }
+    public int getTotalRotorAmount(){ return stock.getRotorMap().size(); }
+    public int getReflectorCount(){ return stock.getReflectorMap().size(); }
+    public boolean isStockLoaded(){ return stock != null; }
 
+    public List<Character> getKeyBoardList(){ return stock.getKeyBoard().getAsCharList(); }
     @Override
     public String toString() {
         return "TheEngine{" +

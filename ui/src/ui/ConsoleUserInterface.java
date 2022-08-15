@@ -13,11 +13,12 @@ import exceptions.XMLException.InvalidXMLException;
 import enigmaMachine.reflector.ReflectorID;
 
 import java.awt.*;
+import java.io.*;
 import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleUserInterface implements UserInterface{
-    private final Engine engine;
+public class ConsoleUserInterface implements UserInterface {
+    private Engine engine;
     private boolean XMLLoaded = false;
     private boolean codeLoaded = false;
 
@@ -67,6 +68,14 @@ public class ConsoleUserInterface implements UserInterface{
                 showHistoryAndStatistics();
                 manageMenu();
                 break;
+            case SAVE_MACHINE_TO_FILE:
+                saveMachineToFile();
+                manageMenu();
+                break;
+            case LOAD_MACHINE_FROM_FILE:
+                loadMachineFromFile();
+                manageMenu();
+                break;
             case EXIT:
                 exit();
                 break;
@@ -100,7 +109,19 @@ public class ConsoleUserInterface implements UserInterface{
         }
     }
 
-    private int getValidChoice(int maxChoiceNumber){
+    private <T extends Enum> void showMenuByEnum(T[] enumValues, int limit) {
+        System.out.println(String.format("Please specify your choice by number (1 - %d)", limit));
+        int index = 1;
+        for (T enumVal : enumValues) {
+            System.out.println(String.format("%d. %s", index, enumVal));
+            ++index;
+            if (index > limit) {
+                return;
+            }
+        }
+    }
+
+    private Integer getValidChoice(int maxChoiceNumber) {
         boolean receivedValid = false;
         Scanner s = new Scanner(System.in);
         String choice;
@@ -163,14 +184,13 @@ public class ConsoleUserInterface implements UserInterface{
         CodeObj underConstructionCode = new CodeObj();
 
         //for each step, the user may choose to "forfeit" and go back to main menu without setting a new code.
-
-        if(!validateAndSetRotors(underConstructionCode)){
+        if (!validateAndSetRotors(underConstructionCode)) {
             return;
         }
         if(!validateAndSetRotorPositions(underConstructionCode)){
             return;
         }
-        if(!validateAndSetReflector(underConstructionCode)){ //NOT DONE, PROBLEM WITH REFLECTORID.. SHOULD IT BE DEPENDANT?
+        if (!validateAndSetReflector(underConstructionCode)) {
             return;
         }
         if(!validateAndSetPlugs(underConstructionCode)){
@@ -190,6 +210,7 @@ public class ConsoleUserInterface implements UserInterface{
                 System.out.println(String.format("Setting your rotor IDs: please choose %d rotors by ID, " +
                         "from left to right, seperated by a comma.", engine.getRotorsCount()));
                 System.out.println("For example, rotor 3 on the left and rotor 1 on the right should be entered as: 3,1");
+                System.out.println(String.format("Valid options: %d - %d", 1, engine.getTotalRotorAmount()));
                 rotorIDs = s.nextLine();
                 engine.validateAndSetRotors(underConstructionCode, rotorIDs);
                 actionCompleted = true;
@@ -231,18 +252,16 @@ public class ConsoleUserInterface implements UserInterface{
         return actionCompleted;
     }
 
-    //NOT DONE, PROBLEM WITH REFLECTORID ENUM.. SHOULD IT BE DEPENDANT?
-    private boolean validateAndSetReflector(CodeObj underConstructionCode){
+    private boolean validateAndSetReflector(CodeObj underConstructionCode) {
         boolean actionCompleted = false;
         Scanner s = new Scanner(System.in);
         String reflector;
-        int reflectorID;
-        do{
-            try{
+        do {
+            try {
                 System.out.println("Setting your reflector: ");
-                showMenuByEnum(ReflectorID.values());
-                reflectorID = getValidChoice(ReflectorID.values().length);
-                engine.validateAndSetReflector(underConstructionCode, reflectorID);
+                showMenuByEnum(ReflectorID.values(), engine.getReflectorCount());
+                reflector = s.nextLine();
+                engine.validateAndSetReflector(underConstructionCode, reflector);
                 actionCompleted = true;
                 System.out.println("Reflector set successfully.");
             }
@@ -251,8 +270,13 @@ public class ConsoleUserInterface implements UserInterface{
                 if(!wantsToRetry()){
                     break;
                 }
+            } catch (NumberFormatException numberException) {
+                System.out.println("Wrong input format: please enter a single number");
+                if (!wantsToRetry()) {
+                    break;
+                }
             }
-        }while(!actionCompleted);
+        } while (!actionCompleted);
 
         return actionCompleted;
     }
@@ -267,12 +291,12 @@ public class ConsoleUserInterface implements UserInterface{
                 System.out.println("Setting your plugs: enter a continuous string of the pairs you wish to plug.");
                 System.out.println("For example, the pairs <A|F,B|C> should be entered as: AFBC");
                 System.out.println("For no plugs, press ENTER");
+                System.out.println("Valid options: " + engine.getKeyBoardList());
                 plugs = s.nextLine();
                 engine.validateAndSetPlugs(underConstructionCode, plugs);
                 actionCompleted = true;
-                System.out.println("Rotor IDs set successfully.");
-            }
-            catch(InputException e) {
+                System.out.println("Plugs set successfully.");
+            } catch (InputException e) {
                 System.out.println(e.getMessage());
                 if(!wantsToRetry()){
                     break;
@@ -311,9 +335,9 @@ public class ConsoleUserInterface implements UserInterface{
         boolean validInput = false;
         Scanner s = new Scanner(System.in);
         String input, output = "";
-
-        do{
-            try{
+        System.out.println("Please note your keyboard includes: " + engine.getKeyBoardList());
+        do {
+            try {
                 System.out.println("Insert desired input below:");
                 input = s.nextLine();
                 output = engine.processMsg(input);
@@ -361,5 +385,47 @@ public class ConsoleUserInterface implements UserInterface{
     @Override
     public void exit() {
         System.out.println("Alright, bye!");
+    }
+
+    public void saveMachineToFile(){
+        System.out.println("Please enter path to file you want to save this machine to");
+        Scanner s = new Scanner(System.in);
+        String fileName = s.nextLine();
+        try (ObjectOutputStream out =
+                     new ObjectOutputStream(
+                             new FileOutputStream(fileName))) {
+            out.writeObject(this.engine);
+            out.flush();
+            System.out.println("Saved successfully to file.");
+        }
+        catch(IOException e){
+            System.out.println("IOException occurred. Returning to Main Menu.");
+        }
+    }
+
+    public void loadMachineFromFile() {
+        System.out.println("Please enter path to file you want to load this machine from");
+        Scanner s = new Scanner(System.in);
+        String fileName = s.nextLine();
+        try (ObjectInputStream in =
+                     new ObjectInputStream(
+                             new FileInputStream(fileName))) {
+            this.engine = (TheEngine) in.readObject();
+            XMLLoaded = engine.isStockLoaded();
+            codeLoaded = engine.getInitialCode() != null;
+            System.out.println("Loaded successfully from file.");
+        }
+        catch(FileNotFoundException e){
+            System.out.println("Error: file not found. Returning to Main Menu.");
+        }
+        catch(IOException e){
+            System.out.println("IOException occurred. Returning to Main Menu.");
+        }
+        catch(ClassNotFoundException e){
+            System.out.println("ClassNotFoundException occurred. Returning to Main Menu.");
+        }
+        catch(SecurityException e){
+            System.out.println("Error: you do not have permissions to this file. Returning to Main Menu.");
+        }
     }
 }

@@ -6,11 +6,13 @@ import enigmaMachine.reflector.Reflecting;
 import enigmaMachine.rotor.Rotor;
 import enigmaMachine.secret.Secret;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Machine {
+public class Machine implements Serializable {
     private final KeyBoard keyboard;
     private final int rotorCount;
     private List<Rotor> rotors;

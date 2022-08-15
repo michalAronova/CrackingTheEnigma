@@ -1,5 +1,7 @@
 package enigmaMachine.reflector;
 
-public interface Reflecting {
+import java.io.Serializable;
+
+public interface Reflecting extends Serializable {
     int passThroughReflector(int toReflect);
 }

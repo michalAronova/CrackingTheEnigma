@@ -2,12 +2,13 @@ package DTO.codeObj;
 
 import javafx.util.Pair;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class CodeObj {
+public class CodeObj implements Serializable {
     private List<Pair<Integer, Character>> ID2PositionList;
     private Map<Integer, Integer> notchRelativeLocation; //mimi- removed final
     private String reflectorID;
@@ -66,7 +67,7 @@ public class CodeObj {
         for(int i = ID2PositionList.size() - 1; i >= 0; i--){
             int ID = ID2PositionList.get(i).getKey();
             sb.append(ID2PositionList.get(i).getKey());
-            sb.append(String.format("(%d)", (Integer) notchRelativeLocation.get(ID)));
+            sb.append(String.format("(%d)", notchRelativeLocation.get(ID)));
             sb.append(",");
         }
         sb.replace(sb.length() - 1, sb.length(),">");

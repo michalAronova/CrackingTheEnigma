@@ -1,6 +1,8 @@
 package enigmaMachine.reflector;
 
-public enum ReflectorID {
+import java.io.Serializable;
+
+public enum ReflectorID implements Serializable {
     I(1),
     II(2),
     III(3),
@@ -22,6 +24,7 @@ public enum ReflectorID {
         }
         return null;
     }
+
     @Override
     public String toString() {
         return name();

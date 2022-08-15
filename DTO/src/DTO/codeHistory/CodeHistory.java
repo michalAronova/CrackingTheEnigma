@@ -1,14 +1,16 @@
 package DTO.codeHistory;
 import DTO.codeObj.CodeObj;
 import javafx.util.Pair;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class CodeHistory {
-    private CodeObj code;
-    private List<Translation> inputOutput;
+public class CodeHistory implements Serializable {
+    private final CodeObj code;
+    private final List<Translation> inputOutput;
 
     public CodeHistory(CodeObj code){
         inputOutput = new LinkedList<>();

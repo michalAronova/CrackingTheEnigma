@@ -1,11 +1,12 @@
 package DTO.codeHistory;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Translation {
-        private String input;
-        private String output;
-        private long time;
+public class Translation implements Serializable {
+        private final String input;
+        private final String output;
+        private final long time;
 
         public Translation(String input, String output, long time) {
                 this.input = input;

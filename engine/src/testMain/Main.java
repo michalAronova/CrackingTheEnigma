@@ -31,7 +31,7 @@ public class Main {
         CodeObj underConstruction = new CodeObj();
         engine.validateAndSetRotors(underConstruction, "2,1");
         engine.validateAndSetRotorPositions(underConstruction, "cc");
-        engine.validateAndSetReflector(underConstruction, 1);
+        engine.validateAndSetReflector(underConstruction, "1");
         engine.validateAndSetPlugs(underConstruction, "af");
         engine.setMachine(underConstruction);
 

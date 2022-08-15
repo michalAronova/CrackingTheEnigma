@@ -49,8 +49,8 @@ public class TechSpecs {
 
     @Override
     public String toString() {
-        String ret = String.format("Total rotors/Rotors in use: %d/%d%nReflector count: %d%n" +
-                        "Total processed messages: %d%n,",
+        String ret = String.format("Rotors in use/Total rotors: %d/%d%nReflector count: %d%n" +
+                        "Total processed messages: %d%n",
                         rotorsInUse, totalRotors, reflectorsCount, processedMsg);
         if(currentCode != null){
             ret = ret.concat(String.format("Initial code: %s%nCurrent code: %s", currentCode, updatedCode));

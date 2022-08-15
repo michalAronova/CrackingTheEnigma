@@ -1,11 +1,12 @@
 package enigmaMachine.keyBoard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class KeyBoard {
+public class KeyBoard implements Serializable {
     private final String keyBoard;
 
     public KeyBoard() {

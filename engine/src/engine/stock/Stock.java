@@ -10,15 +10,16 @@ import schema.generated.CTEReflect;
 import schema.generated.CTEReflector;
 import schema.generated.CTERotor;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Stock {
-    private Map<Integer,Rotor> rotorMap;
-    private Map<String, Reflecting> reflectorMap;
-    private KeyBoard keyBoard;
+public class Stock implements Serializable {
+    private final Map<Integer,Rotor> rotorMap;
+    private final Map<String, Reflecting> reflectorMap;
+    private final KeyBoard keyBoard;
     private final int rotorsCount;
 
     public Stock(List<CTERotor> rotors, List<CTEReflector> reflectors, KeyBoard keyBoard, int rotorsCount) {

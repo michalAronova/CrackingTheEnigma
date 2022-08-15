@@ -14,9 +14,9 @@ public class ObjectInputException extends InputException {
         validValues.add(value);
     }
 
-    public ObjectInputException(String message, List<Object> validValues, List<Object> invalidValue){
+    public ObjectInputException(String message, List<Object> validValues, List<Object> invalidValues){
         this(message, validValues);
-        this.invalidValues = invalidValue;
+        this.invalidValues = invalidValues;
     }
 
     public ObjectInputException(String message, List<Object> validValues){

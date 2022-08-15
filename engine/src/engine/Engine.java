@@ -8,9 +8,10 @@ import javafx.util.Pair;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.List;
 
-public interface Engine {
+public interface Engine extends Serializable {
     boolean loadDataFromXML(String path);
 
     TechSpecs showTechSpecs();
@@ -24,7 +25,7 @@ public interface Engine {
 
     void resetMachine();
 
-    void validateAndSetReflector(CodeObj underConstructionCode, int wantedReflectorID);
+    void validateAndSetReflector(CodeObj underConstructionCode, String wantedReflectorID);
 
     void validateAndSetPlugs(CodeObj underConstructionCode, String plugs);
 
@@ -39,4 +40,10 @@ public interface Engine {
     CodeObj getUpdatedCode();
 
     int getRotorsCount();
+
+    int getTotalRotorAmount();
+
+    int getReflectorCount();
+
+    boolean isStockLoaded();
 }
