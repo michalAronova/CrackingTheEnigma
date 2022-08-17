@@ -2,7 +2,6 @@ package DTO.techSpecs;
 
 import DTO.codeObj.CodeObj;
 
-import java.util.Map;
 import java.util.Objects;
 
 public class TechSpecs {

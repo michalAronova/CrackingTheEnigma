@@ -3,7 +3,6 @@ package enigmaMachine.secret;
 import enigmaMachine.plugBoard.Plugs;
 import enigmaMachine.reflector.Reflecting;
 import enigmaMachine.rotor.Rotor;
-
 import java.util.List;
 import java.util.Objects;
 

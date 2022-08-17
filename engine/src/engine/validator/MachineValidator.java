@@ -4,7 +4,6 @@ import enigmaMachine.reflector.ReflectorID;
 import exceptions.XMLException.InvalidXMLException;
 import exceptions.XMLException.XMLExceptionMsg;
 import schema.generated.*;
-
 import java.util.*;
 
 public class MachineValidator implements Validator{
@@ -23,9 +22,18 @@ public class MachineValidator implements Validator{
     @Override
     public boolean validate() {
         validateABC();
-        validateRotorsAndCount(); // continue to this method only if abc is valid :)
-        validateReflectors(); // continue to this method only if abc is valid :)
+        validateRotorsAndCount(); // continues to this method only if abc is valid
+        validateReflectors(); // continues to this method only if abc is valid
         return true;
+    }
+
+    private void validateABC(){
+        if(processedABC.length()%2 == 1) {
+            throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "odd abc");
+        }
+        if(!checkUniqueString(processedABC)){
+            throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "abc not unique");
+        }
     }
 
     //must call validateABC before this method
@@ -77,15 +85,6 @@ public class MachineValidator implements Validator{
                     throw new InvalidXMLException(XMLExceptionMsg.INVALIDREFLECTOR, "reflection value out of range");
                 }
             }
-        }
-    }
-
-    private void validateABC(){
-        if(processedABC.length()%2 == 1) {
-            throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "odd abc");
-        }
-        if(!checkUniqueString(processedABC)){
-            throw new InvalidXMLException(XMLExceptionMsg.INVALIDABC, "abc not unique");
         }
     }
 

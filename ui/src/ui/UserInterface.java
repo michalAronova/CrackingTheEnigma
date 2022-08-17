@@ -1,7 +1,5 @@
 package ui;
 
-import java.io.IOException;
-
 public interface UserInterface extends Runnable {
     void loadDataFromXML();
     void showMachineDetails();

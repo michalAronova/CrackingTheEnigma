@@ -6,7 +6,6 @@ import enigmaMachine.reflector.Reflecting;
 import enigmaMachine.rotor.Rotor;
 import enigmaMachine.secret.Secret;
 import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +34,6 @@ public class Machine implements Serializable {
     public Machine(Secret settings, KeyBoard keyboard, int rotorCount) {
         this.keyboard = keyboard;
         this.rotorCount = rotorCount;
-
         updateBySecret(settings);
     }
 

@@ -3,7 +3,6 @@ package ui;
 import DTO.codeHistory.CodeHistory;
 import DTO.codeObj.CodeObj;
 import DTO.techSpecs.TechSpecs;
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import engine.Engine;
 import engine.TheEngine;
 import exceptions.InputException.InputException;
@@ -182,7 +181,7 @@ public class ConsoleUserInterface implements UserInterface {
         }
         CodeObj underConstructionCode = new CodeObj();
 
-        //for each step, the user may choose to "forfeit" and go back to main menu without setting a new code.
+        //for each step, the user may choose to "forfeit" and go back to main menu without setting a new code
         if (!validateAndSetRotors(underConstructionCode)) {
             return;
         }

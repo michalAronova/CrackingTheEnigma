@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact name="enigmaMachine:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/enigmaMachine_jar</output-path>
+    <root id="root">
+      <element id="archive" name="enigmaMachine.jar">
+        <element id="module-output" name="enigmaMachine" />
+        <element id="module-output" name="DTO" />
+      </element>
+      <element id="library" level="project" name="jetbrains.annotations" />
+    </root>
+  </artifact>
+</component>

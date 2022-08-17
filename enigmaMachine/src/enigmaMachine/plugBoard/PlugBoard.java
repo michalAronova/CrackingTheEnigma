@@ -17,23 +17,6 @@ public class PlugBoard implements Plugs {
         setAllPlugs(plugs);
     }
 
-    public PlugBoard() {
-        this.keyBoard = new KeyBoard();
-        List<Character> keys = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f');
-        plugBoard = new HashMap<>();
-        keys.forEach(c -> plugBoard.put(c, c));
-        plugBoard.replace('b', 'c');
-        plugBoard.replace('c', 'b');
-    }
-
-    public PlugBoard(@NotNull List<Pair<Character, Character>> plugs) {
-        this.keyBoard = new KeyBoard();
-        List<Character> keys = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f');
-        plugBoard = new HashMap<>();
-        clearAllPlugs();
-        setAllPlugs(plugs);
-    }
-
     @Override
     public Character passThroughPlugBoard(Character input) {
         return plugBoard.get(input);
@@ -53,7 +36,7 @@ public class PlugBoard implements Plugs {
     }
 
     @Override
-    public String toString() { //mimi- return only non default plugs?
+    public String toString() {
         return "PlugBoard{" + plugBoard + '}';
     }
 

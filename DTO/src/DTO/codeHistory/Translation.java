@@ -32,7 +32,7 @@ public class Translation implements Serializable {
                 sb.append("> --> <");
                 sb.append(output);
                 sb.append("> (");
-                sb.append(time);
+                sb.append(String.format("%,d",time));
                 sb.append(" nano-seconds)");
                 return sb.toString();
         }

@@ -1,4 +1,4 @@
-package testMainUI;
+package userMain;
 
 import ui.ConsoleUserInterface;
 import ui.UserInterface;

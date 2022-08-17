@@ -1,9 +1,7 @@
 package DTO.codeHistory;
 import DTO.codeObj.CodeObj;
-import javafx.util.Pair;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +23,10 @@ public class CodeHistory implements Serializable {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Code: %s %n", code));
+        if(inputOutput.isEmpty()){
+            sb.append(String.format("      No translations processed with this code.%n"));
+            return sb.toString();
+        }
         for (int i = 0; i < inputOutput.size(); i++) {
             sb.append(String.format("      %d. %s%n", i+1, inputOutput.get(i).toString()));
         }

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: userMain.Main
+Class-Path: annotations-16.0.2.jar
+

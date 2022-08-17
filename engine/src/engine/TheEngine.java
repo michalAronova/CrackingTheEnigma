@@ -103,8 +103,6 @@ public class TheEngine implements Engine {
         StringBuilder sb = new StringBuilder();
         List<Character> invalid = stock.getKeyBoard().findCharacterNotInKeyBoard(msg);
         if( invalid != null) {
-            //edit the exception: able to get the invalid character and tell user which char wasn't in the abc
-            //msg to user will be like "char <x> not recognized in machine"...
             throw new ObjectInputException("Invalid input: not a recognized character",
                                                     stock.getKeyBoard().getAsObjList(), new ArrayList<>(invalid));
         }
@@ -193,8 +191,7 @@ public class TheEngine implements Engine {
     }
 
     public TechSpecs showTechSpecs() {
-        int rotorsInUse = initialCode == null ? 0: stock.getRotorsCount(); //if there isn't a code configuration, no rotors are in use
-        return new TechSpecs(stock.getRotorMap().size(), rotorsInUse,
+        return new TechSpecs(stock.getRotorMap().size(), stock.getRotorsCount(),
                 stock.getReflectorMap().size(), processedMsgsCnt, initialCode, getUpdatedCode());
     }
 

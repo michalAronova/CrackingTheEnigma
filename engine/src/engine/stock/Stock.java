@@ -9,7 +9,6 @@ import schema.generated.CTEPositioning;
 import schema.generated.CTEReflect;
 import schema.generated.CTEReflector;
 import schema.generated.CTERotor;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,8 @@ public class Stock implements Serializable {
     }
 
     private void fillRotorsMap(List<CTERotor> CTERotors) {
-        CTERotors.forEach(r -> rotorMap.put(r.getId(), new TheRotor(r.getId(), r.getNotch()-1, getPermutation(r.getCTEPositioning()))));
+        CTERotors.forEach(r -> rotorMap.put(r.getId(), new TheRotor(r.getId(),
+                r.getNotch() - 1, getPermutation(r.getCTEPositioning()))));
     }
 
     private String[] getPermutation(List<CTEPositioning> positionings) {
@@ -49,10 +49,11 @@ public class Stock implements Serializable {
     }
 
     private void fillReflectorsMap(List<CTEReflector> CTEReflectors) {
-        CTEReflectors.forEach(r -> reflectorMap.put(r.getId(), new Reflector(r.getId(), reflectionListToMap(r.getCTEReflect()))));
+        CTEReflectors.forEach(r -> reflectorMap.put(r.getId(), new Reflector(r.getId(),
+                                                reflectionListToMap(r.getCTEReflect()))));
     }
 
-    //getting pairs in base 1 and return map in base 0
+    //getting pairs in base 1 (1 -> n) and return map in base 0 (0 -> n-1)
     private Map<Integer, Integer> reflectionListToMap(List<CTEReflect> reflectionList) {
         Map<Integer, Integer> int2int = new HashMap<>();
         reflectionList.forEach(r -> { int2int.put((r.getInput()-1), (r.getOutput()-1));

@@ -1,7 +1,6 @@
 package DTO.codeObj;
 
 import javafx.util.Pair;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,18 +9,19 @@ import java.util.Objects;
 
 public class CodeObj implements Serializable {
     private List<Pair<Integer, Character>> ID2PositionList;
-    private Map<Integer, Integer> notchRelativeLocation; //mimi- removed final
+    private Map<Integer, Integer> notchRelativeLocation;
     private String reflectorID;
     private List<Pair<Character, Character>> plugs;
-    boolean updatedRotorIds = false;
-    boolean updatedRotorPos = false;
-    boolean updatedReflector = false;
-    boolean updatedPlugs = false;
+    private boolean updatedRotorIds = false;
+    private boolean updatedRotorPos = false;
+    private boolean updatedReflector = false;
+    private boolean updatedPlugs = false;
 
     public CodeObj() {
         ID2PositionList = new ArrayList<>();
     }
-    public CodeObj(List<Pair<Integer,Character>> ID2PositionList, CodeObj currentCode, Map<Integer, Integer> relativeNotchesLocation){
+    public CodeObj(List<Pair<Integer,Character>> ID2PositionList, CodeObj currentCode,
+                   Map<Integer, Integer> relativeNotchesLocation){
         this.ID2PositionList = ID2PositionList;
         notchRelativeLocation = relativeNotchesLocation;
         reflectorID = currentCode.reflectorID;
@@ -50,7 +50,7 @@ public class CodeObj implements Serializable {
         return reflectorID;
     }
 
-    public Map<Integer, Integer> getNotchRelativeLocation(){ return notchRelativeLocation; }
+    public Map<Integer, Integer> getNotchRelativeLocations(){ return notchRelativeLocation; }
 
     public void setNotchRelativeLocation(Map<Integer, Integer> notchRelativeLocation){
         this.notchRelativeLocation = notchRelativeLocation;

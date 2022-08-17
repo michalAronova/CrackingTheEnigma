@@ -9,9 +9,6 @@ import java.util.stream.Collectors;
 public class KeyBoard implements Serializable {
     private final String keyBoard;
 
-    public KeyBoard() {
-        keyBoard = "abcdef";
-    }
     public KeyBoard(String abc) {
         keyBoard = abc;
     }

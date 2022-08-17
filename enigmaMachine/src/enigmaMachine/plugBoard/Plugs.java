@@ -1,7 +1,6 @@
 package enigmaMachine.plugBoard;
 
 import javafx.util.Pair;
-
 import java.io.Serializable;
 import java.util.List;
 
