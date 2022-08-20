@@ -11,23 +11,25 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 
-
-<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainApplicationController">
+<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="647.0" prefWidth="681.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainApplicationController">
    <content>
-      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="650.0">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="614.0">
          <center>
             <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Machine">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="334.0" prefWidth="764.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="472.0" prefWidth="614.0">
                            <children>
                               <BorderPane layoutX="10.0" prefHeight="150.0" prefWidth="591.0">
                                  <top>
                                     <fx:include fx:id="machineDetails" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/machineDetails/machineDetails.fxml" BorderPane.alignment="CENTER_LEFT" />
                                  </top>
                                  <bottom>
-                                    <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                                    <HBox prefHeight="191.0" prefWidth="632.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <fx:include source="../components/machineConfiguration/machineConfiguration.fxml" />
+                                       </children></HBox>
                                  </bottom>
                               </BorderPane>
                            </children>
