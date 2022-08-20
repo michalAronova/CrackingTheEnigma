@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/engine/engine.iml" filepath="$PROJECT_DIR$/engine/engine.iml" />
       <module fileurl="file://$PROJECT_DIR$/enigmaMachine/enigmaMachine.iml" filepath="$PROJECT_DIR$/enigmaMachine/enigmaMachine.iml" />
       <module fileurl="file://$PROJECT_DIR$/../exceptions/exceptions.iml" filepath="$PROJECT_DIR$/../exceptions/exceptions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javaFXUI/javaFXUI.iml" filepath="$PROJECT_DIR$/javaFXUI/javaFXUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/ui/ui.iml" filepath="$PROJECT_DIR$/ui/ui.iml" />
     </modules>
   </component>
