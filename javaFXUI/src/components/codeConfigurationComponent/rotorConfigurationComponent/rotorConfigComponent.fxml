@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane stylesheets="@rotorConfigComponent.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="544.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeConfigurationComponent.rotorConfigurationComponent.RotorConfigComponentController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="544.0" stylesheets="@rotorConfigComponent.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeConfigurationComponent.rotorConfigurationComponent.RotorConfigComponentController">
     <columnConstraints>
-        <ColumnConstraints hgrow="ALWAYS" />
-        <ColumnConstraints hgrow="NEVER" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="439.33331298828125" minWidth="397.33331298828125" prefWidth="397.33331298828125" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="146.66668701171875" minWidth="10.0" prefWidth="146.66668701171875" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -43,19 +43,19 @@
                 </ScrollPane>
             </children>
         </AnchorPane>
-        <VBox fx:id="rotorChoiceVBBox" alignment="TOP_CENTER" GridPane.columnIndex="1">
-            <children>
-                <Label fx:id="rotorIDChosenLabel" alignment="CENTER" prefHeight="40.0" prefWidth="86.0" text="ID HERE">
-                    <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
-                    </VBox.margin>
-                </Label>
-            <ComboBox fx:id="rotorIDComboBox" promptText="Rotor ID" visibleRowCount="7">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </ComboBox>
-            </children>
-        </VBox>
+      <FlowPane fx:id="rotorChoicesFlowPane" hgap="2.0" prefHeight="200.0" prefWidth="200.0" vgap="2.0" GridPane.columnIndex="1">
+         <children>
+            <Label fx:id="rotorIDChosenLabel1" alignment="CENTER" prefHeight="35.0" prefWidth="35.0" text="1">
+               <FlowPane.margin>
+                  <Insets />
+               </FlowPane.margin>
+            </Label>
+            <Label fx:id="rotorIDChosenLabel2" alignment="CENTER" prefHeight="35.0" prefWidth="35.0" text="2">
+               <FlowPane.margin>
+                  <Insets />
+               </FlowPane.margin>
+            </Label>
+         </children>
+      </FlowPane>
     </children>
 </GridPane>

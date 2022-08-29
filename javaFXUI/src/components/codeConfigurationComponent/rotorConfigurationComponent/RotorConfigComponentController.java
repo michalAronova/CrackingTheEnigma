@@ -15,37 +15,36 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RotorConfigComponentController {
 
-    @FXML private Label rotorIDChosenLabel;
-    @FXML private ComboBox<Integer> rotorIDComboBox;
+    @FXML private FlowPane rotorChoicesFlowPane;
     @FXML private HBox rotorConfigHBox;
-    @FXML private VBox rotorChoiceVBBox;
 
     private final List<VBox> singleRotorComponentList;
     private List<Integer> rotorIDs;
     private List<Character> rotorPos;
+
+    Map<String,Label> ID2Label;
     private int rotorsSet = 0;
     private CodeConfigComponentController codeConfigComponentController;
     private final String DEFAULT_ROTOR_ID = "ID";
 
     public RotorConfigComponentController(){
         singleRotorComponentList = new ArrayList<>();
+        ID2Label = new HashMap<>();
     }
 
     @FXML public void initialize(){
-        rotorIDComboBox.setOnAction(e -> onComboBoxChoice());
+        //rotorIDComboBox.setOnAction(e -> onComboBoxChoice());
     }
 
     public void setCodeConfigController(CodeConfigComponentController codeConfigComponentController){
@@ -65,23 +64,30 @@ public class RotorConfigComponentController {
             rotorConfigHBox.getChildren().add(vBox);
             singleRotorComponentList.add(i, vBox);
         }
-        setRotorsComboBox(totalRotorAmount);
-    }
-    private void setRotorsComboBox(int totalRotorAmount) {
-        List<Integer> comboBoxValues = new ArrayList<>();
-        for(int i = 1; i <= totalRotorAmount; i++) {
-            comboBoxValues.add(i);
+
+        for (int i = 1; i <= totalRotorAmount; i++) {
+            Label label = createDraggableRotorLabel(i);
+            ID2Label.put(i + "", label);
+            rotorChoicesFlowPane.getChildren().add(label);
         }
 
-        ObservableList<Integer> obList = FXCollections.observableList(comboBoxValues);
-        rotorIDComboBox.getItems().clear();
-        rotorIDComboBox.getItems().addAll(comboBoxValues);
+        //setRotorsComboBox(totalRotorAmount);
     }
-
-    private void onComboBoxChoice(){
-        setOptionRotorLabel(rotorIDComboBox.getValue());
-        rotorIDChosenLabel.setDisable(false);
-    }
+//    private void setRotorsComboBox(int totalRotorAmount) {
+//        List<Integer> comboBoxValues = new ArrayList<>();
+//        for(int i = 1; i <= totalRotorAmount; i++) {
+//            comboBoxValues.add(i);
+//        }
+//
+//        ObservableList<Integer> obList = FXCollections.observableList(comboBoxValues);
+//        rotorIDComboBox.getItems().clear();
+//        rotorIDComboBox.getItems().addAll(comboBoxValues);
+//    }
+//
+//    private void onComboBoxChoice(){
+//        setOptionRotorLabel(rotorIDComboBox.getValue());
+//        rotorIDChosenLabel.setDisable(false);
+//    }
     private VBox createRotorConfigVBox(List<Character> keys, int index){
         //rotor ID label
         Label rotorIDLabel = createRotorIDDragBox(index);
@@ -90,7 +96,7 @@ public class RotorConfigComponentController {
         AnchorPane buttonAnchorPane = createButtonAnchorPane(rotorIDLabel, index);
 
         //spinner
-        Spinner<Character> positionSpinner = createPositionSpinner(keys, index);
+        Spinner<String> positionSpinner = createPositionSpinner(keys, index);
 
         //VBox
         VBox vBox = new VBox(buttonAnchorPane, rotorIDLabel, positionSpinner);
@@ -99,7 +105,7 @@ public class RotorConfigComponentController {
         return vBox;
     }
 
-    private void setRotorVBoxLayout(Label rotorIDLabel, Spinner<Character> positionSpinner, VBox vBox) {
+    private void setRotorVBoxLayout(Label rotorIDLabel, Spinner<String> positionSpinner, VBox vBox) {
         vBox.setAlignment(Pos.CENTER);
         vBox.setLayoutX(12.0);
         vBox.setLayoutY(12.0);
@@ -108,23 +114,33 @@ public class RotorConfigComponentController {
         VBox.setMargin(positionSpinner,new Insets(5, 5, 5, 5));
     }
 
-    private Spinner<Character> createPositionSpinner(List<Character> keys, int index) {
-        Spinner<Character> positionSpinner = new Spinner<>();
-        Collections.reverse(keys);
-        ObservableList<Character> values = FXCollections.observableArrayList(keys);
-        Collections.reverse(keys);
-        SpinnerValueFactory<Character> valueFactory =
-                new SpinnerValueFactory.ListSpinnerValueFactory<Character>(values);
+    private Spinner<String> createPositionSpinner(List<Character> keys, int index) {
+        Spinner<String> positionSpinner = new Spinner<>();
+        List<String> keysAsString = new ArrayList<>();
+        keys.forEach(k -> keysAsString.add(0, k.toString()));
+        ObservableList<String> values = FXCollections.observableArrayList(keysAsString);
+        positionSpinner
+                .setValueFactory(new SpinnerValueFactory
+                                        .ListSpinnerValueFactory<String>(values));
 
-        //positionSpinner.setEditable(true);
+        positionSpinner.setEditable(true);
 
         positionSpinner.valueProperty().addListener(((observable, oldValue, newValue) -> {
-            onPosSpinnerRotated(index, newValue);
+            if(newValue == null || newValue.length() != 1 || !keys.contains(newValue.toUpperCase().charAt(0))){
+                positionSpinner.getValueFactory().setValue(oldValue);
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("Invalid Input");
+                errorAlert.setContentText(String.format(" '%s' is invalid. %n Valid values are: %s", newValue, keys));
+                errorAlert.showAndWait();
+            }
+            else{
+                positionSpinner.getValueFactory().setValue(newValue.toUpperCase());
+                rotorPos.set(index, newValue.toUpperCase().charAt(0));
+            }
         }));
 
-        rotorPos.set(index, positionSpinner.getValue());
+        rotorPos.set(index, positionSpinner.getValue().charAt(0));
 
-        positionSpinner.setValueFactory(valueFactory);
         positionSpinner.setPrefHeight(40);
         positionSpinner.setPrefWidth(70);
         positionSpinner.setMaxHeight(40);
@@ -151,39 +167,31 @@ public class RotorConfigComponentController {
         return buttonAnchorPane;
     }
 
-    private void onPosSpinnerRotated(int index, Character value) {
-        rotorPos.set(index, value);
-    }
-
     private void handleUndoButton(Label rotorID, int index) {
         if(!rotorID.getText().equals(DEFAULT_ROTOR_ID)) {
-            setOptionRotorLabel(Integer.parseInt(rotorID.getText())); //undo rotor id choice
+            //setOptionRotorLabel(Integer.parseInt(rotorID.getText())); //undo rotor id choice
+            ID2Label.get(rotorID.getText()).setDisable(false);
             rotorRemoved(index, Integer.parseInt(rotorID.getText()));
         }
-        rotorID.setText(DEFAULT_ROTOR_ID); //return the chosen id to chosen id label
-        rotorIDChosenLabel.setDisable(false);
+        rotorID.setText(DEFAULT_ROTOR_ID); //set the chosen id to default id
     }
 
     public void reset(){
         singleRotorComponentList.forEach(component ->
                 rotorConfigHBox.getChildren().remove(component));
-        rotorIDComboBox.setItems(FXCollections.observableArrayList(new ArrayList<>()));
-        rotorIDComboBox.getItems().clear();
+        rotorChoicesFlowPane.getChildren().clear();
+        ID2Label.clear();
         singleRotorComponentList.clear();
-
-        rotorIDChosenLabel.setText(DEFAULT_ROTOR_ID);
-        rotorIDChosenLabel.setOnDragDetected(Event::consume);
-        rotorIDChosenLabel.setOnDragDone(Event::consume);
-
         rotorsSet = 0;
     }
 
-    private void setOptionRotorLabel(int number) {
-        rotorIDChosenLabel.setText(number +"");
+    private Label createDraggableRotorLabel(int number){
+        Label label = new Label(number + "");
+        label.setId("draggableRotorLabel"+number);
 
-        rotorIDChosenLabel.setOnDragDetected((event) -> {
-            WritableImage snapshot = rotorIDChosenLabel.snapshot(new SnapshotParameters(), null);
-            Dragboard db = rotorIDChosenLabel.startDragAndDrop(TransferMode.ANY);
+        label.setOnDragDetected((event) -> {
+            WritableImage snapshot = label.snapshot(new SnapshotParameters(), null);
+            Dragboard db = label.startDragAndDrop(TransferMode.ANY);
 
             ClipboardContent content = new ClipboardContent();
             content.putString(number + "");
@@ -193,14 +201,42 @@ public class RotorConfigComponentController {
             event.consume();
         });
 
-        rotorIDChosenLabel.setOnDragDone((event) -> {
+        label.setOnDragDone((event) -> {
             if (event.getTransferMode() == TransferMode.MOVE) {
-                rotorIDChosenLabel.setText("");
-                rotorIDChosenLabel.setDisable(true);
+                label.setDisable(true);
             }
             event.consume();
         });
+
+        label.setAlignment(Pos.CENTER);
+        label.setPrefWidth(35);
+        label.setPrefHeight(35);
+
+        return label;
     }
+//    private void setOptionRotorLabel(int number) {
+//        rotorIDChosenLabel.setText(number +"");
+//
+//        rotorIDChosenLabel.setOnDragDetected((event) -> {
+//            WritableImage snapshot = rotorIDChosenLabel.snapshot(new SnapshotParameters(), null);
+//            Dragboard db = rotorIDChosenLabel.startDragAndDrop(TransferMode.ANY);
+//
+//            ClipboardContent content = new ClipboardContent();
+//            content.putString(number + "");
+//            db.setContent(content);
+//            db.setDragView(snapshot, snapshot.getWidth() / 2, snapshot.getHeight() / 2);
+//
+//            event.consume();
+//        });
+//
+//        rotorIDChosenLabel.setOnDragDone((event) -> {
+//            if (event.getTransferMode() == TransferMode.MOVE) {
+//                rotorIDChosenLabel.setText("");
+//                rotorIDChosenLabel.setDisable(true);
+//            }
+//            event.consume();
+//        });
+//    }
 
     private Label createRotorIDDragBox(int index) {
         Label dragBox = new Label(DEFAULT_ROTOR_ID);
@@ -246,13 +282,11 @@ public class RotorConfigComponentController {
     }
 
     private void rotorRemoved(int index, int rotorID){
-
         rotorIDs.set(index, 0);
         rotorsSet--;
         codeConfigComponentController.getRotorsFilledProperty().setValue(false);
     }
     private void rotorSet(int index, int rotorID){
-
         rotorIDs.set(index, rotorID);
         rotorsSet++;
         if(rotorsSet == singleRotorComponentList.size()){
@@ -264,6 +298,7 @@ public class RotorConfigComponentController {
     public void removeChoices() {
         rotorsSet = 0;
 
+        ID2Label.forEach((id, label) -> label.setDisable(false));
         singleRotorComponentList.forEach(vBox -> {
             for (int i = 0; i < vBox.getChildren().size(); i++) {
                 if(vBox.getChildren().get(i) instanceof Label){
@@ -273,10 +308,5 @@ public class RotorConfigComponentController {
         });
 
         codeConfigComponentController.getRotorsFilledProperty().setValue(false);
-
-        rotorIDChosenLabel.setText(DEFAULT_ROTOR_ID);
-        rotorIDChosenLabel.setOnDragDetected(Event::consume);
-        rotorIDChosenLabel.setOnDragDone(Event::consume);
-        rotorIDComboBox.setValue(1);
     }
 }

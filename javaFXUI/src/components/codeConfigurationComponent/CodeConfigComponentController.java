@@ -54,10 +54,10 @@ public class CodeConfigComponentController {
             plugsComponentController.setCodeConfigController(this);
             rotorConfigComponentController.setCodeConfigController(this);
         }
-
+        System.out.println(reflectorComboBox.valueProperty());
         setButton.disableProperty().bind(Bindings
                 .createBooleanBinding(()->
-                        reflectorComboBox.valueProperty() == null || !rotorsFilled.getValue()
+                        reflectorComboBox.valueProperty().getValue() == null || !rotorsFilled.getValue()
                         , reflectorComboBox.valueProperty(), rotorsFilled));
 
         reflectorComboBox.setPromptText("Reflector ID");
@@ -74,6 +74,9 @@ public class CodeConfigComponentController {
 
     public BooleanProperty getRotorsFilledProperty(){ return rotorsFilled; }
     @FXML public void onSetByRandomClicked(ActionEvent actionEvent) {
+        codeConfigurationAccordion.setDisable(true);
+        setByManualButton.setDisable(false);
+        removeAllChoices();
         mainApplicationController.handleSetByRandom();
     }
 
@@ -113,6 +116,7 @@ public class CodeConfigComponentController {
         rotorPositions = null;
 
         reflectorComboBox.setItems(FXCollections.observableArrayList(new ArrayList<>()));
+        reflectorComboBox.valueProperty().set(null);
     }
 
 //    public void onRotorsUnDone(){

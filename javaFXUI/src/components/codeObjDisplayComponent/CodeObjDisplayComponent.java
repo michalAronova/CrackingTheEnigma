@@ -18,20 +18,6 @@ public class CodeObjDisplayComponent {
     private MainApplicationController mainApplicationController;
 
     @FXML public void initialize(){
-        //rotors (map integer2character)
-//        rotorsDataHBox.getChildren().add(createRotorVBox(5,'h', 2));
-//        rotorsDataHBox.getChildren().add(createRotorVBox(5,'h', 2));
-//        rotorsDataHBox.getChildren().add(createRotorVBox(5,'h', 2));
-//        rotorsDataHBox.getChildren().add(createRotorVBox(5,'h', 2));
-//
-//        //reflector (string)
-//        String reflectorID = "II";
-//        reflectorDataAnchorPane.getChildren().add(createReflectorLabel(reflectorID));
-//
-//        //plugs (list of pairs)
-//        plugsConfiguredHBox.getChildren().add(createPlugLabel(new Pair<>('A', 'B')));
-//        plugsConfiguredHBox.getChildren().add(createPlugLabel(new Pair<>('C', 'D')));
-//        plugsConfiguredHBox.getChildren().add(createPlugLabel( new Pair<>('E', 'F')));
     }
 
     public void setMainApplicationController(MainApplicationController mainApplicationController){
@@ -39,7 +25,6 @@ public class CodeObjDisplayComponent {
     }
 
     public void onCodeChosen(CodeObj code){
-
         rotorsDataHBox.getChildren().clear();
         reflectorDataAnchorPane.getChildren().clear();
         plugsConfiguredHBox.getChildren().clear();

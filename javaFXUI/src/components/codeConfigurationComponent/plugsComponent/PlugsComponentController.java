@@ -147,6 +147,12 @@ public class PlugsComponentController {
     }
 
     public void removeChoices() {
+        PlugsVBox.getChildren().clear();
+        toggleButtons.forEach((str, button) -> {
+            button.setDisable(false);
+            button.setSelected(false);
+        });
+
         currentPlug.clear();
         allSelectedPlugs.clear();
         plugsSelected = 0;
