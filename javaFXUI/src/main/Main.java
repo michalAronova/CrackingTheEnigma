@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -22,7 +23,10 @@ public class Main extends Application {
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(url.openStream());
 
-        Scene scene = new Scene(root, 500, 550);
+        primaryStage.getIcons().add(new Image("/resources/alan_turing_icon.jpg"));
+        primaryStage.setTitle("Enigma Machine Simulator");
+
+        Scene scene = new Scene(root, 650, 550);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeObjDisplayComponent.CodeObjDisplayComponent">
+    <content>
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="466.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="73.0" prefWidth="90.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="393.0" minWidth="10.0" prefWidth="376.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="NEVER" />
+                <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <AnchorPane GridPane.columnSpan="2">
+                    <children>
+                        <Label text="Machine Configuration">
+                            <padding>
+                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                    <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </GridPane.margin>
+                </AnchorPane>
+                <AnchorPane GridPane.rowIndex="1">
+                    <children>
+                        <Label layoutY="-1.0" text="Rotors">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </Label>
+                        <HBox fx:id="rotorsHBox" fillHeight="false" layoutX="130.0" layoutY="-3.0" />
+                    </children>
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                </AnchorPane>
+                <AnchorPane fx:id="reflectorAnchorPane" GridPane.rowIndex="2">
+                    <children>
+                        <Label layoutY="5.0" text="Reflector">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                    <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </GridPane.margin>
+                </AnchorPane>
+                <AnchorPane GridPane.rowIndex="3">
+                    <children>
+                        <Label layoutY="5.0" text="Plugs">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                    <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </GridPane.margin>
+                </AnchorPane>
+                <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <children>
+                        <VBox>
+                            <children>
+                                <Label text="ID">
+                                    <padding>
+                                        <Insets top="3.0" />
+                                    </padding>
+                                </Label>
+                                <Label text="Position">
+                                    <padding>
+                                        <Insets top="3.0" />
+                                    </padding>
+                                </Label>
+                                <Label text="Notch">
+                                    <padding>
+                                        <Insets top="3.0" />
+                                    </padding>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </VBox>
+                        <HBox fx:id="rotorsDataHBox" fillHeight="false" layoutX="64.0">
+                            <padding>
+                                <Insets left="10.0" />
+                            </padding></HBox>
+                    </children>
+                    <GridPane.margin>
+                        <Insets />
+                    </GridPane.margin>
+                </AnchorPane>
+                <HBox fx:id="plugsConfiguredHBox" fillHeight="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <children>
+                        <HBox fx:id="plugHboxWrapper">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </HBox>
+                    </children>
+                </HBox>
+                <AnchorPane fx:id="reflectorDataAnchorPane" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </GridPane.margin>
+                </AnchorPane>
+            </children>
+        </GridPane>
+    </content>
+</ScrollPane>

@@ -10,28 +10,35 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="647.0" prefWidth="681.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainApplicationController">
+<ScrollPane fx:id="mainScrollPane" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minViewportHeight="100.0" minViewportWidth="200.0" minWidth="-Infinity" prefHeight="500.0" prefViewportHeight="500.0" prefViewportWidth="900.0" prefWidth="900.0" stylesheets="@mainApplication.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainApplicationController">
    <content>
-      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="614.0">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0">
          <center>
             <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Machine">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="472.0" prefWidth="614.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0">
                            <children>
-                              <BorderPane layoutX="10.0" prefHeight="150.0" prefWidth="591.0">
-                                 <top>
-                                    <fx:include fx:id="machineDetails" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/machineDetails/machineDetails.fxml" BorderPane.alignment="CENTER_LEFT" />
-                                 </top>
-                                 <bottom>
-                                    <HBox prefHeight="191.0" prefWidth="632.0" BorderPane.alignment="CENTER">
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <FlowPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="800.0">
                                        <children>
-                                          <fx:include source="../components/machineConfiguration/machineConfiguration.fxml" />
+                                          <fx:include fx:id="machineDetails" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="110.0" minWidth="200.0" source="../components/machineDetails/machineDetails.fxml" BorderPane.alignment="CENTER_LEFT" VBox.vgrow="NEVER" />
+                                          <fx:include fx:id="codeObjDisplayComponent" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
+                                       </children>
+                                    </FlowPane>
+                                    <HBox prefHeight="330.0" prefWidth="611.0">
+                                       <children>
+                                          <fx:include fx:id="codeConfigComponent" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeConfigurationComponent/codeConfigComponent.fxml" />
                                        </children></HBox>
-                                 </bottom>
-                              </BorderPane>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" top="7.0" />
+                                 </padding>
+                              </VBox>
                            </children>
                         </AnchorPane>
                   </content>
