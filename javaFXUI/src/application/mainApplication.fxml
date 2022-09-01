@@ -8,8 +8,11 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <ScrollPane fx:id="mainScrollPane" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minViewportHeight="100.0" minViewportWidth="200.0" minWidth="-Infinity" prefHeight="500.0" prefViewportHeight="500.0" prefViewportWidth="900.0" prefWidth="900.0" stylesheets="@mainApplication.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainApplicationController">
@@ -46,9 +49,24 @@
                 </Tab>
                 <Tab text="Encrypt/Decrypt">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0">
                            <children>
-                              <fx:include fx:id="currentCodeDisplayComponent1" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
+                              <GridPane layoutX="14.0" layoutY="14.0" prefHeight="287.0" prefWidth="865.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="6.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="NEVER" maxWidth="481.88885498046875" minWidth="10.0" />
+                                  <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
+                                    <ColumnConstraints hgrow="NEVER" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <fx:include fx:id="currentCodeDisplayComponent1" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="2" />
+                                    <fx:include fx:id="processComponent" source="../components/processComponent/processComponent.fxml" />
+                                 </children>
+                              </GridPane>
                            </children>
                         </AnchorPane>
                   </content>

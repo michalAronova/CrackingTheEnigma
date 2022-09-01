@@ -1,5 +1,6 @@
 package components.processComponent;
 
+import application.MainApplicationController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,6 +27,8 @@ public class ProcessComponentController {
     @FXML private Button clearButton;
     @FXML private Button doneButton;
     @FXML private Label errorLabel;
+
+    private MainApplicationController mainApplicationController;
 
     private StringBuilder resultText;
 
@@ -62,6 +65,11 @@ public class ProcessComponentController {
 
         processButton.setOnAction(e -> handleProcessButton());
     }
+
+    public void setMainApplicationController(MainApplicationController mainApplicationController){
+        this.mainApplicationController = mainApplicationController;
+    }
+
 
     private void textListener(String oldValue, String newValue){
         //if not in keyboard, notify then return

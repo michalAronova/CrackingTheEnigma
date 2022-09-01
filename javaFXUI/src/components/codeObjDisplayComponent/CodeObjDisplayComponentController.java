@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
-public class CodeObjDisplayComponent {
+public class CodeObjDisplayComponentController {
     @FXML private AnchorPane reflectorDataAnchorPane;
     @FXML private HBox plugsConfiguredHBox;
     @FXML private HBox rotorsDataHBox;

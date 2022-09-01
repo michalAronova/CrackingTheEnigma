@@ -2,11 +2,11 @@ package application;
 
 import DTO.codeObj.CodeObj;
 import components.codeConfigurationComponent.CodeConfigComponentController;
-import components.codeObjDisplayComponent.CodeObjDisplayComponent;
+import components.codeObjDisplayComponent.CodeObjDisplayComponentController;
+import components.processComponent.ProcessComponentController;
 import engine.Engine;
 import engine.TheEngine;
 import exceptions.XMLException.InvalidXMLException;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -26,8 +26,10 @@ public class MainApplicationController {
     private Engine engine;
     @FXML private MachineDetailsController machineDetailsController;
     @FXML private CodeConfigComponentController codeConfigComponentController;
-    @FXML private CodeObjDisplayComponent codeObjDisplayComponentController;
-    @FXML private CodeObjDisplayComponent currentCodeDisplayComponentController;
+    @FXML private CodeObjDisplayComponentController codeObjDisplayComponentController;
+    @FXML private CodeObjDisplayComponentController currentCodeDisplayComponentController;
+
+    @FXML private ProcessComponentController processComponentController;
     @FXML private GridPane machineDetails;
     @FXML private Button loadFileButton;
     @FXML private Label fileChosenLabel;
@@ -47,6 +49,7 @@ public class MainApplicationController {
             codeConfigComponentController.setMainApplicationController(this);
             codeObjDisplayComponentController.setMainApplicationController(this);
             currentCodeDisplayComponentController.setMainApplicationController(this);
+            processComponentController.setMainApplicationController(this);
         }
         engine = new TheEngine();
     }
@@ -94,5 +97,9 @@ public class MainApplicationController {
         //System.out.println(engine.getInitialCode().toString());
         //below will alert the relevant component that there's a new code to show:
         //currentCodeController.codeConfigured(engine.getInitialCode());
+    }
+
+    public void handleKeyboardPressed(String key){
+        //notify process component controller...
     }
 }
