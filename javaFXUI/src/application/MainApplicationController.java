@@ -27,6 +27,7 @@ public class MainApplicationController {
     @FXML private MachineDetailsController machineDetailsController;
     @FXML private CodeConfigComponentController codeConfigComponentController;
     @FXML private CodeObjDisplayComponent codeObjDisplayComponentController;
+    @FXML private CodeObjDisplayComponent currentCodeDisplayComponentController;
     @FXML private GridPane machineDetails;
     @FXML private Button loadFileButton;
     @FXML private Label fileChosenLabel;
@@ -35,16 +36,17 @@ public class MainApplicationController {
 
     public MainApplicationController(){
         isFileLoaded = new SimpleBooleanProperty(false);
-
     }
 
     @FXML
     public void initialize(){
         if(machineDetailsController != null && codeConfigComponentController != null
-                && codeObjDisplayComponentController != null){
+                && codeObjDisplayComponentController != null
+                && currentCodeDisplayComponentController != null){
             machineDetailsController.setMainApplicationController(this);
             codeConfigComponentController.setMainApplicationController(this);
             codeObjDisplayComponentController.setMainApplicationController(this);
+            currentCodeDisplayComponentController.setMainApplicationController(this);
         }
         engine = new TheEngine();
     }

@@ -28,6 +28,7 @@
                                        <children>
                                           <fx:include fx:id="machineDetails" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="110.0" minWidth="200.0" source="../components/machineDetails/machineDetails.fxml" BorderPane.alignment="CENTER_LEFT" VBox.vgrow="NEVER" />
                                           <fx:include fx:id="codeObjDisplayComponent" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
+                                          <fx:include fx:id="currentCodeDisplayComponent" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
                                        </children>
                                     </FlowPane>
                                     <HBox prefHeight="330.0" prefWidth="611.0">
@@ -47,7 +48,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <FlowPane layoutX="88.0" layoutY="47.0" prefHeight="336.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <fx:include fx:id="currentCodeDisplayComponent1" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -56,7 +57,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label layoutX="155.0" layoutY="75.0" text="tab3" />
+                              <fx:include fx:id="currentCodeDisplayComponent11" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
                            </children>
                         </AnchorPane>
                      </content>
