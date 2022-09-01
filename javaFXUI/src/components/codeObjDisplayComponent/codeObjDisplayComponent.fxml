@@ -12,10 +12,10 @@
 
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeObjDisplayComponent.CodeObjDisplayComponent">
     <content>
-        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="303.0">
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="246.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="73.0" prefWidth="85.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="-Infinity" prefWidth="249.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="83.0" prefWidth="87.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="-Infinity" prefWidth="159.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints vgrow="NEVER" />
@@ -72,7 +72,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
                 </AnchorPane>
-                <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <AnchorPane prefWidth="107.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <children>
                         <VBox>
                             <children>
