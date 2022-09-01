@@ -1,0 +1,9 @@
+.onDragEntered{
+    -fx-background-color: #8bcc8b;
+    -fx-border-width: 1;
+}
+
+.rotorIDDragBox, #rotorIDChosenLabel{
+    -fx-background-color: none;
+    -fx-border-color: gray; -fx-border-width: 1;
+}

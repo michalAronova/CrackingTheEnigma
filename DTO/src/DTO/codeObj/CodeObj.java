@@ -65,15 +65,14 @@ public class CodeObj implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("<");
         for(int i = ID2PositionList.size() - 1; i >= 0; i--){
-            int ID = ID2PositionList.get(i).getKey();
             sb.append(ID2PositionList.get(i).getKey());
-            sb.append(String.format("(%d)", notchRelativeLocation.get(ID)));
             sb.append(",");
         }
         sb.replace(sb.length() - 1, sb.length(),">");
         sb.append("<");
         for(int i = ID2PositionList.size() - 1; i >= 0; i--){
             sb.append(ID2PositionList.get(i).getValue());
+            sb.append(String.format("(%d)", notchRelativeLocation.get(ID2PositionList.get(i).getKey())));
         }
         sb.append("><");
         sb.append(reflectorID+">");

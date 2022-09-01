@@ -1,0 +1,17 @@
+#machineDetailsTitle {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Lucida Sans Typewriter";
+    -fx-text-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#machineDetailsTitle:hover{
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.5 , 0 , 2 );
+}
+
+.itemLabel, .itemData{
+    -fx-font-size: 13px;
+    -fx-font-family: "Lucida Sans Typewriter";
+    -fx-text-fill: #636161;
+}
