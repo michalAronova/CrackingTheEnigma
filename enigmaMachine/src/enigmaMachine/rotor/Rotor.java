@@ -2,7 +2,7 @@ package enigmaMachine.rotor;
 
 import java.io.Serializable;
 
-public interface Rotor extends AdvanceSelf, Serializable {
+public interface Rotor extends AdvanceSelf, Serializable, Cloneable {
     int getID();
 
     String getRightPermutation();

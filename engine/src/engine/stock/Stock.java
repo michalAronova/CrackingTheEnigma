@@ -10,12 +10,13 @@ import schema.generated.CTEReflect;
 import schema.generated.CTEReflector;
 import schema.generated.CTERotor;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Stock implements Serializable {
+public class Stock implements Serializable, Cloneable {
     private final Map<Integer,Rotor> rotorMap;
     private final Map<String, Reflecting> reflectorMap;
     private final KeyBoard keyBoard;
@@ -30,6 +31,12 @@ public class Stock implements Serializable {
         fillReflectorsMap(reflectors);
     }
 
+    public Stock(Map<Integer, Rotor> rotorMap, Map<String, Reflecting> reflectorMap, KeyBoard keyBoard, int rotorsCount){
+        this.rotorMap = rotorMap;
+        this.reflectorMap = reflectorMap;
+        this.keyBoard = keyBoard;
+        this.rotorsCount = rotorsCount;
+    }
     private void fillRotorsMap(List<CTERotor> CTERotors) {
         CTERotors.forEach(r -> rotorMap.put(r.getId(), new TheRotor(r.getId(),
                 r.getNotch() - 1, getPermutation(r.getCTEPositioning()))));
@@ -109,5 +116,17 @@ public class Stock implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(rotorMap, reflectorMap, keyBoard, rotorsCount);
+    }
+
+    @Override
+    protected Stock clone() {
+        Map<Integer, Rotor> rotorMap = new HashMap<>();
+        Map<String, Reflecting> reflectorMap = new HashMap<>();
+        this.rotorMap.forEach((id, rotor) ->
+                rotorMap.put(id, ((TheRotor)rotor).clone()));
+        this.reflectorMap.forEach((id, reflector) ->
+                reflectorMap.put(id, ((Reflector)reflector).clone()));
+        KeyBoard keyboard = this.keyBoard.clone();
+        return new Stock(rotorMap, reflectorMap, keyboard, this.rotorsCount);
     }
 }
