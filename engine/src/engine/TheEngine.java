@@ -3,6 +3,7 @@ package engine;
 import DTO.codeHistory.CodeHistory;
 import DTO.codeObj.CodeObj;
 import engine.decipherManager.DecipherManager;
+import engine.decipherManager.Difficulty;
 import engine.stock.Stock;
 import engine.validator.DecipherValidator;
 import engine.validator.MachineValidator;
@@ -74,7 +75,9 @@ public class TheEngine implements Engine {
                 this.initialCode = null; //new machine - no code yet!
                 this.processedMsgsCnt = 0; //new machine - new count!
                 this.codesHistories.clear(); //new machine - new histories!
-                this.DM = new DecipherManager(cteDecipher);
+                this.DM = new DecipherManager(cteDecipher, getTotalMissionCount(), new Machine(stock.getKeyBoard(), stock.getRotorsCount())
+                                                , new Stock(cteMachine.getCTERotors().getCTERotor(), cteMachine.getCTEReflectors().getCTEReflector(),
+                                                    new KeyBoard(cteMachine.getABC().trim().toUpperCase()), cteMachine.getRotorsCount()));
                 return true;
             } catch (InvalidXMLException e) {
                 throw e;
@@ -83,6 +86,11 @@ public class TheEngine implements Engine {
             throw new InvalidXMLException(XMLExceptionMsg.INVALIDFILE, "file not found");
         }
     }
+//TODO
+    private Map<Difficulty, Integer> getTotalMissionCount() {
+        Map<Difficulty, Integer> diff2totalWork = new HashMap<>();
+        return diff2totalWork;
+    }
 
     @Override
     public void setMachine(CodeObj machineCode){
@@ -90,6 +98,7 @@ public class TheEngine implements Engine {
         initialCode = machineCode;
         machine.updateBySecret(secretFromCodeObj(initialCode));
         initialCode.setNotchRelativeLocation(getRelativeNotchesMap(initialCode.getID2PositionList()));
+        DM.setMachineCode(machineCode);
     }
 
     private Secret secretFromCodeObj(CodeObj machineCode){

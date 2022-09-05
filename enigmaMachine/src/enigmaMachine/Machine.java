@@ -26,6 +26,7 @@ public class Machine implements Serializable, Cloneable {
     public Machine(KeyBoard keyboard, List<Rotor> rotors, Reflecting reflector, Plugs plugBoard, int rotorCount) {
         this.keyboard = keyboard;
         this.rotors = rotors;
+        setRotors();
         this.reflector = reflector;
         this.plugBoard = plugBoard;
         this.rotorCount = rotorCount;
