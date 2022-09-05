@@ -2,7 +2,9 @@ package engine;
 
 import DTO.codeHistory.CodeHistory;
 import DTO.codeObj.CodeObj;
+import engine.decipherManager.DecipherManager;
 import engine.stock.Stock;
+import engine.validator.DecipherValidator;
 import engine.validator.MachineValidator;
 import engine.validator.Validator;
 import enigmaMachine.Machine;
@@ -19,6 +21,7 @@ import exceptions.InputException.OutOfBoundInputException;
 import exceptions.XMLException.InvalidXMLException;
 import exceptions.XMLException.XMLExceptionMsg;
 import javafx.util.Pair;
+import schema.generated.CTEDecipher;
 import schema.generated.CTEEnigma;
 import schema.generated.CTEMachine;
 import DTO.techSpecs.TechSpecs;
@@ -37,6 +40,7 @@ import java.util.stream.Collectors;
 public class TheEngine implements Engine {
     private Stock stock;
     private Machine machine;
+    private DecipherManager DM;
     private CodeObj initialCode;
     private int processedMsgsCnt;
     private final LinkedList<CodeHistory> codesHistories = new LinkedList<>();
@@ -57,16 +61,20 @@ public class TheEngine implements Engine {
             File file = new File(path);
             InputStream inputStream = new FileInputStream(file);
             CTEEnigma enigma = deserializeFrom(inputStream);
-            CTEMachine machine = enigma.getCTEMachine();
-            Validator validator = new MachineValidator(machine, MIN_ROTOR_COUNT, MAX_ROTOR_COUNT);
+            CTEDecipher cteDecipher = enigma.getCTEDecipher();
+            CTEMachine cteMachine = enigma.getCTEMachine();
+            Validator machineValidator = new MachineValidator(cteMachine, MIN_ROTOR_COUNT, MAX_ROTOR_COUNT);
+            Validator decipherValidator = new DecipherValidator(cteDecipher);
             try{
-                validator.validate();
-                stock = new Stock(machine.getCTERotors().getCTERotor(), machine.getCTEReflectors().getCTEReflector(),
-                        new KeyBoard(machine.getABC().trim().toUpperCase()), machine.getRotorsCount());
+                machineValidator.validate();
+                decipherValidator.validate();
+                stock = new Stock(cteMachine.getCTERotors().getCTERotor(), cteMachine.getCTEReflectors().getCTEReflector(),
+                        new KeyBoard(cteMachine.getABC().trim().toUpperCase()), cteMachine.getRotorsCount());
                 this.machine = new Machine(stock.getKeyBoard(), stock.getRotorsCount());
                 this.initialCode = null; //new machine - no code yet!
                 this.processedMsgsCnt = 0; //new machine - new count!
                 this.codesHistories.clear(); //new machine - new histories!
+                this.DM = new DecipherManager(cteDecipher);
                 return true;
             } catch (InvalidXMLException e) {
                 throw e;

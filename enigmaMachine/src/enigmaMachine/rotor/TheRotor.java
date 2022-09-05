@@ -133,4 +133,9 @@ public class TheRotor implements Rotor {
     public int hashCode() {
         return Objects.hash(notch, id, initialPosition, currentPosition, leftPermutation, rightPermutation, next);
     }
+
+    @Override
+    public TheRotor clone(){
+        return new TheRotor(this.id, this.notch, new String[]{this.leftPermutation, this.rightPermutation});
+    }
 }

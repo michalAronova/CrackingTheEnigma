@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Machine implements Serializable {
+public class Machine implements Serializable, Cloneable {
     private final KeyBoard keyboard;
     private final int rotorCount;
     private List<Rotor> rotors;
@@ -110,5 +110,10 @@ public class Machine implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(keyboard, rotorCount, rotors, reflector, plugBoard);
+    }
+
+    @Override
+    public Machine clone(){
+        return new Machine(this.keyboard.clone(), this.rotorCount);
     }
 }

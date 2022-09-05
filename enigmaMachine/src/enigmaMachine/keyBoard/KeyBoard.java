@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class KeyBoard implements Serializable {
+public class KeyBoard implements Serializable, Cloneable {
     private final String keyBoard;
 
     public KeyBoard(String abc) {
@@ -81,6 +81,11 @@ public class KeyBoard implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(keyBoard);
+    }
+
+    @Override
+    public KeyBoard clone(){
+        return new KeyBoard(this.keyBoard);
     }
 }
 

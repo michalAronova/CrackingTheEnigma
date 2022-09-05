@@ -38,4 +38,10 @@ public class Reflector implements Reflecting {
     public int hashCode() {
         return Objects.hash(reflectionMap, id);
     }
+
+    @Override
+    public Reflector clone(){
+        Map<Integer, Integer> clonedMap = new HashMap<>(this.reflectionMap);
+        return new Reflector(this.id.toString(), clonedMap);
+    }
 }
