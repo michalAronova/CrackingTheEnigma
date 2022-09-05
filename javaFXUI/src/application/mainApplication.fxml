@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane fx:id="mainScrollPane" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minViewportHeight="100.0" minViewportWidth="200.0" minWidth="-Infinity" prefHeight="500.0" prefViewportHeight="500.0" prefViewportWidth="900.0" prefWidth="900.0" stylesheets="@mainApplication.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainApplicationController">
+<ScrollPane fx:id="mainScrollPane" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minViewportHeight="100.0" minViewportWidth="200.0" minWidth="-Infinity" prefHeight="650.0" prefViewportHeight="500.0" prefViewportWidth="900.0" prefWidth="900.0" stylesheets="@mainApplication.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainApplicationController">
    <content>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0">
          <center>
@@ -51,20 +51,31 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0">
                            <children>
-                              <GridPane layoutX="14.0" layoutY="14.0" prefHeight="287.0" prefWidth="865.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="6.0">
+                              <GridPane layoutX="14.0" layoutY="14.0" prefHeight="517.0" prefWidth="878.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="6.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="NEVER" maxWidth="481.88885498046875" minWidth="10.0" />
-                                  <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="0.0" />
-                                    <ColumnConstraints hgrow="NEVER" />
+                                  <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="147.0" />
+                                    <ColumnConstraints hgrow="NEVER" maxWidth="367.0" minWidth="253.0" prefWidth="345.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="239.0" minHeight="231.0" prefHeight="239.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="84.0" minHeight="5.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                                  <RowConstraints fx:id="codeHistoryComponent" maxHeight="215.0" minHeight="80.0" prefHeight="209.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <fx:include fx:id="currentCodeDisplayComponent1" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="2" />
                                     <fx:include fx:id="processComponent" source="../components/processComponent/processComponent.fxml" />
+                                    <HBox prefHeight="84.0" prefWidth="386.0" GridPane.rowIndex="2">
+                                       <children>
+                                          <fx:include fx:id="keyBoardComponent" source="../components/keyBoardComponent/keyBoardComponent.fxml" />
+                                       </children>
+                                    </HBox>
+                                    <HBox GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <children>
+                                          <fx:include source="../components/codeHistoryComponent/CodeHistoryComponent.fxml" />
+                                       </children>
+                                    </HBox>
                                  </children>
                               </GridPane>
                            </children>

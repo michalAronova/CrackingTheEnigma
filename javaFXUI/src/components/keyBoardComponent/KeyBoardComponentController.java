@@ -1,5 +1,6 @@
 package components.keyBoardComponent;
 
+import application.MainApplicationController;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -12,18 +13,9 @@ public class KeyBoardComponentController {
     @FXML private FlowPane keyBoardFlowPane;
 
     @FXML private Button keyButtonA;
+    private MainApplicationController mainApplicationController;
 
-    @FXML private void initialize() {
-        String ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        for (Character c: ABC.toCharArray()) {
-            Button button = createNewButton(c.toString());
-            button.setOnAction(e -> onKeyButtonPressed(button.getText()));
-            keyBoardFlowPane.getChildren().add(button);
-        }
-        setFlowPaneDisable(true);
-    }
-
+    @FXML private void initialize() {}
     @FXML public void setComponent(List<Character> ABC) {
         if(!keyBoardFlowPane.getChildren().isEmpty()){
             keyBoardFlowPane.getChildren().clear();
@@ -33,6 +25,7 @@ public class KeyBoardComponentController {
             button.setOnAction(e -> onKeyButtonPressed(button.getText()));
             keyBoardFlowPane.getChildren().add(button);
         }
+        setFlowPaneDisable(true);
     }
 
     private Button createNewButton(String let){
@@ -44,11 +37,14 @@ public class KeyBoardComponentController {
         button.setPrefHeight(32);
         return button;
     }
-    private void onKeyButtonPressed(String text) {
-        System.out.println(text);
+    private void onKeyButtonPressed(String text){
+        mainApplicationController.keyBoardButtonPressed(text);
     }
 
     public void setFlowPaneDisable(boolean disable){
         keyBoardFlowPane.setDisable(disable);
+    }
+    public void setMainApplicationController(MainApplicationController mainApplicationController){
+        this.mainApplicationController = mainApplicationController;
     }
 }

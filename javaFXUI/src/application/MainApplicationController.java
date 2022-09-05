@@ -2,7 +2,10 @@ package application;
 
 import DTO.codeObj.CodeObj;
 import components.codeConfigurationComponent.CodeConfigComponentController;
+import components.codeHistoryComponent.CodeHistoryComponentController;
+import components.codeHistoryComponent.StatisticData;
 import components.codeObjDisplayComponent.CodeObjDisplayComponentController;
+import components.keyBoardComponent.KeyBoardComponentController;
 import components.processComponent.ProcessComponentController;
 import engine.Engine;
 import engine.TheEngine;
@@ -28,12 +31,12 @@ public class MainApplicationController {
     @FXML private CodeConfigComponentController codeConfigComponentController;
     @FXML private CodeObjDisplayComponentController codeObjDisplayComponentController;
     @FXML private CodeObjDisplayComponentController currentCodeDisplayComponentController;
-
     @FXML private ProcessComponentController processComponentController;
+    @FXML private KeyBoardComponentController keyBoardComponentController;
+    @FXML private CodeHistoryComponentController codeHistoryComponentController;
     @FXML private GridPane machineDetails;
     @FXML private Button loadFileButton;
     @FXML private Label fileChosenLabel;
-
     private BooleanProperty isFileLoaded;
 
     public MainApplicationController(){
@@ -44,12 +47,15 @@ public class MainApplicationController {
     public void initialize(){
         if(machineDetailsController != null && codeConfigComponentController != null
                 && codeObjDisplayComponentController != null
-                && currentCodeDisplayComponentController != null){
+                && currentCodeDisplayComponentController != null
+                && codeHistoryComponentController != null){
             machineDetailsController.setMainApplicationController(this);
             codeConfigComponentController.setMainApplicationController(this);
             codeObjDisplayComponentController.setMainApplicationController(this);
             currentCodeDisplayComponentController.setMainApplicationController(this);
             processComponentController.setMainApplicationController(this);
+            keyBoardComponentController.setMainApplicationController(this);
+            codeHistoryComponentController.setMainApplicationController(this);
         }
         engine = new TheEngine();
     }
@@ -69,6 +75,7 @@ public class MainApplicationController {
                 codeConfigComponentController.handleFileLoaded(engine.getKeyBoardList(),
                         engine.getRotorsCount(), engine.getTotalRotorAmount(),
                         engine.getReflectorCount());
+                keyBoardComponentController.setComponent(engine.getKeyBoardList());
             }
             catch(InvalidXMLException e){
                 fileChosenLabel.getStyleClass().add("error-message");
@@ -101,5 +108,18 @@ public class MainApplicationController {
 
     public void handleKeyboardPressed(String key){
         //notify process component controller...
+    }
+
+    public void singleModeOn(Boolean mode) {
+        keyBoardComponentController.setFlowPaneDisable(!mode);
+    }
+
+    public void keyBoardButtonPressed(String text) {
+        processComponentController.keyPressed(text);
+    }
+
+    public void onProcessButtonPressed(String input, String output){
+        StatisticData newProcess = new StatisticData(engine.getInitialCode().toString(), input, output, 25.0);
+        codeHistoryComponentController.addNewProcess(newProcess);
     }
 }

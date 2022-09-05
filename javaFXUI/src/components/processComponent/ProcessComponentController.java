@@ -27,9 +27,7 @@ public class ProcessComponentController {
     @FXML private Button clearButton;
     @FXML private Button doneButton;
     @FXML private Label errorLabel;
-
     private MainApplicationController mainApplicationController;
-
     private StringBuilder resultText;
 
     @FXML public void initialize(){
@@ -40,13 +38,16 @@ public class ProcessComponentController {
         automatToggle.setToggleGroup(toggleGroup);
         singleToggle.setToggleGroup(toggleGroup);
 
+        singleToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            mainApplicationController.singleModeOn(newValue);
+        });
+
         SegmentedButton segmentedButton = new SegmentedButton(automatToggle, singleToggle);
         segmentedButton.setToggleGroup(toggleGroup);
         segmentedButton.getStyleClass().add(SegmentedButton.STYLE_CLASS_DARK);
 
         toggleContainer.getChildren().clear();
         toggleContainer.getChildren().add(segmentedButton);
-
         processButton.visibleProperty().bind(automatToggle.selectedProperty());
         doneButton.visibleProperty().bind(singleToggle.selectedProperty());
 
@@ -94,6 +95,8 @@ public class ProcessComponentController {
             resultText.append(singleProcess());
         }
         resultTextField.setText(resultText.toString());
+        //mainApplicationController.onProcessButtonPressed(userText, resultText.toString());
+
     }
 
     private void handleDoneButton(){
@@ -107,7 +110,7 @@ public class ProcessComponentController {
         return arr[rand.nextInt(arr.length - 1)];
     }
 
-    public void keyPressed(){
-        //this will be called from the keyboard component!
+    public void keyPressed(String text){
+        userTextField.setText(userTextField.getText().concat(text));
     }
 }
