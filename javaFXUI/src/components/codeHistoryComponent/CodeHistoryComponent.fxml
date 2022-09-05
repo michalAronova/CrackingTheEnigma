@@ -4,14 +4,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 
-<ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeHistoryComponent.CodeHistoryComponentController">
+<ScrollPane fx:id="codeHistoryComponent" fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeHistoryComponent.CodeHistoryComponentController">
    <content>
       <TableView fx:id="codeHistoryTableView">
         <columns>
-          <TableColumn fx:id="codeColumn" editable="false" maxWidth="-1.0" minWidth="79.0" prefWidth="-1.0" sortable="false" text="Code" />
-          <TableColumn fx:id="inputColumn" editable="false" maxWidth="-1.0" minWidth="77.0" prefWidth="-1.0" sortable="false" text="Input" />
-            <TableColumn fx:id="outputColumn" maxWidth="-1.0" minWidth="66.0" prefWidth="-1.0" text="OutPut" />
-            <TableColumn fx:id="timeElapsedColumn" maxWidth="-1.0" minWidth="95.0" prefWidth="-1.0" text="TimeElapsed" />
+          <TableColumn fx:id="codeColumn" editable="false" maxWidth="144.0" minWidth="-1.0" prefWidth="250.0" sortable="false" text="Code" />
+          <TableColumn fx:id="inputColumn" editable="false" maxWidth="159.0" minWidth="-1.0" prefWidth="130.0" sortable="false" text="Input" />
+            <TableColumn fx:id="outputColumn" maxWidth="188.0" minWidth="-1.0" prefWidth="130.0" text="OutPut" />
+            <TableColumn fx:id="timeElapsedColumn" maxWidth="326.0" minWidth="-1.0" prefWidth="100.0" text="Time (ms)" />
         </columns>
       </TableView>
    </content>

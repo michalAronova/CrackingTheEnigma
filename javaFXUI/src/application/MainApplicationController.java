@@ -30,7 +30,9 @@ public class MainApplicationController {
     @FXML private MachineDetailsController machineDetailsController;
     @FXML private CodeConfigComponentController codeConfigComponentController;
     @FXML private CodeObjDisplayComponentController codeObjDisplayComponentController;
-    @FXML private CodeObjDisplayComponentController currentCodeDisplayComponentController;
+    @FXML private CodeObjDisplayComponentController currentCodeDisplayComponent1Controller;
+    @FXML private CodeObjDisplayComponentController currentCodeDisplayComponent2Controller;
+    @FXML private CodeObjDisplayComponentController currentCodeDisplayComponent3Controller;
     @FXML private ProcessComponentController processComponentController;
     @FXML private KeyBoardComponentController keyBoardComponentController;
     @FXML private CodeHistoryComponentController codeHistoryComponentController;
@@ -47,15 +49,25 @@ public class MainApplicationController {
     public void initialize(){
         if(machineDetailsController != null && codeConfigComponentController != null
                 && codeObjDisplayComponentController != null
-                && currentCodeDisplayComponentController != null
+                && currentCodeDisplayComponent1Controller != null
+                && currentCodeDisplayComponent2Controller != null
+                && currentCodeDisplayComponent3Controller != null
+                && processComponentController != null
+                && keyBoardComponentController != null
                 && codeHistoryComponentController != null){
             machineDetailsController.setMainApplicationController(this);
             codeConfigComponentController.setMainApplicationController(this);
             codeObjDisplayComponentController.setMainApplicationController(this);
-            currentCodeDisplayComponentController.setMainApplicationController(this);
+            currentCodeDisplayComponent1Controller.setMainApplicationController(this);
+            currentCodeDisplayComponent2Controller.setMainApplicationController(this);
+            currentCodeDisplayComponent3Controller.setMainApplicationController(this);
             processComponentController.setMainApplicationController(this);
             keyBoardComponentController.setMainApplicationController(this);
             codeHistoryComponentController.setMainApplicationController(this);
+        }
+        else {
+
+            System.out.println("hereeeee");
         }
         engine = new TheEngine();
     }
@@ -119,6 +131,7 @@ public class MainApplicationController {
     }
 
     public void onProcessButtonPressed(String input, String output){
+        System.out.println("hello");
         StatisticData newProcess = new StatisticData(engine.getInitialCode().toString(), input, output, 25.0);
         codeHistoryComponentController.addNewProcess(newProcess);
     }

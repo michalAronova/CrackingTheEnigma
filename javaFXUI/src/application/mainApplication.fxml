@@ -31,7 +31,7 @@
                                        <children>
                                           <fx:include fx:id="machineDetails" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="110.0" minWidth="200.0" source="../components/machineDetails/machineDetails.fxml" BorderPane.alignment="CENTER_LEFT" VBox.vgrow="NEVER" />
                                           <fx:include fx:id="codeObjDisplayComponent" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
-                                          <fx:include fx:id="currentCodeDisplayComponent" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
+                                          <fx:include fx:id="currentCodeDisplayComponent1" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
                                        </children>
                                     </FlowPane>
                                     <HBox prefHeight="330.0" prefWidth="611.0">
@@ -54,28 +54,24 @@
                               <GridPane layoutX="14.0" layoutY="14.0" prefHeight="517.0" prefWidth="878.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="6.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="NEVER" maxWidth="481.88885498046875" minWidth="10.0" />
-                                  <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="147.0" />
-                                    <ColumnConstraints hgrow="NEVER" maxWidth="367.0" minWidth="253.0" prefWidth="345.0" />
+                                  <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="159.0" />
+                                    <ColumnConstraints hgrow="NEVER" maxWidth="367.0" minWidth="253.0" prefWidth="333.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints maxHeight="239.0" minHeight="231.0" prefHeight="239.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="84.0" minHeight="5.0" prefHeight="11.0" vgrow="SOMETIMES" />
-                                  <RowConstraints fx:id="codeHistoryComponent" maxHeight="215.0" minHeight="80.0" prefHeight="209.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="215.0" minHeight="80.0" prefHeight="209.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <fx:include fx:id="currentCodeDisplayComponent1" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="2" />
+                                    <fx:include fx:id="currentCodeDisplayComponent2" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="2" />
                                     <fx:include fx:id="processComponent" source="../components/processComponent/processComponent.fxml" />
                                     <HBox prefHeight="84.0" prefWidth="386.0" GridPane.rowIndex="2">
                                        <children>
                                           <fx:include fx:id="keyBoardComponent" source="../components/keyBoardComponent/keyBoardComponent.fxml" />
                                        </children>
                                     </HBox>
-                                    <HBox GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                       <children>
-                                          <fx:include source="../components/codeHistoryComponent/CodeHistoryComponent.fxml" />
-                                       </children>
-                                    </HBox>
+                                     <fx:include fx:id="codeHistoryComponent" source="../components/codeHistoryComponent/CodeHistoryComponent.fxml" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children>
@@ -86,7 +82,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <fx:include fx:id="currentCodeDisplayComponent11" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
+                              <fx:include fx:id="currentCodeDisplayComponent3" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" />
                            </children>
                         </AnchorPane>
                      </content>

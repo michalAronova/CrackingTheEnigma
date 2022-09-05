@@ -95,8 +95,10 @@ public class ProcessComponentController {
             resultText.append(singleProcess());
         }
         resultTextField.setText(resultText.toString());
-        //mainApplicationController.onProcessButtonPressed(userText, resultText.toString());
-
+        System.out.println(mainApplicationController==null);
+        System.out.println(userText);
+        System.out.println(resultText.toString());
+        mainApplicationController.onProcessButtonPressed(userText, resultText.toString());
     }
 
     private void handleDoneButton(){
