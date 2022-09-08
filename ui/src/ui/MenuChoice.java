@@ -10,7 +10,8 @@ public enum MenuChoice {
     HISTORY_AND_STATISTICS(7, "Show machine history and statistics"),
     SAVE_MACHINE_TO_FILE(8, "Save machine to file"),
     LOAD_MACHINE_FROM_FILE(9, "Load machine from file"),
-    EXIT(10, "Exit");
+    BRUTE_FORCE(10, "Brute Force"),
+    EXIT(11, "Exit");
     private final int menuNumber;
     private final String description;
     private MenuChoice(int menuNumber, String description){

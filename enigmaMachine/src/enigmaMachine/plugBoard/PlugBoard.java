@@ -35,6 +35,25 @@ public class PlugBoard implements Plugs {
         });
     }
 
+    public List<Pair<Character, Character>> getPlugsForCode(){
+        Map<Character, Character> singleMap = new HashMap<>();
+        plugBoard.forEach((k, v) -> {
+            if(!k.equals(v)){
+                if(!singleMap.containsKey(v)){
+                    singleMap.put(k,v);
+                }
+            }
+        });
+
+        List<Pair<Character, Character>> plugs = new ArrayList<>();
+        singleMap.forEach((c1, c2) -> {
+            if(!c1.equals(c2)){
+                plugs.add(new Pair<>(c1, c2));
+            }
+        });
+        return plugs;
+    }
+
     @Override
     public String toString() {
         return "PlugBoard{" + plugBoard + '}';

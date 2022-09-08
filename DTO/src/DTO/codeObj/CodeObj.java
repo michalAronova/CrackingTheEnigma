@@ -42,6 +42,19 @@ public class CodeObj implements Serializable {
         updatedPlugs = true;
     }
 
+    public CodeObj(List<Pair<Integer, Character>> ID2PositionList,
+                   String reflectorID, List<Pair<Character, Character>> plugs,
+                   Map<Integer, Integer> relativeNotchesLocation){
+        this.ID2PositionList = ID2PositionList;
+        this.reflectorID = reflectorID;
+        this.plugs = plugs;
+        this.notchRelativeLocation = relativeNotchesLocation;
+        updatedRotorIds = true;
+        updatedRotorPos = true;
+        updatedReflector = true;
+        updatedPlugs = true;
+    }
+
     public List<Pair<Integer, Character>> getID2PositionList() {
         return ID2PositionList;
     }

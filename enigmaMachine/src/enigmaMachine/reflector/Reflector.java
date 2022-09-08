@@ -19,6 +19,11 @@ public class Reflector implements Reflecting {
     }
 
     @Override
+    public String getID() {
+        return id.toString();
+    }
+
+    @Override
     public String toString() {
         return "Reflector{" +
                 "id=" + id +

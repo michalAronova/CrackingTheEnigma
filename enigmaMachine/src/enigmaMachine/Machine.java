@@ -1,5 +1,6 @@
 package enigmaMachine;
 
+import DTO.codeObj.CodeObj;
 import enigmaMachine.keyBoard.KeyBoard;
 import enigmaMachine.plugBoard.Plugs;
 import enigmaMachine.reflector.Reflecting;
@@ -8,9 +9,7 @@ import enigmaMachine.secret.Secret;
 import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Machine implements Serializable, Cloneable {
     private final KeyBoard keyboard;
@@ -119,13 +118,12 @@ public class Machine implements Serializable, Cloneable {
         return new Machine(this.keyboard.clone(), this.rotorCount);
     }
 
-    public void updateByPositionsList(List<Pair<Integer, Character>> startRotorsPositions) {
+    public void updateByPositionsList(List<Character> startRotorsPositions) {
         for (int i = 0; i < rotors.size(); i++) {
             rotors.get(i)
                     .setInitialPosition(rotors.get(i)
-                    .getRightPermutation()
-                    .indexOf(startRotorsPositions.get(i)
-                            .getValue()));
+                            .getRightPermutation()
+                            .indexOf(startRotorsPositions.get(i)));
         }
     }
 
@@ -135,5 +133,22 @@ public class Machine implements Serializable, Cloneable {
             sb.append(process(c));
         }
         return sb.toString();
+    }
+
+    public int getRotorCount() {
+        return rotorCount;
+    }
+
+    public CodeObj getMachineCode(){
+        List<Pair<Integer, Character>> ID2PositionList = new LinkedList<>();
+        Map<Integer, Integer> notchRelativeLocation = new HashMap<>();
+        String reflectorID = reflector.getID();
+        List<Pair<Character, Character>> plugs = plugBoard.getPlugsForCode();
+        rotors.forEach(rotor -> {
+            ID2PositionList.add(new Pair<>(rotor.getID(), rotor.getCurrentPositionChar()));
+            notchRelativeLocation.put(rotor.getID(), rotor.getRelativeNotch());
+        });
+
+        return new CodeObj(ID2PositionList, reflectorID, plugs, notchRelativeLocation);
     }
 }

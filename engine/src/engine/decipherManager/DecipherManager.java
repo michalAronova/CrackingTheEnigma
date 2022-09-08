@@ -1,11 +1,13 @@
 package engine.decipherManager;
 
 import DTO.codeObj.CodeObj;
+import DTO.missionResult.MissionResult;
 import engine.decipherManager.dictionary.Dictionary;
 import engine.decipherManager.mission.Mission;
 import engine.stock.Stock;
 import enigmaMachine.Machine;
 import enigmaMachine.keyBoard.KeyBoard;
+import enigmaMachine.rotor.Rotor;
 import javafx.util.Pair;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import schema.generated.CTEDecipher;
@@ -20,7 +22,7 @@ import java.util.concurrent.*;
 public class DecipherManager {
     private int agentCount;
     private Dictionary dictionary;
-    private int missionSize;
+    private int missionSize = 100;
     private Difficulty difficulty;
     private Map<Difficulty, Integer> diff2totalWork;
     private Machine machine;
@@ -28,6 +30,8 @@ public class DecipherManager {
     private CodeObj machineCode;
 
     private String stockEncoded;
+
+    private double possiblePositionPermutations;
 
     private String machineEncoded;
     public DecipherManager(CTEDecipher cteDecipher, Map<Difficulty, Integer> diff2totalWork, Machine machine,
@@ -43,7 +47,14 @@ public class DecipherManager {
         catch(IOException e){
             e.printStackTrace();
         }
+        possiblePositionPermutations = calculatePermutationsCount();
     }
+
+    private double calculatePermutationsCount() {
+        return Math.pow(stock.getKeyBoard().length(), machine.getRotorCount());
+    }
+
+
     public DecipherManager() { System.out.println("DM was created"); }
 
     public Difficulty getDifficulty() { return difficulty; }
@@ -63,7 +74,7 @@ public class DecipherManager {
 
     public void serializeMachine(Machine machine){
         try{
-            machineEncoded = serializableToString(this.machine);
+            machineEncoded = serializableToString(machine);
         }
         catch(IOException e){
             e.printStackTrace();
@@ -81,104 +92,65 @@ public class DecipherManager {
     }
     public void manageAgents() {
         //debug
-        String toDecrypt = "hello world";
+        Machine copiedMachine = deepCopyMachine();
+        System.out.println("decrypting code: ");
+        System.out.println(copiedMachine.getMachineCode());
+        String encryption = copiedMachine.processWord("hello tonight");
+        //
+        BlockingQueue<MissionResult> resultQueue = new LinkedBlockingQueue<>();
+
         //
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
                 .namingPattern("Agent %d")
                 .build();
         BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<>(2);
-        ThreadPoolExecutor threadExecutor = new ThreadPoolExecutor(3, 3,
+        ThreadPoolExecutor threadExecutor = new ThreadPoolExecutor(agentCount, agentCount,
                                             Long.MAX_VALUE, TimeUnit.NANOSECONDS, workQueue , factory);
 
         threadExecutor.prestartAllCoreThreads();
         try {
-            int totalMissionsAmount = diff2totalWork.get(difficulty) / missionSize;
-            int leftoverMissionsAmount = diff2totalWork.get(difficulty) % missionSize;
-            List<Pair<Integer,Character>> nextRotorsPositions = initializeRotorsPositions(machineCode.getID2PositionList());
-                    //HERE WILL BE CALL FOR HARDER LEVELS CONFIG
+            double totalMissionsAmount = possiblePositionPermutations / missionSize;
+            double leftoverMissionsAmount = possiblePositionPermutations % missionSize;
+            List<Character> nextRotorsPositions = initializeRotorsPositions(machineCode.getID2PositionList());
+            //HERE WILL BE CALL FOR HARDER LEVELS CONFIG
             //reflector loop
             //      rotor id loop -> which rotors?
             //          rotor placement -> where rotors?
             //              positions loop -> f.e. AA AB BA BB (written below)
             for (int i = 0; i <= totalMissionsAmount; i++) {
                 if(i != 0) {
-                    nextRotorsPositions = getNextRotorsPositions(stock.getKeyBoard(), nextRotorsPositions, missionSize);
+                    nextRotorsPositions = getNextRotorsPositions(nextRotorsPositions, missionSize);
                 }
                 if(i == totalMissionsAmount){
-                    workQueue.put(new Mission(deepCopyMachine(), nextRotorsPositions, leftoverMissionsAmount, toDecrypt, dictionary));
+                    workQueue.put(new Mission(deepCopyMachine(), nextRotorsPositions, leftoverMissionsAmount,
+                            encryption, dictionary, this::speedometer));
                 }
                 else{
-                    workQueue.put(new Mission(deepCopyMachine(), nextRotorsPositions, missionSize, toDecrypt, dictionary));
+                    workQueue.put(new Mission(deepCopyMachine(), nextRotorsPositions, missionSize,
+                            encryption, dictionary, this::speedometer));
                 }
             }
         }
         catch (InterruptedException e) {
             System.out.println(Thread.currentThread().getName() + " was interrupted.");
         }
-
-        //what does the thread need to do its mission?
-        // -----> what is in the mission so the thread can work it?
-        //1. machine, configured by the DM!
-        //2.mission size, so agent knows how many moves to make on the machine
-        //3.blockingQueue - where should it put its findings?
-
-
-        //we need: machine maker
-        //                            1024                          100         = 11 (100x10 + 24)
-        //loop size is: total work (AAA-ZZZ) / mission size (chosen by user)
-
-        // AAA AAB AAC AAD sent!
-        //
-        // ZZZ - 24
-
-        //MICHALIOT FRAMEWORK
-/*
-        List<Pair<Integer,Character>> id2Position = new ArrayList<>();
-        id2Position.add(new Pair<>(1, 'A'));
-        id2Position.add(new Pair<>(3, 'A'));
-        id2Position.add(new Pair<>(2, 'A'));
-
-        String keyboard = "ABCDEF";
-        int missionSize = 100;
-        for(int i = 0; i < 11; i++){
-            if(i != 0){
-                id2Position = speedometer(keyboard, id2Position, missionSize);
-            }
-            //clone new machine
-            //configure machine by id2position
-            //submit new task (mission!) with this new machine, and mission size
-            threadExecutor.submit(() -> System.out.println(Thread.currentThread().getName()));
-        }
-*/
         threadExecutor.shutdown();
     }
 
-//    private Machine cloneMachine(List<Pair<Integer, Character>> rotorsPosition) {
-//        //Machine machine =
-//    }
-
-    private List<Pair<Integer, Character>> initializeRotorsPositions(List<Pair<Integer,Character>> origin) {
-        List<Pair<Integer, Character>> initialized = new ArrayList<>();
+    private List<Character> initializeRotorsPositions(List<Pair<Integer,Character>> origin) {
+        List<Character> initialized = new ArrayList<>();
         for (Pair<Integer, Character> p: origin) {
-            initialized.add(new Pair<>(p.getKey(), stock.getKeyBoard().charAt(0)));
+            initialized.add(stock.getKeyBoard().charAt(0));
         }
         return initialized;
     }
 
-    private List<Pair<Integer,Character>> getNextRotorsPositions(KeyBoard keyboard,
-                                                                 List<Pair<Integer,Character>> start, int missionSize){
-        // 0 like in mivneh mahshevim
-        // [2, 1, 0]
-        // [[1,A], [2,A], [3,A]]
-        // [A,A,A]
-        List<Character> characters = new ArrayList<>();
-        for (Pair<Integer, Character> p: start) {
-            characters.add(p.getValue());
-        }
+    private List<Character> getNextRotorsPositions(List<Character> start, int missionSize){
+        List<Character> characters = new ArrayList<>(start);
         for(int i = 0; i < missionSize ; i++){
-            characters = speedometer(characters, keyboard);
+            characters = speedometer(characters);
         }
-        return setNewCharacters(start, characters);
+        return characters;
     }
 
     private List<Pair<Integer, Character>> setNewCharacters(List<Pair<Integer, Character>> start, List<Character> characters) {
@@ -191,15 +163,19 @@ public class DecipherManager {
         return updated;
     }
 
-    private List<Character> speedometer(List<Character> characters, KeyBoard keyboard) {
+    private List<Character> speedometer(List<Character> characters) {
         List<Character> updated = new ArrayList<>(characters);
-        char[] board = keyboard.toString().toCharArray();
+        List<Character> keys = stock.getKeyBoard().getAsCharList();
+        String keysString = stock.getKeyBoard().getKeyBoardString();
+
         for(int i = 0; i < characters.size(); i++){
-            if(updated.get(i).equals(board[board.length - 1])){
-                updated.set(i, board[0]);
+            if(updated.get(i).equals(keys.get(keys.size() - 1))){
+                updated.set(i, keys.get(0));
             }
             else{
-                updated.set(i, board[keyboard.indexOf(updated.get(i)) + 1]);
+                updated.set(i, keys.get(keysString
+                                            .indexOf(
+                                                updated.get(i)) + 1));
                 break;
             }
         }

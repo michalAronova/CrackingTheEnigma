@@ -3,6 +3,7 @@ package engine.decipherManager.dictionary;
 import schema.generated.CTEDictionary;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Dictionary {
     private Set<String> words;
@@ -20,6 +21,7 @@ public class Dictionary {
 
         cteWords = removeExcludedChars(cteWords);
         this.words = new HashSet<>(Arrays.asList(cteWords.split(" ")));
+        this.words = this.words.stream().map(String::toUpperCase).collect(Collectors.toSet());
     }
 
     public Set<String> getWords() {
@@ -70,6 +72,6 @@ public class Dictionary {
     }
 
     public boolean isInDictionary(String word) {
-        return words.contains(word);
+        return words.contains(word.toUpperCase());
     }
 }

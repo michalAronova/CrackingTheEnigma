@@ -10,5 +10,7 @@ public interface UserInterface extends Runnable {
     void showHistoryAndStatistics();
     void saveMachineToFile();
     void loadMachineFromFile();
+
+    void bruteForce();
     void exit();
 }

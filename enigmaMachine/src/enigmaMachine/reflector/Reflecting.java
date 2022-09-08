@@ -4,4 +4,6 @@ import java.io.Serializable;
 
 public interface Reflecting extends Serializable, Cloneable {
     int passThroughReflector(int toReflect);
+
+    String getID();
 }

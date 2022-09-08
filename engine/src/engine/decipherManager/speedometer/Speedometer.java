@@ -1,5 +1,9 @@
 package engine.decipherManager.speedometer;
 
-public interface Speedometer<T, K> {
-    T calculateNext(T value, K calculateBy);
+import enigmaMachine.keyBoard.KeyBoard;
+
+import java.util.List;
+
+public interface Speedometer {
+    List<Character> calculateNext(List<Character> value);
 }

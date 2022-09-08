@@ -66,14 +66,14 @@ public class ProcessComponentController {
         processButton.visibleProperty().bind(automatToggle.selectedProperty());
         doneButton.visibleProperty().bind(singleToggle.selectedProperty());
 
-        userTextField.setOnAction(e -> {
-            if(singleToggle.isSelected()){
-                handleDoneButton();
-            }
-            else{
-                handleProcessButton();
-            }
-        });
+//        userTextField.setOnAction(e -> {
+//            if(singleToggle.isSelected()){
+//                handleDoneButton();
+//            }
+//            else{
+//                handleProcessButton();
+//            }
+//        });
 
         resultText = new StringBuilder();
         userTextField.setOnKeyTyped(ke -> {

@@ -31,10 +31,7 @@ import DTO.techSpecs.TechSpecs;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -373,6 +370,11 @@ public class TheEngine implements Engine {
     }
 
     public List<Character> getKeyBoardList(){ return stock.getKeyBoard().getAsCharList(); }
+
+    @Override
+    public void manageAgents(){
+        DM.manageAgents();
+    }
     @Override
     public String toString() {
         return "TheEngine{" +

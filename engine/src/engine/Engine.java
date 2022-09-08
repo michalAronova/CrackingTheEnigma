@@ -56,4 +56,6 @@ public interface Engine extends Serializable {
 
     void enterManualHistory(String input, String output);
 
+    void manageAgents();
+
 }

@@ -75,6 +75,10 @@ public class ConsoleUserInterface implements UserInterface {
                 loadMachineFromFile();
                 manageMenu();
                 break;
+            case BRUTE_FORCE:
+                bruteForce();
+                manageMenu();
+                break;
             case EXIT:
                 exit();
                 break;
@@ -146,8 +150,8 @@ public class ConsoleUserInterface implements UserInterface {
         do {
             try {
                 System.out.println("Please enter a full path to your desired XML to load the machine.");
-                path = s.nextLine();
-                engine.loadDataFromXML(path);
+                //path = s.nextLine();
+                engine.loadDataFromXML("C:/Users/micha/IdeaProjects/CrackingTheEnigma/engine/src/resources/ex2-basic.xml");
                 XMLLoaded = true;
                 codeLoaded = false; //new XML - previous code is KAPOOT
             } catch (InvalidXMLException e) {
@@ -422,5 +426,10 @@ public class ConsoleUserInterface implements UserInterface {
         catch(SecurityException e){
             System.out.println("Error: you do not have permissions to this file. Returning to Main Menu.");
         }
+    }
+
+    public void bruteForce(){
+        System.out.println("brute force initiated!");
+        engine.manageAgents();
     }
 }

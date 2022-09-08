@@ -8,4 +8,5 @@ public interface Plugs extends Serializable, Cloneable {
     Character passThroughPlugBoard(Character input);
     void clearAllPlugs();
     void setAllPlugs(List<Pair<Character, Character>> plugs);
+    List<Pair<Character, Character>> getPlugsForCode();
 }
