@@ -68,4 +68,8 @@ public class Dictionary {
         }
         return cleaned;
     }
+
+    public boolean isInDictionary(String word) {
+        return words.contains(word);
+    }
 }

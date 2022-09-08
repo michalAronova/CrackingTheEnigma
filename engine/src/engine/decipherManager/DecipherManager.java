@@ -44,9 +44,7 @@ public class DecipherManager {
             e.printStackTrace();
         }
     }
-    public DecipherManager() {
-        System.out.println("DM was created");
-    }
+    public DecipherManager() { System.out.println("DM was created"); }
 
     public Difficulty getDifficulty() { return difficulty; }
     public int getAgentCount() {
