@@ -10,7 +10,9 @@ import javafx.util.Pair;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import schema.generated.CTEDecipher;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
@@ -24,6 +26,10 @@ public class DecipherManager {
     private Machine machine;
     private Stock stock;
     private CodeObj machineCode;
+
+    private String stockEncoded;
+
+    private String machineEncoded;
     public DecipherManager(CTEDecipher cteDecipher, Map<Difficulty, Integer> diff2totalWork, Machine machine,
                            Stock stock){
         agentCount = cteDecipher.getAgents();
@@ -31,6 +37,12 @@ public class DecipherManager {
         this.diff2totalWork = diff2totalWork;
         this.machine = machine;
         this.stock = stock;
+        try{
+            stockEncoded = serializableToString(this.stock);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
     public DecipherManager() {
         System.out.println("DM was created");
@@ -50,7 +62,29 @@ public class DecipherManager {
         DecipherManager DM = new DecipherManager();
         DM.manageAgents();
     }
+
+    public void serializeMachine(Machine machine){
+        try{
+            machineEncoded = serializableToString(this.machine);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public Machine deepCopyMachine(){
+        try{
+            return (Machine)objectFromString(this.machineEncoded);
+        }
+        catch(ClassNotFoundException | IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
     public void manageAgents() {
+        //debug
+        String toDecrypt = "hello world";
+        //
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
                 .namingPattern("Agent %d")
                 .build();
@@ -61,13 +95,23 @@ public class DecipherManager {
         threadExecutor.prestartAllCoreThreads();
         try {
             int totalMissionsAmount = diff2totalWork.get(difficulty) / missionSize;
+            int leftoverMissionsAmount = diff2totalWork.get(difficulty) % missionSize;
             List<Pair<Integer,Character>> nextRotorsPositions = initializeRotorsPositions(machineCode.getID2PositionList());
-            for (int i = 0; i < totalMissionsAmount; i++) {
+                    //HERE WILL BE CALL FOR HARDER LEVELS CONFIG
+            //reflector loop
+            //      rotor id loop -> which rotors?
+            //          rotor placement -> where rotors?
+            //              positions loop -> f.e. AA AB BA BB (written below)
+            for (int i = 0; i <= totalMissionsAmount; i++) {
                 if(i != 0) {
                     nextRotorsPositions = getNextRotorsPositions(stock.getKeyBoard(), nextRotorsPositions, missionSize);
                 }
-                Machine machine = cloneMachine(nextRotorsPositions);
-                workQueue.put(new Mission(i));
+                if(i == totalMissionsAmount){
+                    workQueue.put(new Mission(deepCopyMachine(), nextRotorsPositions, leftoverMissionsAmount, toDecrypt, dictionary));
+                }
+                else{
+                    workQueue.put(new Mission(deepCopyMachine(), nextRotorsPositions, missionSize, toDecrypt, dictionary));
+                }
             }
         }
         catch (InterruptedException e) {
@@ -111,9 +155,9 @@ public class DecipherManager {
         threadExecutor.shutdown();
     }
 
-    private Machine cloneMachine(List<Pair<Integer, Character>> rotorsPosition) {
-        //Machine machine =
-    }
+//    private Machine cloneMachine(List<Pair<Integer, Character>> rotorsPosition) {
+//        //Machine machine =
+//    }
 
     private List<Pair<Integer, Character>> initializeRotorsPositions(List<Pair<Integer,Character>> origin) {
         List<Pair<Integer, Character>> initialized = new ArrayList<>();
@@ -165,4 +209,22 @@ public class DecipherManager {
     }
 
     public void setMachineCode(CodeObj code) { machineCode = code; }
+
+    private static String serializableToString( Serializable o ) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(o);
+        oos.close();
+        return Base64.getEncoder().encodeToString(baos.toByteArray());
+    }
+
+    private static Object objectFromString(String s) throws IOException, ClassNotFoundException
+    {
+        byte [] data = Base64.getDecoder().decode(s);
+        ObjectInputStream ois = new ObjectInputStream(
+                new ByteArrayInputStream(data));
+        Object o  = ois.readObject();
+        ois.close();
+        return o;
+    }
 }

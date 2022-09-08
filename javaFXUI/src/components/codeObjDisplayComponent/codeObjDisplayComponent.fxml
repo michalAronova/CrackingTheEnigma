@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -12,10 +13,10 @@
 
 <ScrollPane fitToHeight="true" fitToWidth="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeObjDisplayComponent.CodeObjDisplayComponentController">
     <content>
-        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="246.0">
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="83.0" prefWidth="87.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="-Infinity" prefWidth="159.0" />
+                <ColumnConstraints hgrow="NEVER" maxWidth="151.0" minWidth="83.0" prefWidth="87.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="-Infinity" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints vgrow="NEVER" />
@@ -62,7 +63,7 @@
                 </AnchorPane>
                 <AnchorPane GridPane.rowIndex="3">
                     <children>
-                        <Label layoutY="5.0" text="Plugs">
+                        <Label layoutY="5.0" text="Plugs" AnchorPane.topAnchor="5.0">
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
@@ -105,20 +106,12 @@
                         <Insets />
                     </GridPane.margin>
                 </AnchorPane>
-                <HBox fx:id="plugsConfiguredHBox" fillHeight="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <children>
-                        <HBox fx:id="plugHboxWrapper">
-                            <HBox.margin>
-                                <Insets />
-                            </HBox.margin>
-                        </HBox>
-                    </children>
-                </HBox>
                 <AnchorPane fx:id="reflectorDataAnchorPane" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </GridPane.margin>
                 </AnchorPane>
+            <FlowPane fx:id="plugsFlowPane" prefHeight="1.0" prefWidth="225.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
             </children>
         </GridPane>
     </content>

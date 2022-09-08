@@ -1,6 +1,7 @@
 package engine;
 
 import DTO.codeHistory.CodeHistory;
+import DTO.codeHistory.Translation;
 import DTO.codeObj.CodeObj;
 import engine.decipherManager.DecipherManager;
 import engine.decipherManager.Difficulty;
@@ -44,6 +45,7 @@ public class TheEngine implements Engine {
     private DecipherManager DM;
     private CodeObj initialCode;
     private int processedMsgsCnt;
+    private Pair<CodeObj, Translation> lastTranslationMade;
     private final LinkedList<CodeHistory> codesHistories = new LinkedList<>();
     private final static String JAXB_XML_PACKAGE_NAME = "schema.generated";
     private final static int MIN_ROTOR_COUNT = 2;
@@ -99,6 +101,7 @@ public class TheEngine implements Engine {
         machine.updateBySecret(secretFromCodeObj(initialCode));
         initialCode.setNotchRelativeLocation(getRelativeNotchesMap(initialCode.getID2PositionList()));
         DM.setMachineCode(machineCode);
+        DM.serializeMachine(this.machine);
     }
 
     private Secret secretFromCodeObj(CodeObj machineCode){
@@ -130,8 +133,21 @@ public class TheEngine implements Engine {
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
         processedMsgsCnt++;
-        codesHistories.getLast().addTranslation(msg, sb.toString(), timeElapsed);
+        Translation translation = new Translation(msg, sb.toString(), timeElapsed);
+        codesHistories.getLast().addTranslation(translation);
+        lastTranslationMade = new Pair<>(codesHistories.getLast().getCode(), translation);
         return sb.toString();
+    }
+    @Override
+    public Pair<CodeObj, Translation> getLastTranslationMade() {
+        return lastTranslationMade;
+    }
+    @Override
+    public Character processCharacterWithoutHistory(Character c){
+        if (stock.getKeyBoard().getAsCharList().contains(c)){
+            return machine.process(c);
+        }
+        return null;
     }
 
     private CodeObj autoGenerateCodeObj(){
@@ -320,6 +336,7 @@ public class TheEngine implements Engine {
     public int getProcessedMsgsCnt() {
         return processedMsgsCnt;
     }
+
     @Override
     public CodeObj getInitialCode() {
         return initialCode;
@@ -347,6 +364,13 @@ public class TheEngine implements Engine {
     public int getTotalRotorAmount(){ return stock.getRotorMap().size(); }
     public int getReflectorCount(){ return stock.getReflectorMap().size(); }
     public boolean isStockLoaded(){ return stock != null; }
+
+    public void enterManualHistory(String input, String output){
+        if(!initialCode.toString().equals(codesHistories.getLast().getCode().toString())){
+            codesHistories.addLast(new CodeHistory(initialCode));
+        }
+        codesHistories.getLast().addTranslation(new Translation(input, output, 25));
+    }
 
     public List<Character> getKeyBoardList(){ return stock.getKeyBoard().getAsCharList(); }
     @Override

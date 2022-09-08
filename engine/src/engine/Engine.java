@@ -1,6 +1,7 @@
 package engine;
 
 import DTO.codeHistory.CodeHistory;
+import DTO.codeHistory.Translation;
 import DTO.codeObj.CodeObj;
 import DTO.techSpecs.TechSpecs;
 import enigmaMachine.secret.Secret;
@@ -23,6 +24,8 @@ public interface Engine extends Serializable {
 
     String processMsg(String msg);
 
+    Character processCharacterWithoutHistory(Character character);
+
     void resetMachine();
 
     void validateAndSetReflector(CodeObj underConstructionCode, String wantedReflectorID);
@@ -34,6 +37,8 @@ public interface Engine extends Serializable {
     void validateAndSetRotorPositions(CodeObj underConstructionCode, String positionsOfRotors);
 
     List<CodeHistory> showCodeHistory();
+
+    Pair<CodeObj, Translation> getLastTranslationMade();
 
     int getProcessedMsgsCnt();
 
@@ -48,4 +53,7 @@ public interface Engine extends Serializable {
     int getReflectorCount();
 
     boolean isStockLoaded();
+
+    void enterManualHistory(String input, String output);
+
 }

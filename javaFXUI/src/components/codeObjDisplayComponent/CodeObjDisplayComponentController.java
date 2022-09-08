@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
@@ -13,6 +14,7 @@ import javafx.util.Pair;
 public class CodeObjDisplayComponentController {
     @FXML private AnchorPane reflectorDataAnchorPane;
     @FXML private HBox plugsConfiguredHBox;
+    @FXML private FlowPane plugsFlowPane;
     @FXML private HBox rotorsDataHBox;
 
     private MainApplicationController mainApplicationController;
@@ -27,7 +29,8 @@ public class CodeObjDisplayComponentController {
     public void onCodeChosen(CodeObj code){
         rotorsDataHBox.getChildren().clear();
         reflectorDataAnchorPane.getChildren().clear();
-        plugsConfiguredHBox.getChildren().clear();
+        //plugsConfiguredHBox.getChildren().clear();
+        plugsFlowPane.getChildren().clear();
 
         for (int i = code.getID2PositionList().size() - 1; i >= 0; i--) {
             int ID = code.getID2PositionList().get(i).getKey();
@@ -38,8 +41,8 @@ public class CodeObjDisplayComponentController {
         }
 
         reflectorDataAnchorPane.getChildren().add(createReflectorLabel(code.getReflectorID()));
-
-        code.getPlugs().forEach((p) -> plugsConfiguredHBox.getChildren().add(createPlugLabel(p)));
+        code.getPlugs().forEach((p) -> plugsFlowPane.getChildren().add(createPlugLabel(p)));
+        //code.getPlugs().forEach((p) -> plugsConfiguredHBox.getChildren().add(createPlugLabel(p)));
     }
 
     private HBox createPlugLabel(Pair<Character, Character> newPlug) {
@@ -80,4 +83,5 @@ public class CodeObjDisplayComponentController {
         HBox.setMargin(vBox, new Insets(3, 3, 3, 3));
         return vBox;
     }
+
 }

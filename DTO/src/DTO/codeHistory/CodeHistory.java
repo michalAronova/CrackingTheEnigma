@@ -19,6 +19,14 @@ public class CodeHistory implements Serializable {
         inputOutput.add(new Translation(input, output, time));
     }
 
+    public void addTranslation(Translation translation){
+        inputOutput.add(translation);
+    }
+
+    public CodeObj getCode(){
+        return code;
+    }
+
     @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();

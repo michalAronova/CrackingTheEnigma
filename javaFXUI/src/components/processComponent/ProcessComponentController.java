@@ -1,15 +1,16 @@
 package components.processComponent;
 
 import application.MainApplicationController;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 import org.controlsfx.control.SegmentedButton;
-
-import java.util.Random;
 
 public class ProcessComponentController {
 
@@ -23,6 +24,7 @@ public class ProcessComponentController {
     @FXML private TextField resultTextField;
 
     @FXML private Button processButton;
+    @FXML private Button resetButton;
 
     @FXML private Button clearButton;
     @FXML private Button doneButton;
@@ -30,8 +32,12 @@ public class ProcessComponentController {
     private MainApplicationController mainApplicationController;
     private StringBuilder resultText;
 
+    private FadeTransition errorTransition;
+
     @FXML public void initialize(){
         errorLabel.setOpacity(0);
+        errorLabel.getStyleClass().add("error-message");
+        errorTransition = createErrorTransition();
         resultTextField.setDisable(true);
 
         PersistentButtonToggleGroup toggleGroup = new PersistentButtonToggleGroup();
@@ -40,7 +46,16 @@ public class ProcessComponentController {
 
         singleToggle.selectedProperty().addListener((observable, oldValue, newValue) -> {
             mainApplicationController.singleModeOn(newValue);
+            if(newValue){
+                clearAllFields();
+            }
         });
+
+        automatToggle.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            if(newValue){
+                clearAllFields();
+            }
+        }));
 
         SegmentedButton segmentedButton = new SegmentedButton(automatToggle, singleToggle);
         segmentedButton.setToggleGroup(toggleGroup);
@@ -61,10 +76,43 @@ public class ProcessComponentController {
         });
 
         resultText = new StringBuilder();
+        userTextField.setOnKeyTyped(ke -> {
+            String characterTyped = ke.getCharacter().toUpperCase();
+            if(!mainApplicationController.checkForKeyInKeyBoard(characterTyped.charAt(0))
+            && !characterTyped.equals(System.lineSeparator())){
+                //ENTER IS ALSO HERE :(
+                //CTRL+V IS ALSO HERE...
+                errorLabel.setText(ke.getCharacter() + " is not part of this machine's keyboard");
+                errorTransition.play();
+                ke.consume();
+            }
+        });
         userTextField.textProperty().addListener((observable, oldValue, newValue)
                                                     -> textListener(oldValue, newValue));
 
         processButton.setOnAction(e -> handleProcessButton());
+        doneButton.setOnAction(e -> handleDoneButton());
+        resetButton.setOnAction(e -> handleResetButton());
+        clearButton.setOnAction(e -> clearAllFields());
+    }
+
+    private FadeTransition createErrorTransition() {
+        errorTransition = new FadeTransition(Duration.millis(3500), errorLabel);
+        errorTransition.setFromValue(0);
+        errorTransition.setToValue(1.0);
+        errorTransition.setCycleCount(2);
+        errorTransition.setAutoReverse(true);
+        return errorTransition;
+    }
+
+    private void clearAllFields() {
+        userTextField.clear();
+        resultText.delete(0, resultText.length());
+        resultTextField.clear();
+    }
+
+    private void handleResetButton() {
+        mainApplicationController.codeResetRequested();
     }
 
     public void setMainApplicationController(MainApplicationController mainApplicationController){
@@ -73,46 +121,38 @@ public class ProcessComponentController {
 
 
     private void textListener(String oldValue, String newValue){
-        //if not in keyboard, notify then return
-        //use of errorLabel with animation of "opacity" to show up and disappear
         if(singleToggle.isSelected()){
-            if(oldValue.length() < newValue.length()){
-                resultText.append(singleProcess());
+            int change = newValue.length() - oldValue.length();
+            if(change > 1){
+                userTextField.setText(oldValue);
+                errorLabel.setText("You're in single mode, pasting is not supported");
+                errorTransition.play();
+            }
+            else if(change == 1){
+                resultText.append(mainApplicationController.processSingleCharacter(newValue.charAt(0)));
                 resultTextField.setText(resultText.toString());
                 //call the keyboard component... notify
             }
             else{
-                resultText.deleteCharAt(resultText.length() - 1);
+                resultText.delete(resultText.length() + change, resultText.length());
                 resultTextField.setText(resultText.toString());
             }
         }
     }
 
     private void handleProcessButton() {
-        String userText = userTextField.getText();
-        resultText.delete(0, resultText.length());
-        for(char c: userText.toCharArray()){
-            resultText.append(singleProcess());
-        }
-        resultTextField.setText(resultText.toString());
-        System.out.println(mainApplicationController==null);
-        System.out.println(userText);
-        System.out.println(resultText.toString());
-        mainApplicationController.onProcessButtonPressed(userText, resultText.toString());
+        mainApplicationController.onProcessButtonPressed(userTextField.getText());
     }
 
     private void handleDoneButton(){
-        //does something...
-    }
-
-    private char singleProcess(){
-        String str = "abcdefghijklmnop";
-        Random rand = new Random();
-        char[] arr = str.toCharArray();
-        return arr[rand.nextInt(arr.length - 1)];
+        mainApplicationController.onSingleModeDone(userTextField.getText(), resultTextField.getText());
     }
 
     public void keyPressed(String text){
         userTextField.setText(userTextField.getText().concat(text));
+    }
+
+    public void showOutput(String output) {
+        resultTextField.setText(output);
     }
 }

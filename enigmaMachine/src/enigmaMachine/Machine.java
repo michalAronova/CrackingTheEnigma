@@ -5,6 +5,7 @@ import enigmaMachine.plugBoard.Plugs;
 import enigmaMachine.reflector.Reflecting;
 import enigmaMachine.rotor.Rotor;
 import enigmaMachine.secret.Secret;
+import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.Collections;
@@ -116,5 +117,23 @@ public class Machine implements Serializable, Cloneable {
     @Override
     public Machine clone(){
         return new Machine(this.keyboard.clone(), this.rotorCount);
+    }
+
+    public void updateByPositionsList(List<Pair<Integer, Character>> startRotorsPositions) {
+        for (int i = 0; i < rotors.size(); i++) {
+            rotors.get(i)
+                    .setInitialPosition(rotors.get(i)
+                    .getRightPermutation()
+                    .indexOf(startRotorsPositions.get(i)
+                            .getValue()));
+        }
+    }
+
+    public String processWord(String toDecrypt) {
+        StringBuilder sb = new StringBuilder();
+        for (Character c:toDecrypt.toCharArray()) {
+            sb.append(process(c));
+        }
+        return sb.toString();
     }
 }
