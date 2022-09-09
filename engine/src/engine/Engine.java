@@ -58,4 +58,6 @@ public interface Engine extends Serializable {
 
     void manageAgents();
 
+    int getAgentCountFromDM();
+
 }

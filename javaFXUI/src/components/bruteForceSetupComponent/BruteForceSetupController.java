@@ -4,10 +4,7 @@ import application.MainApplicationController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +12,18 @@ import java.util.List;
 public class BruteForceSetupController {
     @FXML private Label totalMissionNumLabel;
     @FXML private Label agentsNumLabel;
+    @FXML private Slider numberOfAgentsSlider;
     @FXML private ComboBox<?> difficultyComboBox;
     @FXML private TextField missionSizeTextBox;
     @FXML private Button bruteForceSetButton;
     @FXML private Button bruteForceStartButton;
     private MainApplicationController mainApplicationController;
-
-    @FXML public void initialize(){
+    private int agentCount;
+    @FXML public void initialize(){}
+    public void initialBruteForceSetUp(){
+        numberOfAgentsSlider.setMax(mainApplicationController.getAgentCount());
         initialDiffComboBox();
     }
-
     private void initialDiffComboBox() {
         difficultyComboBox.getItems().clear();
         List<String> list = new ArrayList<String>();
@@ -39,4 +38,6 @@ public class BruteForceSetupController {
     public void setMainApplicationController(MainApplicationController mainApplicationController){
         this.mainApplicationController = mainApplicationController;
     }
+
+    public void setAgentCount(int agentCount) { this.agentCount = agentCount; }
 }

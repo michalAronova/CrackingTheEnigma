@@ -375,6 +375,10 @@ public class TheEngine implements Engine {
     public void manageAgents(){
         DM.manageAgents();
     }
+
+    public int getAgentCountFromDM(){
+        return DM.getAgentCount();
+    }
     @Override
     public String toString() {
         return "TheEngine{" +
