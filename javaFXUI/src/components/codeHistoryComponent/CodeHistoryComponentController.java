@@ -37,9 +37,6 @@ public class CodeHistoryComponentController {
         timeElapsedColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         timeElapsedColumn.setEditable(false);
         timeElapsedColumn.setSortable(false);
-        addNewProcess(new StatisticData("SomeCode", "hello", "world", 25.0));
-        addNewProcess(new StatisticData("SomeCode", "hello", "world", 26.0));
-        addNewProcess(new StatisticData("NewCode", "hello", "world", 26.0));
     }
     public void setMainApplicationController(MainApplicationController mainApplicationController){
         this.mainApplicationController = mainApplicationController;

@@ -58,12 +58,8 @@ public class DecipherManager {
     public DecipherManager() { System.out.println("DM was created"); }
 
     public Difficulty getDifficulty() { return difficulty; }
-    public int getAgentCount() {
-        return agentCount;
-    }
-    public Dictionary getDictionary() {
-        return dictionary;
-    }
+    public int getAgentCount() { return agentCount; }
+    public Dictionary getDictionary() { return dictionary; }
     public void setMissionSize(int missionSize) { this.missionSize = missionSize; }
     public void setDifficulty(Difficulty difficulty) { this.difficulty = difficulty; }
 

@@ -1,10 +1,13 @@
 package components.keyBoardComponent;
 
 import application.MainApplicationController;
+import javafx.animation.FillTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.util.List;
 
@@ -12,7 +15,7 @@ public class KeyBoardComponentController {
 
     @FXML private FlowPane keyBoardFlowPane;
 
-    @FXML private Button keyButtonA;
+    @FXML private Button keybutton;
     private MainApplicationController mainApplicationController;
 
     @FXML private void initialize() {}
@@ -39,6 +42,10 @@ public class KeyBoardComponentController {
     }
     private void onKeyButtonPressed(String text){
         mainApplicationController.keyBoardButtonPressed(text);
+        /*FillTransition ft = new FillTransition(Duration.millis(3000), this, Color.RED, Color.BLUE);
+        ft.setCycleCount(3);
+        ft.setAutoReverse(true);
+        ft.play();*/
     }
 
     public void setFlowPaneDisable(boolean disable){

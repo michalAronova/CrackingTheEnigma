@@ -13,8 +13,8 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="544.0" stylesheets="@rotorConfigComponent.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeConfigurationComponent.rotorConfigurationComponent.RotorConfigComponentController">
     <columnConstraints>
-        <ColumnConstraints hgrow="ALWAYS" maxWidth="439.33331298828125" minWidth="397.33331298828125" prefWidth="397.33331298828125" />
-      <ColumnConstraints hgrow="NEVER" maxWidth="146.66668701171875" minWidth="10.0" prefWidth="146.66668701171875" />
+        <ColumnConstraints hgrow="ALWAYS" maxWidth="439.33331298828125" minWidth="362.0" prefWidth="372.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="182.0" minWidth="10.0" prefWidth="172.0" />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -22,7 +22,7 @@
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <children>
-                <ScrollPane prefHeight="400.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <ScrollPane prefHeight="400.0" prefWidth="369.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <content>
                         <VBox>
                             <children>
@@ -45,6 +45,8 @@
         </AnchorPane>
       <FlowPane fx:id="rotorChoicesFlowPane" hgap="2.0" prefHeight="200.0" prefWidth="200.0" vgap="2.0" GridPane.columnIndex="1">
          <children>
+            <Label text="Choose Rotor And drag" />
+            <Label text="to wanted placement" />
             <Label fx:id="rotorIDChosenLabel1" alignment="CENTER" prefHeight="35.0" prefWidth="35.0" text="1">
                <FlowPane.margin>
                   <Insets />

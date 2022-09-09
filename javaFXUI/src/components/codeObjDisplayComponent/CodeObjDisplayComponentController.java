@@ -16,7 +16,7 @@ public class CodeObjDisplayComponentController {
     @FXML private HBox plugsConfiguredHBox;
     @FXML private FlowPane plugsFlowPane;
     @FXML private HBox rotorsDataHBox;
-
+    @FXML private Label HeaderLabel;
     private MainApplicationController mainApplicationController;
 
     @FXML public void initialize(){
@@ -82,6 +82,9 @@ public class CodeObjDisplayComponentController {
         vBox.setPadding(new Insets(3, 3, 3, 3));
         HBox.setMargin(vBox, new Insets(3, 3, 3, 3));
         return vBox;
+    }
+    public void setHeaderLabelText(String headerLabel) {
+        HeaderLabel.setText(headerLabel);
     }
 
 }

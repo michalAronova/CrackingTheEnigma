@@ -26,7 +26,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image("/resources/alan_turing_icon.jpg"));
         primaryStage.setTitle("Enigma Machine Simulator");
 
-        Scene scene = new Scene(root, 950, 650);
+        Scene scene = new Scene(root, 1100, 800);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

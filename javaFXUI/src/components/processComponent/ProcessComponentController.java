@@ -7,33 +7,30 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import org.controlsfx.control.SegmentedButton;
 
 public class ProcessComponentController {
-
     @FXML private HBox toggleContainer;
     @FXML private ToggleButton automatToggle;
-
     @FXML private ToggleButton singleToggle;
-
     @FXML private TextField userTextField;
-
     @FXML private TextField resultTextField;
-
     @FXML private Button processButton;
     @FXML private Button resetButton;
-
     @FXML private Button clearButton;
     @FXML private Button doneButton;
     @FXML private Label errorLabel;
     private MainApplicationController mainApplicationController;
     private StringBuilder resultText;
-
     private FadeTransition errorTransition;
 
+    public Boolean isBruteForceProcess() { return bruteForceProcess; }
+    public void setBruteForceProcess(Boolean bruteForceProcess) { this.bruteForceProcess = bruteForceProcess; }
+
+    private Boolean bruteForceProcess;
+    public ToggleButton getSingleToggle() { return singleToggle; }
     @FXML public void initialize(){
         errorLabel.setOpacity(0);
         errorLabel.getStyleClass().add("error-message");
@@ -119,7 +116,6 @@ public class ProcessComponentController {
         this.mainApplicationController = mainApplicationController;
     }
 
-
     private void textListener(String oldValue, String newValue){
         if(singleToggle.isSelected()){
             int change = newValue.length() - oldValue.length();
@@ -141,7 +137,7 @@ public class ProcessComponentController {
     }
 
     private void handleProcessButton() {
-        mainApplicationController.onProcessButtonPressed(userTextField.getText());
+        mainApplicationController.onProcessButtonPressed(userTextField.getText(), this);
     }
 
     private void handleDoneButton(){
