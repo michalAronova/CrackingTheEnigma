@@ -82,8 +82,8 @@ public class MainApplicationController {
         }
         engine = new TheEngine();
         encryptTabPane.setDisable(true);
-        bruteForceTabPane.setDisable(false);
-        //bruteForceTabPane.setDisable(true);
+        //bruteForceTabPane.setDisable(false);
+        bruteForceTabPane.setDisable(true);
 
     }
 
