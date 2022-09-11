@@ -28,12 +28,12 @@ public class DecipherManager {
     private Machine machine;
     private Stock stock;
     private CodeObj machineCode;
-
     private String stockEncoded;
 
     private double possiblePositionPermutations;
-
     private String machineEncoded;
+    private int agentCountChosen;
+
     public DecipherManager(CTEDecipher cteDecipher, Map<Difficulty, Integer> diff2totalWork, Machine machine,
                            Stock stock){
         agentCount = cteDecipher.getAgents();
@@ -62,6 +62,24 @@ public class DecipherManager {
     public Dictionary getDictionary() { return dictionary; }
     public void setMissionSize(int missionSize) { this.missionSize = missionSize; }
     public void setDifficulty(Difficulty difficulty) { this.difficulty = difficulty; }
+    public void setDifficulty(String difficulty) {
+        switch (difficulty) {
+            case "EASY":
+                this.difficulty = Difficulty.EASY;
+                break;
+            case "MEDIUM":
+                this.difficulty = Difficulty.MEDIUM;
+                break;
+            case "HARD":
+                this.difficulty = Difficulty.HARD;
+                break;
+            case "IMPOSSIBLE":
+                this.difficulty = Difficulty.IMPOSSIBLE;
+                break;
+            default:
+                break;
+        }
+    }
 
     public static void main(String[] args) {
         DecipherManager DM = new DecipherManager();
@@ -100,7 +118,7 @@ public class DecipherManager {
                 .namingPattern("Agent %d")
                 .build();
         BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<>(2);
-        ThreadPoolExecutor threadExecutor = new ThreadPoolExecutor(agentCount, agentCount,
+        ThreadPoolExecutor threadExecutor = new ThreadPoolExecutor(agentCountChosen, agentCountChosen,
                                             Long.MAX_VALUE, TimeUnit.NANOSECONDS, workQueue , factory);
 
         threadExecutor.prestartAllCoreThreads();
@@ -197,4 +215,9 @@ public class DecipherManager {
         ois.close();
         return o;
     }
+
+    public void setAgentCount(int agentCountChosen) {
+        this.agentCountChosen = agentCountChosen;
+    }
 }
+

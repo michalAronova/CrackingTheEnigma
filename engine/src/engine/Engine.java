@@ -60,4 +60,7 @@ public interface Engine extends Serializable {
 
     int getAgentCountFromDM();
 
+    void setDMParamsFromUI(int agentCountChosen, String difficulty, int missionSize);
+
+    Integer calculateTotalMissionsAmount();
 }
