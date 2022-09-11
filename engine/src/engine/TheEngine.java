@@ -366,7 +366,9 @@ public class TheEngine implements Engine {
         if(!initialCode.toString().equals(codesHistories.getLast().getCode().toString())){
             codesHistories.addLast(new CodeHistory(initialCode));
         }
-        codesHistories.getLast().addTranslation(new Translation(input, output, 25));
+        Translation newTranslation = new Translation(input, output, 25);
+        codesHistories.getLast().addTranslation(newTranslation);
+        lastTranslationMade = new Pair<>(codesHistories.getLast().getCode(), newTranslation);
     }
 
     public List<Character> getKeyBoardList(){ return stock.getKeyBoard().getAsCharList(); }

@@ -63,22 +63,11 @@ public class ProcessComponentController {
         processButton.visibleProperty().bind(automatToggle.selectedProperty());
         doneButton.visibleProperty().bind(singleToggle.selectedProperty());
 
-//        userTextField.setOnAction(e -> {
-//            if(singleToggle.isSelected()){
-//                handleDoneButton();
-//            }
-//            else{
-//                handleProcessButton();
-//            }
-//        });
-
         resultText = new StringBuilder();
         userTextField.setOnKeyTyped(ke -> {
             String characterTyped = ke.getCharacter().toUpperCase();
             if(!mainApplicationController.checkForKeyInKeyBoard(characterTyped.charAt(0))
             && !characterTyped.equals(System.lineSeparator())){
-                //ENTER IS ALSO HERE :(
-                //CTRL+V IS ALSO HERE...
                 errorLabel.setText(ke.getCharacter() + " is not part of this machine's keyboard");
                 errorTransition.play();
                 ke.consume();
@@ -125,23 +114,29 @@ public class ProcessComponentController {
                 errorTransition.play();
             }
             else if(change == 1){
-                resultText.append(mainApplicationController.processSingleCharacter(newValue.charAt(0)));
+                resultText.append(mainApplicationController.processSingleCharacter(newValue.toUpperCase().charAt(0)));
                 resultTextField.setText(resultText.toString());
-                //call the keyboard component... notify
+                //call the keyboard component... notify - animation ensues!
             }
             else{
-                resultText.delete(resultText.length() + change, resultText.length());
+                resultText.delete(0, resultText.length());
                 resultTextField.setText(resultText.toString());
+                //resultText.delete(resultText.length() + change, resultText.length());
+                //resultTextField.setText(resultText.toString());
             }
         }
     }
 
     private void handleProcessButton() {
         mainApplicationController.onProcessButtonPressed(userTextField.getText(), this);
+        userTextField.clear();
     }
 
     private void handleDoneButton(){
         mainApplicationController.onSingleModeDone(userTextField.getText(), resultTextField.getText());
+        userTextField.clear();
+        resultTextField.clear();
+        resultText.delete(0, resultText.length());
     }
 
     public void keyPressed(String text){
