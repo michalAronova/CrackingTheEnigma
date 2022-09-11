@@ -22,6 +22,7 @@ public class BruteForceSetupController {
     @FXML public void initialize(){}
     public void initialBruteForceSetUp(){
         numberOfAgentsSlider.setMax(mainApplicationController.getAgentCount());
+        numberOfAgentsSlider.setMin(2);
         initialDiffComboBox();
     }
     private void initialDiffComboBox() {
