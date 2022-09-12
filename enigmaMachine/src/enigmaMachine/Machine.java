@@ -1,6 +1,9 @@
 package enigmaMachine;
 
 import DTO.codeObj.CodeObj;
+import DTO.machineAnatomy.MachineAnatomy;
+import DTO.machineAnatomy.componentAnatomy.ComponentAnatomy;
+import DTO.machineAnatomy.componentAnatomy.ComponentType;
 import enigmaMachine.keyBoard.KeyBoard;
 import enigmaMachine.plugBoard.Plugs;
 import enigmaMachine.reflector.Reflecting;
@@ -150,5 +153,21 @@ public class Machine implements Serializable, Cloneable {
         });
 
         return new CodeObj(ID2PositionList, reflectorID, plugs, notchRelativeLocation);
+    }
+
+    public MachineAnatomy getMachineAnatomy(){
+        List<ComponentAnatomy> rotorsAnatomy = new LinkedList<>();
+        rotors.forEach(rotor -> {
+            rotorsAnatomy.add(new ComponentAnatomy(ComponentType.ROTOR,
+                                                    rotor.getLeftPermutation(),
+                                                    rotor.getRightPermutation(),
+                                                    String.valueOf(rotor.getID())));
+        });
+        ComponentAnatomy reflectorAnatomy = new ComponentAnatomy(ComponentType.REFLECTOR,
+                                                    reflector.getLeftPermutation(),
+                                                    reflector.getRightPermutation(),
+                                                    reflector.getID());
+
+        return new MachineAnatomy(reflectorAnatomy, rotorsAnatomy);
     }
 }

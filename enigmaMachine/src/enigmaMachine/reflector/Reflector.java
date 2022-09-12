@@ -24,6 +24,27 @@ public class Reflector implements Reflecting {
     }
 
     @Override
+    public String getLeftPermutation() {
+        return null;
+    }
+
+    @Override
+    public String getRightPermutation() {
+        return null;
+    }
+
+//    @Override
+//    public String[] getPermutations() {
+//        String[] permutations = new String[2];
+//        StringBuilder left = new StringBuilder();
+//        StringBuilder right = new StringBuilder();
+//        for(int i = 1; i <= reflectionMap.size(); i++){
+//            right.append(i);
+//            reflectionMap.get(i);
+//        }
+//    }
+
+    @Override
     public String toString() {
         return "Reflector{" +
                 "id=" + id +

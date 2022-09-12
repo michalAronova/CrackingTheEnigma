@@ -36,6 +36,11 @@ public class TheRotor implements Rotor {
     }
 
     @Override
+    public String getLeftPermutation() {
+        return leftPermutation;
+    }
+
+    @Override
     public void setInitialPosition(Character let) {
         setInitialPosition(rightPermutation.indexOf(let));
     }

@@ -26,4 +26,6 @@ public interface Rotor extends AdvanceSelf, Serializable, Cloneable {
     int getCurrentPosition();
 
     char getCurrentPositionChar();
+
+    String getLeftPermutation();
 }
