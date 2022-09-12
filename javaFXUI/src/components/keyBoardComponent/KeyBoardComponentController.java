@@ -36,7 +36,6 @@ public class KeyBoardComponentController {
         for (int i = 0; i < buttonsList.size(); i++) {
             Button b = (Button)keyBoardFlowPane.getChildren().get(i);
             if(b.getText().equals(lastProcessedChar.toString())){
-                System.out.println("here");
                 return b;
             }
         }
