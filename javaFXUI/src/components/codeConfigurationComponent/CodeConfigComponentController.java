@@ -28,6 +28,7 @@ public class CodeConfigComponentController {
     @FXML public Label messageLabel;
     @FXML public Accordion codeConfigurationAccordion;
     @FXML public Button setButton;
+    @FXML public Button clearButton;
     @FXML private ComboBox<String> reflectorComboBox;
 
     @FXML private PlugsComponentController plugsComponentController;
@@ -53,6 +54,7 @@ public class CodeConfigComponentController {
                         reflectorComboBox.valueProperty().getValue() == null || !rotorsFilled.getValue()
                         , reflectorComboBox.valueProperty(), rotorsFilled));
 
+        clearButton.disableProperty().bind(codeConfigurationAccordion.disableProperty());
         reflectorComboBox.setPromptText("Reflector ID");
         setByRandomButton.setDisable(true);
         setByManualButton.setDisable(true);
@@ -64,7 +66,6 @@ public class CodeConfigComponentController {
         codeConfigurationAccordion.setDisable(false);
         setByManualButton.setDisable(true);
     }
-
     public BooleanProperty getRotorsFilledProperty(){ return rotorsFilled; }
     @FXML public void onSetByRandomClicked(ActionEvent actionEvent) {
         codeConfigurationAccordion.setDisable(true);
@@ -72,7 +73,9 @@ public class CodeConfigComponentController {
         removeAllChoices();
         mainApplicationController.handleSetByRandom();
     }
-
+    @FXML public void onClearButtonClicked(){
+        removeAllChoices();
+    }
     @FXML public void onSetClicked(ActionEvent actionEvent) {
         sendManualCodeToParentController();
         removeAllChoices();

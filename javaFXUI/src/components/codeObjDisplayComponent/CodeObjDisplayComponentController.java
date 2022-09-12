@@ -24,6 +24,8 @@ public class CodeObjDisplayComponentController {
 
     public void setMainApplicationController(MainApplicationController mainApplicationController){
         this.mainApplicationController = mainApplicationController;
+        mainApplicationController.getCodeChangesProperty()
+                .addListener(e -> onCodeChosen(mainApplicationController.getCurrentCode()));
     }
 
     public void onCodeChosen(CodeObj code){
