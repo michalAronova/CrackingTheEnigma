@@ -157,6 +157,8 @@ public class MainApplicationController {
 
     public void keyBoardButtonPressed(String text) {
         processComponentController.keyPressed(text);
+        Character lastProcessedChar = processComponentController.getLastProcessedChar();
+        keyBoardComponentController.activateKeyAnimation(lastProcessedChar);
     }
 
     public void onProcessButtonPressed(String input, ProcessComponentController controller){

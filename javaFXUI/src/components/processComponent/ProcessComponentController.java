@@ -146,4 +146,5 @@ public class ProcessComponentController {
     public void showOutput(String output) {
         resultTextField.setText(output);
     }
+    public Character getLastProcessedChar() { return resultTextField.getText().charAt(resultTextField.getText().length()-1); }
 }
