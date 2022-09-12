@@ -90,8 +90,8 @@ public class MainApplicationController {
         }
         engine = new TheEngine();
         encryptTabPane.setDisable(true);
-        //bruteForceTabPane.setDisable(false);
-        bruteForceTabPane.setDisable(true);
+        bruteForceTabPane.setDisable(false);
+        //bruteForceTabPane.setDisable(true);
 
     }
 
@@ -214,5 +214,14 @@ public class MainApplicationController {
 
     public CodeObj getCurrentCode() {
         return currentCode;
+    }
+
+    public void onBruteForceSet(int agentCountChosen, String difficulty, int missionSize) {
+            engine.setDMParamsFromUI(agentCountChosen, difficulty, missionSize);
+    }
+
+    public void calculateTotalMissionAmount() {
+        bruteForceSetupController.updateTotalMissionAmount(engine.calculateTotalMissionsAmount());
+
     }
 }

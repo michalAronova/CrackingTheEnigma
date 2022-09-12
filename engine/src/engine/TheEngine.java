@@ -399,6 +399,16 @@ public class TheEngine implements Engine {
         TheEngine theEngine = (TheEngine) o;
         return processedMsgsCnt == theEngine.processedMsgsCnt && Objects.equals(stock, theEngine.stock) && Objects.equals(machine, theEngine.machine) && Objects.equals(initialCode, theEngine.initialCode) && Objects.equals(codesHistories, theEngine.codesHistories);
     }
+    public void setDMParamsFromUI(int agentCountChosen, String difficulty, int missionSize){
+        DM.setDifficulty(difficulty);
+        DM.setMissionSize(missionSize);
+        DM.setAgentCount(agentCountChosen);
+    }
+
+
+    public Integer calculateTotalMissionsAmount(){
+        return 200;
+    }
 
     @Override
     public int hashCode() {
