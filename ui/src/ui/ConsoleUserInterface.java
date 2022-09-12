@@ -5,6 +5,7 @@ import DTO.codeObj.CodeObj;
 import DTO.techSpecs.TechSpecs;
 import engine.Engine;
 import engine.TheEngine;
+import enigmaMachine.Machine;
 import exceptions.InputException.InputException;
 import exceptions.InputException.ObjectInputException;
 import exceptions.InputException.OutOfBoundInputException;
@@ -430,6 +431,9 @@ public class ConsoleUserInterface implements UserInterface {
 
     public void bruteForce(){
         System.out.println("brute force initiated!");
-        engine.manageAgents();
+        System.out.println("decrypting code: ");
+        System.out.println(engine.getUpdatedCode());
+        String encryption = engine.processWord("hello tonight");
+        engine.manageAgents(encryption);
     }
 }

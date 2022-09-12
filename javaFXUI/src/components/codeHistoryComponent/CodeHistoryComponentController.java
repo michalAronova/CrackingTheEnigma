@@ -24,7 +24,6 @@ public class CodeHistoryComponentController {
 
     public void initialize() {
         codeHistoryTableView.setEditable(false);
-        //codeHistoryTableView.setColumnResizePolicy(param -> true);
         codeHistoryTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         codeColumn.setCellValueFactory(new PropertyValueFactory<>("code"));
         codeColumn.setEditable(false);

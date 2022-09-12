@@ -1,19 +1,22 @@
 package DTO.missionResult;
 
 import DTO.codeObj.CodeObj;
+import javafx.util.Pair;
 
 import java.util.List;
 
 public class MissionResult {
-    List<CodeObj> candidates;
-    long time;
+    private List<Pair<String,CodeObj>> candidates;
+    private String agentID;
+    private long time;
 
-    public MissionResult(List<CodeObj> candidates, long time) {
+    public MissionResult(List<Pair<String,CodeObj>> candidates, String agentID, long time) {
         this.candidates = candidates;
+        this.agentID = agentID;
         this.time = time;
     }
 
-    public List<CodeObj> getCandidates() {
+    public List<Pair<String,CodeObj>> getCandidates() {
         return candidates;
     }
 

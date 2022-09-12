@@ -56,11 +56,13 @@ public interface Engine extends Serializable {
 
     void enterManualHistory(String input, String output);
 
-    void manageAgents();
+    void manageAgents(String encryption);
 
     int getAgentCountFromDM();
 
     void setDMParamsFromUI(int agentCountChosen, String difficulty, int missionSize);
 
     Integer calculateTotalMissionsAmount();
+
+    String processWord(String word);
 }

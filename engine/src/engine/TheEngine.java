@@ -374,8 +374,13 @@ public class TheEngine implements Engine {
     public List<Character> getKeyBoardList(){ return stock.getKeyBoard().getAsCharList(); }
 
     @Override
-    public void manageAgents(){
-        DM.manageAgents();
+    public void manageAgents(String encryption){
+        DM.manageAgents(encryption);
+    }
+
+    @Override
+    public String processWord(String word) {
+        return machine.processWord(word);
     }
 
     public int getAgentCountFromDM(){
@@ -402,7 +407,7 @@ public class TheEngine implements Engine {
     public void setDMParamsFromUI(int agentCountChosen, String difficulty, int missionSize){
         DM.setDifficulty(difficulty);
         DM.setMissionSize(missionSize);
-        DM.setAgentCount(agentCountChosen);
+        DM.setAgentCountChosen(agentCountChosen);
     }
 
 

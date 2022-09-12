@@ -11,6 +11,7 @@ import javafx.util.Pair;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.stream.Collectors;
 
 public class Mission implements Runnable {
@@ -21,16 +22,20 @@ public class Mission implements Runnable {
     private List<Character> currentPositions;
     private final Speedometer speedometer;
 
-    private List<CodeObj> candidates;
+    private List<Pair<String, CodeObj>> candidates;
+
+    private BlockingQueue<MissionResult> resultQueue;
 
 
     public Mission(Machine machine, List<Character> startRotorsPositions, double missionSize,
-                   String toDecrypt, Dictionary dictionary, Speedometer speedometer) {
+                   String toDecrypt, Dictionary dictionary, Speedometer speedometer,
+                   BlockingQueue<MissionResult> resultQueue) {
         this.machine = machine;
         this.missionSize = missionSize;
         this.toDecrypt = toDecrypt;
         this.dictionary = dictionary;
         this.currentPositions = startRotorsPositions;
+        this.resultQueue = resultQueue;
         machine.updateByPositionsList(currentPositions);
         this.speedometer = speedometer;
         candidates = new LinkedList<>();
@@ -54,23 +59,26 @@ public class Mission implements Runnable {
                 }
             }
             if(isCandidate){
-                System.out.println(Thread.currentThread().getName() + " found a candidate!");
-                System.out.println("origin: " + toDecrypt);
-                System.out.println("processed: " + processed);
-                System.out.println("code: ");
-                System.out.println(currentCode);
-                candidates.add(currentCode);
+//                System.out.println(Thread.currentThread().getName() + " found a candidate!");
+//                System.out.println("origin: " + toDecrypt);
+//                System.out.println("processed: " + processed);
+//                System.out.println("code: ");
+//                System.out.println(currentCode);
+                candidates.add(new Pair<>(processed, currentCode));
             //      2.1 if yes - put in the blockingQueue of decryption candidates
-            }
-            else{
-                //System.out.println(String.format("%s - did not find candidate in: %s", Thread.currentThread().getName(), currentCode.toString()));
             }
             currentPositions = speedometer.calculateNext(currentPositions);
             machine.updateByPositionsList(currentPositions);
         }
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
-        MissionResult result = new MissionResult(candidates, timeElapsed);
-        //push to blockingQueue!
+        if(!candidates.isEmpty()){
+            try {
+                resultQueue.put(new MissionResult(candidates,
+                        Thread.currentThread().getName(), timeElapsed));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
