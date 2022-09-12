@@ -2,11 +2,14 @@ package components.keyBoardComponent;
 
 import application.MainApplicationController;
 import javafx.animation.FillTransition;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 import java.util.List;
@@ -18,6 +21,26 @@ public class KeyBoardComponentController {
     @FXML private Button keybutton;
     private MainApplicationController mainApplicationController;
 
+    public void activateKeyAnimation(Character lastProcessedChar) {
+        Button b =  getButtonByChar(lastProcessedChar);
+        //b.setStyle("-fx-background-color: #fffb00");
+
+        //Shape buttonShape = getButtonByChar(lastProcessedChar).getShape();
+        /*FillTransition ft = new FillTransition(Duration.millis(3000), buttonShape , Color.RED, Color.BLUE);
+        ft.setCycleCount(3);
+        ft.setAutoReverse(true);
+        ft.play();*/
+    }
+    public Button getButtonByChar(Character lastProcessedChar){
+        ObservableList<Node> buttonsList = keyBoardFlowPane.getChildren();
+        for (int i = 0; i < buttonsList.size(); i++) {
+            Button b = (Button)keyBoardFlowPane.getChildren().get(i);
+            if(b.getText().equals(lastProcessedChar.toString())){
+                return b;
+            }
+        }
+        return null;
+    }
     @FXML private void initialize() {}
     @FXML public void setComponent(List<Character> ABC) {
         if(!keyBoardFlowPane.getChildren().isEmpty()){
@@ -42,10 +65,6 @@ public class KeyBoardComponentController {
     }
     private void onKeyButtonPressed(String text){
         mainApplicationController.keyBoardButtonPressed(text);
-        /*FillTransition ft = new FillTransition(Duration.millis(3000), this, Color.RED, Color.BLUE);
-        ft.setCycleCount(3);
-        ft.setAutoReverse(true);
-        ft.play();*/
     }
 
     public void setFlowPaneDisable(boolean disable){
