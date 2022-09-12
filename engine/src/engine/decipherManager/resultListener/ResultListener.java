@@ -5,12 +5,11 @@ import DTO.missionResult.MissionResult;
 import java.util.concurrent.BlockingQueue;
 
 public class ResultListener implements Runnable{
-    private BlockingQueue<MissionResult> resultQueue;
+    private final BlockingQueue<MissionResult> resultQueue;
 
     public ResultListener(BlockingQueue<MissionResult> resultQueue) {
         this.resultQueue = resultQueue;
     }
-
 
     @Override
     public void run() {

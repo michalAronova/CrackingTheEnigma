@@ -44,6 +44,7 @@ public class Mission implements Runnable {
     @Override
     public void run() {
         long startTime = System.nanoTime();
+        System.out.println(machine.getMachineCode());
         for (int i = 0; i < missionSize; i++){
             //do thing:
             //  1. machine.process(toDecrypt);

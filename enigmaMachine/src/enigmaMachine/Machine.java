@@ -170,4 +170,13 @@ public class Machine implements Serializable, Cloneable {
 
         return new MachineAnatomy(reflectorAnatomy, rotorsAnatomy);
     }
+
+    public void setReflector(Reflecting reflector) {
+        this.reflector = reflector;
+    }
+
+    public void setRotors(List<Rotor> newPermutation) {
+        this.rotors = newPermutation;
+        setRotors();
+    }
 }

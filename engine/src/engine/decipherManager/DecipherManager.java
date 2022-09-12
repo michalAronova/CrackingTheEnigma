@@ -4,17 +4,19 @@ import DTO.codeObj.CodeObj;
 import DTO.missionResult.MissionResult;
 import engine.decipherManager.dictionary.Dictionary;
 import engine.decipherManager.mission.Mission;
+import engine.decipherManager.permuter.Permuter;
+import engine.decipherManager.resultListener.ResultListener;
 import engine.stock.Stock;
 import enigmaMachine.Machine;
+import enigmaMachine.reflector.Reflecting;
+import enigmaMachine.rotor.Rotor;
 import javafx.util.Pair;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
+import org.paukov.combinatorics3.Generator;
 import schema.generated.CTEDecipher;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class DecipherManager {
@@ -32,6 +34,7 @@ public class DecipherManager {
 
     private double possiblePositionPermutations;
     private String machineEncoded;
+    private String updatingMachineEncoding;
     private int agentCountChosen;
 
     private BlockingQueue<MissionResult> resultQueue;
@@ -94,15 +97,16 @@ public class DecipherManager {
     public void serializeMachine(Machine machine){
         try{
             machineEncoded = serializableToString(machine);
+            updatingMachineEncoding = machineEncoded;
         }
         catch(IOException e){
             e.printStackTrace();
         }
     }
 
-    public Machine deepCopyMachine(){
+    public Machine deepCopyMachine(String encoding){
         try{
-            return (Machine)objectFromString(this.machineEncoded);
+            return (Machine)objectFromString(encoding);
         }
         catch(ClassNotFoundException | IOException e){
             e.printStackTrace();
@@ -111,9 +115,13 @@ public class DecipherManager {
     }
 
     public void manageAgents(String encryption) {
+        updatingMachineEncoding = machineEncoded;
         this.encryption = encryption;
+
+        difficulty = Difficulty.MEDIUM;
+        agentCountChosen = 3;
+
         //debug
-        //agentCountChosen = 3;
 //        Machine copiedMachine = deepCopyMachine();
 //        System.out.println("decrypting code: ");
 //        System.out.println(copiedMachine.getMachineCode());
@@ -122,17 +130,7 @@ public class DecipherManager {
 
         //create result queue and register listener thread
         resultQueue = new LinkedBlockingQueue<>();
-        Thread resultListener = new Thread(() -> {
-            try {
-                System.out.println(Thread.currentThread().getName() + " is taking result...");
-                System.out.println(resultQueue.take());
-                //Platform.runLater(mainApplicationController.addResultToTable());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        resultListener.setName("Result Thread");
-        resultListener.start();
+        new Thread(new ResultListener(resultQueue), "Result Listener").start();
 
         //create work queue and thread pool of agents
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
@@ -168,9 +166,6 @@ public class DecipherManager {
         threadExecutor.shutdown();
     }
 
-
-
-
     private List<Character> initializeRotorsPositions(List<Pair<Integer,Character>> origin) {
         List<Character> initialized = new ArrayList<>();
         for (Pair<Integer, Character> p: origin) {
@@ -184,21 +179,17 @@ public class DecipherManager {
             double totalMissionsAmountForPositions = possiblePositionPermutations / missionSize;
             double leftoverMissionsAmountForPositions = possiblePositionPermutations % missionSize;
             List<Character> nextRotorsPositions = initializeRotorsPositions(machineCode.getID2PositionList());
-            //HERE WILL BE CALL FOR HARDER LEVELS CONFIG
-            //reflector loop
-            //      rotor id loop -> which rotors?
-            //          rotor placement -> where rotors?
-            //              positions loop -> f.e. AA AB BA BB (written below)
+
             for (int i = 0; i <= totalMissionsAmountForPositions; i++) {
                 if(i != 0) {
                     nextRotorsPositions = getNextRotorsPositions(nextRotorsPositions, missionSize);
                 }
                 if(i == totalMissionsAmountForPositions){
-                    workQueue.put(new Mission(deepCopyMachine(), nextRotorsPositions, leftoverMissionsAmountForPositions,
+                    workQueue.put(new Mission(deepCopyMachine(updatingMachineEncoding), nextRotorsPositions, leftoverMissionsAmountForPositions,
                             encryption, dictionary, this::speedometer, resultQueue));
                 }
                 else{
-                    workQueue.put(new Mission(deepCopyMachine(), nextRotorsPositions, missionSize,
+                    workQueue.put(new Mission(deepCopyMachine(updatingMachineEncoding), nextRotorsPositions, missionSize,
                             encryption, dictionary, this::speedometer, resultQueue));
                 }
             }
@@ -208,15 +199,64 @@ public class DecipherManager {
         }
     }
 
-    private void runMedium(){
-        //for reflectors...
-        //  easy();
+    private void runMedium() {
+        for (Reflecting reflector: stock.getReflectorMap().values()) {
+            Machine machine = deepCopyMachine(updatingMachineEncoding);
+            machine.setReflector(reflector);
+            serializeUpdatingMachine(machine);
+            runEasy();
+        }
     }
 
     private void runHard() {
+        Machine machine = deepCopyMachine(updatingMachineEncoding);
+        Permuter permuter =  new Permuter(stock.getRotorsCount());
+        List<Rotor> rotors = machine.getRotors();
+        List<Rotor> newPermutation = new ArrayList<>(); 
+        int[] perms;
+        
+        while((perms = permuter.getNext()) != null){
+            for (int perm : perms) {
+                newPermutation.add(rotors.get(perm));
+            }
+            machine.setRotors(newPermutation);
+            serializeUpdatingMachine(machine);
+            runMedium();
+        }
     }
+
     private void runImpossible() {
+        List<List<Integer>> permutations = new LinkedList<>();
+
+        Generator.combination(stock.getRotorMap().keySet())
+                .simple(stock.getRotorsCount())
+                .stream()
+                .forEach(permutations::add);
+
+        for (List<Integer> perm: permutations) {
+            Machine machine = deepCopyMachine(updatingMachineEncoding);
+            machine.setRotors(getRotorListFromIDList(perm));
+            serializeUpdatingMachine(machine);
+            runHard();
+        }
     }
+
+    private List<Rotor> getRotorListFromIDList(List<Integer> perm) {
+        List<Rotor> result = new LinkedList<>();
+        for (Integer id: perm) {
+            result.add(stock.getRotorMap().get(id));
+        }
+        return result;
+    }
+
+    private void serializeUpdatingMachine(Machine machine) {
+        try {
+            updatingMachineEncoding = serializableToString(machine);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private List<Character> getNextRotorsPositions(List<Character> start, int missionSize){
         List<Character> characters = new ArrayList<>(start);
