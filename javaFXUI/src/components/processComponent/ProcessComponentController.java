@@ -35,7 +35,9 @@ public class ProcessComponentController {
         errorLabel.setOpacity(0);
         errorLabel.getStyleClass().add("error-message");
         errorTransition = createErrorTransition();
-        resultTextField.setDisable(true);
+        //resultTextField.setDisable(true);
+        resultTextField.setEditable(false);
+        resultTextField.setOnMouseClicked(e -> userTextField.requestFocus());
 
         PersistentButtonToggleGroup toggleGroup = new PersistentButtonToggleGroup();
         automatToggle.setToggleGroup(toggleGroup);
@@ -116,6 +118,8 @@ public class ProcessComponentController {
             else if(change == 1){
                 resultText.append(mainApplicationController.processSingleCharacter(newValue.toUpperCase().charAt(0)));
                 resultTextField.setText(resultText.toString());
+                mainApplicationController.getCodeChangesProperty()
+                        .setValue(mainApplicationController.getCodeChangesProperty().getValue() + 1);
                 //call the keyboard component... notify - animation ensues!
             }
             else{
