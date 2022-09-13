@@ -10,10 +10,14 @@ public class MissionResult {
     private String agentID;
     private long time;
 
+
     public MissionResult(List<Pair<String,CodeObj>> candidates, String agentID, long time) {
         this.candidates = candidates;
         this.agentID = agentID;
         this.time = time;
+    }
+    public String getAgentID() {
+        return agentID;
     }
 
     public List<Pair<String,CodeObj>> getCandidates() {

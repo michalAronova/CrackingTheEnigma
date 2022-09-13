@@ -118,15 +118,10 @@ public class DecipherManager {
         updatingMachineEncoding = machineEncoded;
         this.encryption = encryption;
 
+        //debug -----------------------------
         difficulty = Difficulty.MEDIUM;
         agentCountChosen = 3;
-
-        //debug
-//        Machine copiedMachine = deepCopyMachine();
-//        System.out.println("decrypting code: ");
-//        System.out.println(copiedMachine.getMachineCode());
-//        String encryption = copiedMachine.processWord("hello tonight");
-        //
+        // ----------------------------------
 
         //create result queue and register listener thread
         resultQueue = new LinkedBlockingQueue<>();
