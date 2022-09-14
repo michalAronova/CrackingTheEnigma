@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class Mission implements Runnable {
@@ -26,16 +27,18 @@ public class Mission implements Runnable {
 
     private BlockingQueue<MissionResult> resultQueue;
 
+    private Consumer<Integer> updateTotalMissionDone;
 
     public Mission(Machine machine, List<Character> startRotorsPositions, double missionSize,
                    String toDecrypt, Dictionary dictionary, Speedometer speedometer,
-                   BlockingQueue<MissionResult> resultQueue) {
+                   BlockingQueue<MissionResult> resultQueue, Consumer<Integer> updateTotalMissionDone) {
         this.machine = machine;
         this.missionSize = missionSize;
         this.toDecrypt = toDecrypt;
         this.dictionary = dictionary;
         this.currentPositions = startRotorsPositions;
         this.resultQueue = resultQueue;
+        this.updateTotalMissionDone = updateTotalMissionDone;
         machine.updateByPositionsList(currentPositions);
         this.speedometer = speedometer;
         candidates = new LinkedList<>();
@@ -44,7 +47,6 @@ public class Mission implements Runnable {
     @Override
     public void run() {
         long startTime = System.nanoTime();
-        System.out.println(machine.getMachineCode());
         for (int i = 0; i < missionSize; i++){
             //do thing:
             //  1. machine.process(toDecrypt);
@@ -73,6 +75,7 @@ public class Mission implements Runnable {
         }
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
+        updateTotalMissionDone.accept(1);
         if(!candidates.isEmpty()){
             try {
                 resultQueue.put(new MissionResult(candidates,

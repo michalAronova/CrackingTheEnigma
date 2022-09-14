@@ -10,6 +10,9 @@ import engine.stock.Stock;
 import enigmaMachine.Machine;
 import enigmaMachine.reflector.Reflecting;
 import enigmaMachine.rotor.Rotor;
+import exceptions.taskExceptions.TaskIsCancelledException;
+import javafx.beans.property.BooleanProperty;
+import javafx.concurrent.Task;
 import javafx.util.Pair;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.paukov.combinatorics3.Generator;
@@ -18,6 +21,7 @@ import schema.generated.CTEDecipher;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.function.Consumer;
 
 public class DecipherManager {
 
@@ -41,6 +45,14 @@ public class DecipherManager {
     private BlockingQueue<Runnable>  workQueue;
 
     private String encryption;
+    private BooleanProperty isPaused;
+    private BooleanProperty isCancelled;
+    private Task<Boolean> currentRunningTask;
+
+    private Consumer<MissionResult> transferMissionResult;
+
+    private Consumer<Integer> updateTotalMissionDone;
+
 
     public DecipherManager(CTEDecipher cteDecipher, Map<Difficulty, Integer> diff2totalWork, Machine machine,
                            Stock stock){
@@ -104,6 +116,26 @@ public class DecipherManager {
         }
     }
 
+    public void setIsPaused(BooleanProperty isPaused) {
+        this.isPaused = isPaused;
+    }
+
+    public void setIsCancelled(BooleanProperty isCancelled) {
+        this.isCancelled = isCancelled;
+    }
+
+    public void setCurrentRunningTask(Task<Boolean> task){
+        currentRunningTask = task;
+    }
+
+    public void setTransferMissionResult(Consumer<MissionResult> transferMissionResult){
+        this.transferMissionResult = transferMissionResult;
+    }
+
+    public void setUpdateTotalMissionDone(Consumer<Integer> updateTotalMissionDone){
+        this.updateTotalMissionDone = updateTotalMissionDone;
+    }
+
     public Machine deepCopyMachine(String encoding){
         try{
             return (Machine)objectFromString(encoding);
@@ -125,7 +157,7 @@ public class DecipherManager {
 
         //create result queue and register listener thread
         resultQueue = new LinkedBlockingQueue<>();
-        new Thread(new ResultListener(resultQueue), "Result Listener").start();
+        new Thread(new ResultListener(resultQueue, transferMissionResult), "Result Listener").start();
 
         //create work queue and thread pool of agents
         BasicThreadFactory factory = new BasicThreadFactory.Builder()
@@ -169,6 +201,11 @@ public class DecipherManager {
         return initialized;
     }
 
+    public int calcTotalMissionAmountEasy(){
+        return (int) (possiblePositionPermutations / missionSize +
+                (possiblePositionPermutations % missionSize !=0 ? 1 : 0));
+    }
+
     private void runEasy(){
         try {
             double totalMissionsAmountForPositions = possiblePositionPermutations / missionSize;
@@ -176,16 +213,28 @@ public class DecipherManager {
             List<Character> nextRotorsPositions = initializeRotorsPositions(machineCode.getID2PositionList());
 
             for (int i = 0; i <= totalMissionsAmountForPositions; i++) {
+                while(isPaused.getValue()){
+                    try{
+                        isPaused.wait();
+                    }
+                    catch(InterruptedException e){
+                        break;
+                    }
+                }
+                if(isCancelled.getValue()){
+                    throw new TaskIsCancelledException();
+                }
+
                 if(i != 0) {
                     nextRotorsPositions = getNextRotorsPositions(nextRotorsPositions, missionSize);
                 }
                 if(i == totalMissionsAmountForPositions){
                     workQueue.put(new Mission(deepCopyMachine(updatingMachineEncoding), nextRotorsPositions, leftoverMissionsAmountForPositions,
-                            encryption, dictionary, this::speedometer, resultQueue));
+                            encryption, dictionary, this::speedometer, resultQueue, updateTotalMissionDone));
                 }
                 else{
                     workQueue.put(new Mission(deepCopyMachine(updatingMachineEncoding), nextRotorsPositions, missionSize,
-                            encryption, dictionary, this::speedometer, resultQueue));
+                            encryption, dictionary, this::speedometer, resultQueue, updateTotalMissionDone));
                 }
             }
         }

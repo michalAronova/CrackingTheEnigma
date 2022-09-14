@@ -89,6 +89,7 @@ public class MainApplicationController {
             System.out.println("nullComponent");
         }
         engine = new TheEngine();
+        bruteForcePlayComponentController.setEngine(engine);
         encryptTabPane.setDisable(true);
         bruteForceTabPane.setDisable(false);
         //bruteForceTabPane.setDisable(true);
@@ -223,7 +224,16 @@ public class MainApplicationController {
     }
 
     public void calculateTotalMissionAmount() {
-        bruteForceSetupController.updateTotalMissionAmount(engine.calculateTotalMissionsAmount());
+        int totalMissionAmount = engine.calculateTotalMissionsAmount();
+        bruteForceSetupController.updateTotalMissionAmount(totalMissionAmount);
+        bruteForcePlayComponentController.updateTotalMissionAmount(totalMissionAmount);
+    }
 
+    public void toggleSetUpToAction(boolean isActive) {
+        bruteForceSetupController.toggleSetUpToAction(isActive);
+    }
+
+    public void startBruteForce() {
+        bruteForcePlayComponentController.onBruteForceStarted("ZKKMGFVNIWQGG");
     }
 }

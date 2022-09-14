@@ -25,7 +25,9 @@ public class BruteForceSetupController {
     private int agentCount;
     private int agentAmountChosen;
 
-    @FXML public void initialize(){}
+    @FXML public void initialize(){
+
+    }
     public void initialBruteForceSetUp(){
         initializeSlider();
         initialDiffComboBox();
@@ -67,7 +69,16 @@ public class BruteForceSetupController {
         mainApplicationController.calculateTotalMissionAmount();
     }
 
+    public void onStartButton(){
+        mainApplicationController.startBruteForce();
+    }
+
     public void updateTotalMissionAmount(Integer totalMissionAmount) {
         totalMissionNumLabel.setText(totalMissionAmount.toString());
+    }
+
+    public void toggleSetUpToAction(boolean isActive) {
+        bruteForceSetButton.setDisable(isActive);
+        bruteForceStartButton.setDisable(isActive);
     }
 }

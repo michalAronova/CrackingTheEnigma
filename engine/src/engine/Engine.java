@@ -4,6 +4,7 @@ import DTO.codeHistory.CodeHistory;
 import DTO.codeHistory.Translation;
 import DTO.codeObj.CodeObj;
 import DTO.techSpecs.TechSpecs;
+import engine.decipherManager.DecipherManager;
 import enigmaMachine.secret.Secret;
 import javafx.util.Pair;
 
@@ -65,4 +66,6 @@ public interface Engine extends Serializable {
     Integer calculateTotalMissionsAmount();
 
     String processWord(String word);
+
+    DecipherManager getDM();
 }

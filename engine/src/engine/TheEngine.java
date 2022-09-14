@@ -412,7 +412,12 @@ public class TheEngine implements Engine {
 
 
     public Integer calculateTotalMissionsAmount(){
-        return 200;
+        return DM.calcTotalMissionAmountEasy();
+        //return 200;
+    }
+
+    public DecipherManager getDM(){
+        return DM;
     }
 
     @Override
