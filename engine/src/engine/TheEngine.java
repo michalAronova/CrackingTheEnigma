@@ -74,21 +74,16 @@ public class TheEngine implements Engine {
                 this.initialCode = null; //new machine - no code yet!
                 this.processedMsgsCnt = 0; //new machine - new count!
                 this.codesHistories.clear(); //new machine - new histories!
-                this.DM = new DecipherManager(cteDecipher, getTotalMissionCount(), new Machine(stock.getKeyBoard(), stock.getRotorsCount())
+                this.DM = new DecipherManager(cteDecipher, new Machine(stock.getKeyBoard(), stock.getRotorsCount())
                                                 , new Stock(cteMachine.getCTERotors().getCTERotor(), cteMachine.getCTEReflectors().getCTEReflector(),
                                                     new KeyBoard(cteMachine.getABC().trim().toUpperCase()), cteMachine.getRotorsCount()));
                 return true;
-            } catch (InvalidXMLException e) {
+            } catch (InvalidXMLException | OutOfBoundInputException e) {
                 throw e;
             }
         } catch (JAXBException | FileNotFoundException e) {
             throw new InvalidXMLException(XMLExceptionMsg.INVALIDFILE, "file not found");
         }
-    }
-//TODO
-    private Map<Difficulty, Integer> getTotalMissionCount() {
-        Map<Difficulty, Integer> diff2totalWork = new HashMap<>();
-        return diff2totalWork;
     }
 
     @Override
@@ -410,9 +405,9 @@ public class TheEngine implements Engine {
         DM.setAgentCountChosen(agentCountChosen);
     }
 
-
     public Double calculateTotalMissionsAmount(){
-        return DM.calcTotalMissionAmountByDifficulty();
+        //return DM.calcTotalMissionAmountByDifficulty();
+        return DM.getTotalMissionAmount();
         //return 200;
     }
 

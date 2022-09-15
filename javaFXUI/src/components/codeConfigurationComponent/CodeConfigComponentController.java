@@ -19,6 +19,7 @@ import javafx.util.StringConverter;
 import utils.AutoCompleteComboBox;
 import utils.AutoCompleteComboBox.HideableItem;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CodeConfigComponentController {
@@ -53,7 +54,7 @@ public class CodeConfigComponentController {
                         reflectorComboBox.valueProperty().getValue() == null || !rotorsFilled.getValue()
                         , reflectorComboBox.valueProperty(), rotorsFilled));
 
-        clearButton.disableProperty().bind(codeConfigurationAccordion.disableProperty());
+        clearButton.setDisable(true);
         reflectorComboBox.setPromptText("Reflector ID");
         setByRandomButton.setDisable(true);
         setByManualButton.setDisable(true);
@@ -82,8 +83,15 @@ public class CodeConfigComponentController {
 
     private void sendManualCodeToParentController() {
         CodeObj code = new CodeObj();
+
+        Collections.reverse(rotorIDs);
         code.setRotorIDs(this.rotorIDs);
+        Collections.reverse(rotorIDs);
+
+        Collections.reverse(rotorPositions);
         code.setRotorPos(this.rotorPositions);
+        Collections.reverse(rotorPositions);
+
         code.setPlugs(plugsComponentController.getSelectedPlugs());
         code.setReflectorID(reflectorComboBox.valueProperty().getValue());
 
@@ -98,6 +106,8 @@ public class CodeConfigComponentController {
         rotorConfigComponentController.removeChoices();
         plugsComponentController.removeChoices();
         reflectorComboBox.valueProperty().set(null);
+        rotorIDs = null;
+        rotorPositions = null;
     }
 
     private void resetConfigComponent(){
@@ -114,65 +124,23 @@ public class CodeConfigComponentController {
         reflectorComboBox.valueProperty().set(null);
     }
 
-//    public void onRotorsUnDone(){
-//        rotorsFilled = false;
-//        setButton.setDisable(true);
-//    }
-
     public void onRotorsCompleted(List<Integer> rotorIDs, List<Character> rotorPositions){
         //this method will be called from within the rotors controller
         //when the rotors have all been chosen ("this is the listener")
         this.rotorIDs = rotorIDs;
         this.rotorPositions = rotorPositions;
-//        rotorsFilled.setValue();
-//        rotorsFilled = true;
-//
-//        if(!reflectorChoice.equals("")){ //reflector was chosen in the combo box
-//            setButton.setDisable(false);
-//        }
     }
 
     public void handleFileLoaded(List<Character> keys, int rotorsRequired,
                                  int totalRotorAmount, int reflectorAmount){
         setByRandomButton.setDisable(false);
         setByManualButton.setDisable(false);
+        clearButton.disableProperty().bind(setByManualButton.disabledProperty().not());
+        
         resetConfigComponent();
         reflectorComboBox.setItems(FXCollections
                 .observableArrayList(ReflectorID.getListToLimit(reflectorAmount)));
         plugsComponentController.setComponent(keys);
         rotorConfigComponentController.setComponent(rotorsRequired, totalRotorAmount, keys);
     }
-
-//    public void handleReflectorComboBox(ActionEvent e){
-//        reflectorChoice.setValue(reflectorComboBox.getValue());
-////        if(rotorsFilled){
-////            setButton.setDisable(false);
-////        }
-//    }
-
-    //TEST METHOD
-    private ComboBox<HideableItem<String>> createComboBox(){
-        List<String> test = new ArrayList<>();
-        test.add("yalla");
-        test.add("you are");
-        test.add("bacon");
-        test.add("band");
-        ComboBox<HideableItem<String>> comboBox =
-                AutoCompleteComboBox
-                        .createComboBoxWithAutoCompletionSupport(test,
-                            new StringConverter() {
-            @Override
-            public String toString(Object object) {
-                return object.toString();
-            }
-
-            @Override
-            public Object fromString(String string) {
-                return string;
-            }
-        });
-        return comboBox;
-    }
-
-
 }

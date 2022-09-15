@@ -44,7 +44,8 @@ public class BruteForceTask extends Task<Boolean> {
             engine.getDM().setTransferMissionResult((result) -> uiAdapter.addNewCandidate(result));
             engine.getDM().setUpdateTotalMissionDone((delta) -> uiAdapter.updateTotalMissionDone(delta));
 
-            new Thread(() -> engine.manageAgents(decryption), "Manage Agents Thread").start();
+            //new Thread(() -> engine.manageAgents(decryption), "Manage Agents Thread").start();
+            engine.manageAgents(decryption);
         }
         catch(TaskIsCancelledException e){
             onCancel.accept(null);

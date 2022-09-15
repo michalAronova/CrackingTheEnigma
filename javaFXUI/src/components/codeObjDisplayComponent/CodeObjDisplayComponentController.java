@@ -31,8 +31,9 @@ public class CodeObjDisplayComponentController {
     public void onCodeChosen(CodeObj code){
         rotorsDataHBox.getChildren().clear();
         reflectorDataAnchorPane.getChildren().clear();
-        //plugsConfiguredHBox.getChildren().clear();
         plugsFlowPane.getChildren().clear();
+
+        if(code == null) return;
 
         for (int i = code.getID2PositionList().size() - 1; i >= 0; i--) {
             int ID = code.getID2PositionList().get(i).getKey();

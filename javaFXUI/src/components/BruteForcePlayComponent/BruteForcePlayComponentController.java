@@ -44,7 +44,7 @@ public class BruteForcePlayComponentController {
 
     private BruteForceTask currentRunningTask;
 
-    private BooleanProperty taskPaused;
+    private final BooleanProperty taskPaused;
 
     private BooleanProperty taskCancelled;
 
@@ -98,7 +98,6 @@ public class BruteForcePlayComponentController {
 
     private void toggleTaskButtons(boolean isActive) {
         stopButton.setDisable(!isActive);
-        //pauseButton.setDisable(!isActive);
         mainApplicationController.toggleSetUpToAction(isActive);
 
         if(isActive){
@@ -113,15 +112,20 @@ public class BruteForcePlayComponentController {
         }
     }
 
+    @FXML
     private void onPauseClicked(){
         taskPaused.set(true);
     }
 
+    @FXML
     private void onResumeClicked(){
         taskPaused.set(false);
-        taskPaused.notifyAll();
+        synchronized (taskPaused){
+            taskPaused.notifyAll();
+        }
     }
 
+    @FXML
     private void onStopClicked(){
         taskCancelled.setValue(true);
         currentRunningTask.cancel();
@@ -158,7 +162,7 @@ public class BruteForcePlayComponentController {
 
         bindTaskToUIComponents(currentRunningTask, onFinish);
 
-        new Thread(currentRunningTask).start();
+        new Thread(currentRunningTask, "Manage Agents Task Thread").start();
     }
 
     private UIAdapter createUIAdapter() {
@@ -239,5 +243,9 @@ public class BruteForcePlayComponentController {
 
     public void updateTotalMissionAmount(double totalMissionAmount) {
         this.totalMissionAmountProperty.set(totalMissionAmount);
+    }
+
+    public void setDecryptionString(String currentDecryption) {
+        this.currentDecryption = currentDecryption;
     }
 }

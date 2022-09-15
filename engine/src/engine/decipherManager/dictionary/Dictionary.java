@@ -74,4 +74,15 @@ public class Dictionary {
     public boolean isInDictionary(String word) {
         return words.contains(word.toUpperCase());
     }
+
+    public boolean areAllWordsInDictionary(String words){
+        words = removeExcludedChars(words);
+        List<String> wordsList = new LinkedList<>(Arrays.asList(words.split(" ")));
+        for(String word: wordsList){
+            if(!isInDictionary(word)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

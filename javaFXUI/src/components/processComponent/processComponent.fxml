@@ -40,7 +40,7 @@
          <GridPane.margin>
             <Insets bottom="5.0" />
          </GridPane.margin></TextField>
-      <Label text="Enter your desired text below:" GridPane.rowIndex="1" />
+      <Label fx:id="promptTextLabel" text="Enter your desired text below:" GridPane.rowIndex="1" />
       <Label text="Your result:" GridPane.rowIndex="4" />
       <Button fx:id="processButton" mnemonicParsing="false" text="Process" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="NEVER">
          <padding>

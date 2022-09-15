@@ -1,6 +1,7 @@
 package components.processComponent;
 
 import application.MainApplicationController;
+import exceptions.InputException.InputException;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,16 +23,20 @@ public class ProcessComponentController {
     @FXML private Button clearButton;
     @FXML private Button doneButton;
     @FXML private Label errorLabel;
+    @FXML private Label promptTextLabel;
     private MainApplicationController mainApplicationController;
     private StringBuilder resultText;
     private FadeTransition errorTransition;
 
     public Boolean isBruteForceProcess() { return bruteForceProcess; }
-    public void setBruteForceProcess(Boolean bruteForceProcess) { this.bruteForceProcess = bruteForceProcess; }
+    public void setBruteForceProcess(Boolean bruteForceProcess) {
+        this.bruteForceProcess = bruteForceProcess;
+    }
 
     private Boolean bruteForceProcess;
     public ToggleButton getSingleToggle() { return singleToggle; }
     @FXML public void initialize(){
+
         errorLabel.setOpacity(0);
         errorLabel.getStyleClass().add("error-message");
         errorTransition = createErrorTransition();
@@ -132,8 +137,13 @@ public class ProcessComponentController {
     }
 
     private void handleProcessButton() {
-        mainApplicationController.onProcessButtonPressed(userTextField.getText(), this);
-        userTextField.clear();
+        try{
+            mainApplicationController.onProcessButtonPressed(userTextField.getText(), this);
+            userTextField.clear();
+        }
+        catch(InputException e){
+            showErrorMessage(e.getMessage());
+        }
     }
 
     private void handleDoneButton(){
@@ -151,4 +161,13 @@ public class ProcessComponentController {
         resultTextField.setText(output);
     }
     public Character getLastProcessedChar() { return resultTextField.getText().charAt(resultTextField.getText().length()-1); }
+
+    public void showErrorMessage(String message) {
+        errorLabel.setText(message);
+        errorTransition.play();
+    }
+
+    public void changeLabelForBruteForce() {
+        promptTextLabel.setText("Enter your desired dictionary words below: ");
+    }
 }

@@ -40,17 +40,17 @@
       </Label>
       <FlowPane GridPane.columnSpan="2" GridPane.rowIndex="1">
          <children>
-            <Button fx:id="stopButton" mnemonicParsing="false" text="STOP">
+            <Button fx:id="stopButton" onAction="#onStopClicked" mnemonicParsing="false" text="STOP">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin>
             </Button>
-            <Button fx:id="pauseButton" mnemonicParsing="false" text="Pause">
+            <Button fx:id="pauseButton" onAction="#onPauseClicked" mnemonicParsing="false" text="Pause">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin>
             </Button>
-            <Button fx:id="resumeButton" mnemonicParsing="false" text="Resume">
+            <Button fx:id="resumeButton" onAction="#onResumeClicked" mnemonicParsing="false" text="Resume">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin>

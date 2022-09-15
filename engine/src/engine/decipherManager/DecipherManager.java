@@ -15,15 +15,11 @@ import javafx.beans.property.BooleanProperty;
 import javafx.concurrent.Task;
 import javafx.util.Pair;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
-import org.apache.commons.math3.stat.interval.BinomialConfidenceInterval;
-import org.apache.commons.math3.util.ArithmeticUtils;
 import org.apache.commons.math3.util.CombinatoricsUtils;
-import org.apache.commons.math3.util.MathUtils;
 import org.paukov.combinatorics3.Generator;
 import schema.generated.CTEDecipher;
 
 import java.io.*;
-import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
@@ -33,9 +29,9 @@ public class DecipherManager {
     private final int WORK_QUEUE_LIMIT = 1000;
     private int agentCount;
     private Dictionary dictionary;
-    private int missionSize = 100;
+    private int missionSize;
     private Difficulty difficulty;
-    private Map<Difficulty, Integer> diff2totalWork;
+    private Map<Difficulty, Double> diff2totalWork;
     private Machine machine;
     private Stock stock;
     private CodeObj machineCode;
@@ -59,11 +55,10 @@ public class DecipherManager {
     private Consumer<Integer> updateTotalMissionDone;
 
 
-    public DecipherManager(CTEDecipher cteDecipher, Map<Difficulty, Integer> diff2totalWork, Machine machine,
+    public DecipherManager(CTEDecipher cteDecipher, Machine machine,
                            Stock stock){
         agentCount = cteDecipher.getAgents();
         dictionary = new Dictionary(cteDecipher.getCTEDictionary());
-        this.diff2totalWork = diff2totalWork;
         this.machine = machine;
         this.stock = stock;
         try{
@@ -79,13 +74,13 @@ public class DecipherManager {
         return Math.pow(stock.getKeyBoard().length(), machine.getRotorCount());
     }
 
-
-    public DecipherManager() { System.out.println("DM was created"); }
-
     public Difficulty getDifficulty() { return difficulty; }
     public int getAgentCount() { return agentCount; }
     public Dictionary getDictionary() { return dictionary; }
-    public void setMissionSize(int missionSize) { this.missionSize = missionSize; }
+    public void setMissionSize(int missionSize) {
+        this.missionSize = missionSize;
+        createDiff2MissionAmountMap();
+    }
     public void setDifficulty(Difficulty difficulty) { this.difficulty = difficulty; }
     public void setDifficulty(String difficulty) {
         switch (difficulty.toUpperCase()) {
@@ -104,11 +99,6 @@ public class DecipherManager {
             default:
                 break;
         }
-    }
-
-    public static void main(String[] args) {
-        DecipherManager DM = new DecipherManager();
-        DM.manageAgents("hello world");
     }
 
     public void serializeMachine(Machine machine){
@@ -167,7 +157,8 @@ public class DecipherManager {
         ThreadPoolExecutor threadExecutor = new ThreadPoolExecutor(agentCountChosen, agentCountChosen,
                                             Long.MAX_VALUE, TimeUnit.NANOSECONDS, workQueue , factory);
 
-        new Thread(() -> initiateWork(threadExecutor), "Mission Distributor").start();
+        //new Thread(() -> initiateWork(threadExecutor), "Mission Distributor").start();
+        initiateWork(threadExecutor);
     }
 
     private void initiateWork(ThreadPoolExecutor threadExecutor) {
@@ -201,9 +192,9 @@ public class DecipherManager {
         return initialized;
     }
 
-    public int calcTotalMissionAmountEasy(){
-        return (int) (possiblePositionPermutations / missionSize +
-                (possiblePositionPermutations % missionSize !=0 ? 1 : 0));
+    public double calcTotalMissionAmountEasy(){
+        return possiblePositionPermutations / missionSize +
+                (possiblePositionPermutations % missionSize !=0 ? 1 : 0);
     }
 
     public double calcTotalMissionAmountByDifficulty(){
@@ -223,6 +214,26 @@ public class DecipherManager {
                 .binomialCoefficientDouble(stock.getRotorMap().size(), stock.getRotorsCount());
     }
 
+    public double getTotalMissionAmount(){
+        return diff2totalWork.get(difficulty);
+    }
+
+    public void createDiff2MissionAmountMap(){
+        diff2totalWork = new HashMap<>();
+        double result = calcTotalMissionAmountEasy();
+        diff2totalWork.put(Difficulty.EASY, result);
+
+        result *= stock.getReflectorMap().size();
+        diff2totalWork.put(Difficulty.MEDIUM, result);
+
+        result *= CombinatoricsUtils.factorialDouble(stock.getRotorsCount());
+        diff2totalWork.put(Difficulty.HARD, result);
+
+        result *= CombinatoricsUtils
+                .binomialCoefficientDouble(stock.getRotorMap().size(), stock.getRotorsCount());
+        diff2totalWork.put(Difficulty.IMPOSSIBLE, result);
+    }
+
     private void runEasy(){
         int totalMissions = 0;
         try {
@@ -231,12 +242,14 @@ public class DecipherManager {
             List<Character> nextRotorsPositions = initializeRotorsPositions(machineCode.getID2PositionList());
 
             for (int i = 0; i <= totalMissionsAmountForPositions; i++) {
-                while(isPaused.getValue()){
-                    try{
-                        isPaused.wait();
-                    }
-                    catch(InterruptedException e){
-                        break;
+                synchronized (isPaused){
+                    while(isPaused.getValue()){
+                        try{
+                           isPaused.wait();
+                        }
+                        catch(InterruptedException e){
+                            break;
+                        }
                     }
                 }
                 if(isCancelled.getValue()){
