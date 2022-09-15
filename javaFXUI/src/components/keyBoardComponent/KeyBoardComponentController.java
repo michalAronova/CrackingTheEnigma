@@ -1,14 +1,17 @@
 package components.keyBoardComponent;
 
 import application.MainApplicationController;
-import javafx.animation.FillTransition;
+import javafx.animation.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
@@ -23,8 +26,16 @@ public class KeyBoardComponentController {
 
     public void activateKeyAnimation(Character lastProcessedChar) {
         Button b =  getButtonByChar(lastProcessedChar);
-        //b.setStyle("-fx-background-color: #fffb00");
+        Rectangle rect = new Rectangle(400, 200, Color.CYAN);
 
+        /*FillTransition fillTransition = new FillTransition(Duration.seconds(2), rect);
+        fillTransition.setFromValue(Color.BLUEVIOLET);
+        fillTransition.setToValue(Color.AZURE);
+        fillTransition.setCycleCount(FillTransition.INDEFINITE);
+        fillTransition.play();*/
+        //String style = b.getStyle();
+        //b.setStyle("-fx-background-color: #fffb00");
+        //b.setStyle(style);
         //Shape buttonShape = getButtonByChar(lastProcessedChar).getShape();
         /*FillTransition ft = new FillTransition(Duration.millis(3000), buttonShape , Color.RED, Color.BLUE);
         ft.setCycleCount(3);

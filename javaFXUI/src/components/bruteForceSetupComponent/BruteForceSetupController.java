@@ -31,6 +31,7 @@ public class BruteForceSetupController {
     public void initialBruteForceSetUp(){
         initializeSlider();
         initialDiffComboBox();
+        bruteForceStartButton.setDisable(true);
     }
 
     private void initializeSlider() {
@@ -67,6 +68,7 @@ public class BruteForceSetupController {
                                     difficultyComboBox.getValue().toString(),
                                     parseInt(missionSizeTextBox.getText()));
         mainApplicationController.calculateTotalMissionAmount();
+        bruteForceStartButton.setDisable(false);
     }
 
     public void onStartButton(){

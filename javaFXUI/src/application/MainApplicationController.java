@@ -91,8 +91,7 @@ public class MainApplicationController {
         engine = new TheEngine();
         bruteForcePlayComponentController.setEngine(engine);
         encryptTabPane.setDisable(true);
-        bruteForceTabPane.setDisable(false);
-        //bruteForceTabPane.setDisable(true);
+        bruteForceTabPane.setDisable(true);
 
     }
 
@@ -221,6 +220,7 @@ public class MainApplicationController {
 
     public void onBruteForceSet(int agentCountChosen, String difficulty, int missionSize) {
             engine.setDMParamsFromUI(agentCountChosen, difficulty, missionSize);
+            bruteForcePlayComponentController.initializeDataProperties();
     }
 
     public void calculateTotalMissionAmount() {

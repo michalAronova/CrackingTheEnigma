@@ -9,11 +9,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="components.BruteForcePlayComponent.BruteForcePlayComponentController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="764.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="components.BruteForcePlayComponent.BruteForcePlayComponentController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="159.0" prefWidth="169.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="63.0" prefWidth="63.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.0" minWidth="10.0" prefWidth="448.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="63.0" prefWidth="63.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.0" minWidth="10.0" prefWidth="448.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints vgrow="SOMETIMES" />
@@ -21,7 +22,7 @@
       <RowConstraints vgrow="SOMETIMES" />
     <RowConstraints vgrow="SOMETIMES" />
     <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label text="Brute Force">
@@ -84,9 +85,9 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <FlowPane GridPane.columnIndex="2" GridPane.rowIndex="1">
+      <FlowPane GridPane.columnIndex="3" GridPane.rowIndex="1">
          <GridPane.margin>
-            <Insets bottom="10.0" left="50.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
          <children>
             <Label text="Progress">
@@ -94,18 +95,19 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </FlowPane.margin>
             </Label>
-            <ProgressBar fx:id="progressBar" prefHeight="23.0" prefWidth="280.0" progress="0.0">
+            <ProgressBar fx:id="progressBar" prefHeight="23.0" prefWidth="238.0" progress="0.0">
                <FlowPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </FlowPane.margin>
             </ProgressBar>
+            <Label fx:id="progressPercentageLabel" text="Label" />
          </children>
       </FlowPane>
-      <Label text="All Potential Candidates:" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <Label text="All Potential Candidates:" GridPane.columnIndex="3" GridPane.rowIndex="2">
          <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <FlowPane fx:id="potentialCandidatesFlowPane" prefHeight="79.0" prefWidth="448.0" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.rowSpan="3" />
+      <FlowPane fx:id="potentialCandidatesFlowPane" prefHeight="79.0" prefWidth="448.0" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.rowSpan="3" />
    </children>
 </GridPane>

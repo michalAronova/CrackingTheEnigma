@@ -62,11 +62,6 @@ public class Mission implements Runnable {
                 }
             }
             if(isCandidate){
-//                System.out.println(Thread.currentThread().getName() + " found a candidate!");
-//                System.out.println("origin: " + toDecrypt);
-//                System.out.println("processed: " + processed);
-//                System.out.println("code: ");
-//                System.out.println(currentCode);
                 candidates.add(new Pair<>(processed, currentCode));
             //      2.1 if yes - put in the blockingQueue of decryption candidates
             }
@@ -75,7 +70,9 @@ public class Mission implements Runnable {
         }
         long endTime = System.nanoTime();
         long timeElapsed = endTime - startTime;
-        updateTotalMissionDone.accept(1);
+        if(missionSize != 0) {
+            updateTotalMissionDone.accept(1);
+        }
         if(!candidates.isEmpty()){
             try {
                 resultQueue.put(new MissionResult(candidates,

@@ -2,6 +2,7 @@ package components.BruteForcePlayComponent;
 
 import DTO.codeObj.CodeObj;
 import application.MainApplicationController;
+import components.singleCandidateComponent.SingleCandidateComponentController;
 import engine.Engine;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
@@ -18,8 +19,10 @@ import logic.bruteForceTask.BruteForceTask;
 import logic.uiAdapter.UIAdapter;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+
 
 public class BruteForcePlayComponentController {
     @FXML private Button stopButton;
@@ -65,13 +68,13 @@ public class BruteForcePlayComponentController {
         resumeButton.setDisable(true);
         pauseButton.setDisable(true);
         stopButton.setDisable(true);
-
+        initializeDataLabels();
         totalPotentialCandidatesNumberLabel.textProperty()
                 .bind(Bindings.format("%d", totalPotentialCandidatesProperty));
         totalTimeLabel.textProperty()
-                .bind(Bindings.format("%f", totalTimeProperty));
-//        progressPercentageLabel.textProperty()
-//                .bind(Bindings.format("%f", progressPercentageProperty));
+                .bind(Bindings.format("%.2f", totalTimeProperty));
+        progressPercentageLabel.textProperty()
+                .bind(Bindings.format("%.2f", progressPercentageProperty));
         missionDoneLabel.textProperty()
                 .bind(Bindings.format("%d", missionsDoneProperty));
 
@@ -131,6 +134,22 @@ public class BruteForcePlayComponentController {
         missionsDoneProperty.set(0);
     }
 
+    private void initializeDataLabels() {
+        missionDoneLabel.setText("0");
+        totalPotentialCandidatesNumberLabel.setText("0");
+        totalTimeLabel.setText("0");
+    }
+
+    public void initializeDataProperties() {
+        totalPotentialCandidatesProperty.set(0);
+        missionsDoneProperty.set(0);
+        totalTimeProperty.set(0);
+        progressPercentageProperty.set(0);
+        if (currentRunningTask != null) {
+            currentRunningTask.updateProgress(0);
+            progressBar.setProgress(0);
+        }
+    }
     public void initiateBruteForce(UIAdapter uiAdapter, Runnable onFinish) {
         currentRunningTask = new BruteForceTask(currentDecryption, engine, uiAdapter,
                 totalMissionAmountProperty.get(),
@@ -161,35 +180,45 @@ public class BruteForcePlayComponentController {
 
     private void createTile(String candidate, CodeObj code, String agentID){
         System.out.println("Creating tile for: " + code +", " + agentID + ", "+ candidate);
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(HistogramResourcesConstants.MAIN_FXML_RESOURCE);
-//            Node singleCandidateTile = loader.load();
-//
-//            SingleCandidateController singleCandidateController = loader.getController();
-//            singleCandidateController.setAgentID(agentID);
-//            singleCandidateController.setCandidate(candidate);
-//            singleCandidateController.setCode(code);
-//
-//            potentialCandidatesFlowPane.getChildren().add(singleCandidateTile);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            /*
+        URL url = getClass().getResource("/filteredDictionary/filteredDictionary.fxml");
+        fxmlLoader.setLocation(url);
+        Parent root = fxmlLoader.load(url.openStream());
+
+
+             */
+            FXMLLoader loader = new FXMLLoader();
+
+            URL url = getClass().getResource("/components/singleCandidateComponent/singleCandidateComponent.fxml");
+            System.out.println("Value URL = " + url);
+            loader.setLocation(url);
+            Node singleCandidateTile = loader.load();
+
+            SingleCandidateComponentController singleCandidateController = loader.getController();
+            singleCandidateController.setAgent(agentID);
+            singleCandidateController.setCandidate(candidate);
+            singleCandidateController.setCode(code.toString());
+
+            potentialCandidatesFlowPane.getChildren().add(singleCandidateTile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void bindTaskToUIComponents(Task<Boolean> aTask, Runnable onFinish) {
         // task progress bar
         progressBar.progressProperty().bind(aTask.progressProperty());
-        System.out.println("is progress bar bound? " +progressBar.progressProperty().isBound());
+
         // task percent label
-//        progressPercentageLabel.textProperty().bind(
-//                Bindings.concat(
-//                        Bindings.format(
-//                                "%.0f",
-//                                Bindings.multiply(
-//                                        aTask.progressProperty(),
-//                                        100)),
-//                        " %"));
+        progressPercentageLabel.textProperty().bind(
+                Bindings.concat(
+                        Bindings.format(
+                                "%.0f",
+                                Bindings.multiply(
+                                        aTask.progressProperty(),
+                                        100)),
+                        " %"));
 
         // task cleanup upon finish
         aTask.progressProperty().addListener(((observable, oldValue, newValue) -> {

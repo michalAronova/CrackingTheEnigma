@@ -255,6 +255,7 @@ public class DecipherManager {
                             encryption, dictionary, this::speedometer, resultQueue, updateTotalMissionDone));
                 }
                 totalMissions++;
+
             }
         }
         catch (InterruptedException e) {
