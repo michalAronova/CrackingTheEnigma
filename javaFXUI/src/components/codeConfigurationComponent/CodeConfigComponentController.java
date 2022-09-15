@@ -48,7 +48,6 @@ public class CodeConfigComponentController {
             plugsComponentController.setCodeConfigController(this);
             rotorConfigComponentController.setCodeConfigController(this);
         }
-        System.out.println(reflectorComboBox.valueProperty());
         setButton.disableProperty().bind(Bindings
                 .createBooleanBinding(()->
                         reflectorComboBox.valueProperty().getValue() == null || !rotorsFilled.getValue()

@@ -15,13 +15,13 @@ public class BruteForceTask extends Task<Boolean> {
     private String decryption;
     private Engine engine;
     private UIAdapter uiAdapter;
-    private int totalMissionAmount;
+    private double totalMissionAmount;
     private BooleanProperty isPaused;
     private BooleanProperty isCancelled;
     private Consumer<Runnable> onCancel;
 
     public BruteForceTask(String decryption, Engine engine,
-                          UIAdapter uiAdapter, int totalMissionAmount,
+                          UIAdapter uiAdapter, double totalMissionAmount,
                           BooleanProperty isPaused, BooleanProperty isCancelled,
                           Consumer<Runnable> onCancel) {
         this.decryption = decryption;
@@ -36,6 +36,7 @@ public class BruteForceTask extends Task<Boolean> {
 
     @Override
     protected Boolean call() throws Exception {
+        updateProgress(0, totalMissionAmount);
         try{
             engine.getDM().setIsCancelled(isCancelled);
             engine.getDM().setIsPaused(isPaused);
@@ -53,4 +54,9 @@ public class BruteForceTask extends Task<Boolean> {
     }
 
     public UIAdapter getUiAdapter(){ return uiAdapter; }
+
+    public void updateProgress(int current){
+        updateProgress(current, totalMissionAmount);
+    }
+
 }

@@ -63,8 +63,8 @@ public class BruteForceSetupController {
     public void setAgentCount(int agentCount) { this.agentCount = agentCount; }
 
     public void onSetButton() {
-        mainApplicationController.onBruteForceSet(parseInt(agentsNumLabel.getText().toString()),
-                                    difficultyComboBox.getSelectionModel().getSelectedItem().toString(),
+        mainApplicationController.onBruteForceSet(parseInt(agentsNumLabel.getText()),
+                                    difficultyComboBox.getValue().toString(),
                                     parseInt(missionSizeTextBox.getText()));
         mainApplicationController.calculateTotalMissionAmount();
     }
@@ -73,7 +73,7 @@ public class BruteForceSetupController {
         mainApplicationController.startBruteForce();
     }
 
-    public void updateTotalMissionAmount(Integer totalMissionAmount) {
+    public void updateTotalMissionAmount(Double totalMissionAmount) {
         totalMissionNumLabel.setText(totalMissionAmount.toString());
     }
 

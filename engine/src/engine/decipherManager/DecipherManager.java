@@ -15,10 +15,15 @@ import javafx.beans.property.BooleanProperty;
 import javafx.concurrent.Task;
 import javafx.util.Pair;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
+import org.apache.commons.math3.stat.interval.BinomialConfidenceInterval;
+import org.apache.commons.math3.util.ArithmeticUtils;
+import org.apache.commons.math3.util.CombinatoricsUtils;
+import org.apache.commons.math3.util.MathUtils;
 import org.paukov.combinatorics3.Generator;
 import schema.generated.CTEDecipher;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
@@ -83,7 +88,7 @@ public class DecipherManager {
     public void setMissionSize(int missionSize) { this.missionSize = missionSize; }
     public void setDifficulty(Difficulty difficulty) { this.difficulty = difficulty; }
     public void setDifficulty(String difficulty) {
-        switch (difficulty) {
+        switch (difficulty.toUpperCase()) {
             case "EASY":
                 this.difficulty = Difficulty.EASY;
                 break;
@@ -93,7 +98,7 @@ public class DecipherManager {
             case "HARD":
                 this.difficulty = Difficulty.HARD;
                 break;
-            case "IMPOSSIBLE":
+            case "NOT POSSIBLE":
                 this.difficulty = Difficulty.IMPOSSIBLE;
                 break;
             default:
@@ -150,11 +155,6 @@ public class DecipherManager {
         updatingMachineEncoding = machineEncoded;
         this.encryption = encryption;
 
-        //debug -----------------------------
-        difficulty = Difficulty.MEDIUM;
-        agentCountChosen = 3;
-        // ----------------------------------
-
         //create result queue and register listener thread
         resultQueue = new LinkedBlockingQueue<>();
         new Thread(new ResultListener(resultQueue, transferMissionResult), "Result Listener").start();
@@ -206,7 +206,25 @@ public class DecipherManager {
                 (possiblePositionPermutations % missionSize !=0 ? 1 : 0));
     }
 
+    public double calcTotalMissionAmountByDifficulty(){
+        double result = calcTotalMissionAmountEasy();
+        if(difficulty.equals(Difficulty.EASY)){
+            return result;
+        }
+        result *= stock.getReflectorMap().size();
+        if(difficulty.equals(Difficulty.MEDIUM)){
+            return result;
+        }
+        result *= CombinatoricsUtils.factorialDouble(stock.getRotorsCount());
+        if(difficulty.equals(Difficulty.HARD)){
+            return result;
+        }
+        return result * CombinatoricsUtils
+                .binomialCoefficientDouble(stock.getRotorMap().size(), stock.getRotorsCount());
+    }
+
     private void runEasy(){
+        int totalMissions = 0;
         try {
             double totalMissionsAmountForPositions = possiblePositionPermutations / missionSize;
             double leftoverMissionsAmountForPositions = possiblePositionPermutations % missionSize;
@@ -236,6 +254,7 @@ public class DecipherManager {
                     workQueue.put(new Mission(deepCopyMachine(updatingMachineEncoding), nextRotorsPositions, missionSize,
                             encryption, dictionary, this::speedometer, resultQueue, updateTotalMissionDone));
                 }
+                totalMissions++;
             }
         }
         catch (InterruptedException e) {
@@ -266,6 +285,7 @@ public class DecipherManager {
             machine.setRotors(newPermutation);
             serializeUpdatingMachine(machine);
             runMedium();
+            newPermutation.clear();
         }
     }
 

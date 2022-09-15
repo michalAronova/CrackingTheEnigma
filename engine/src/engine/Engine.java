@@ -63,7 +63,7 @@ public interface Engine extends Serializable {
 
     void setDMParamsFromUI(int agentCountChosen, String difficulty, int missionSize);
 
-    Integer calculateTotalMissionsAmount();
+    Double calculateTotalMissionsAmount();
 
     String processWord(String word);
 

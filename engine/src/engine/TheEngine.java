@@ -411,8 +411,8 @@ public class TheEngine implements Engine {
     }
 
 
-    public Integer calculateTotalMissionsAmount(){
-        return DM.calcTotalMissionAmountEasy();
+    public Double calculateTotalMissionsAmount(){
+        return DM.calcTotalMissionAmountByDifficulty();
         //return 200;
     }
 

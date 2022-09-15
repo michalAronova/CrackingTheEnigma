@@ -224,7 +224,7 @@ public class MainApplicationController {
     }
 
     public void calculateTotalMissionAmount() {
-        int totalMissionAmount = engine.calculateTotalMissionsAmount();
+        double totalMissionAmount = engine.calculateTotalMissionsAmount();
         bruteForceSetupController.updateTotalMissionAmount(totalMissionAmount);
         bruteForcePlayComponentController.updateTotalMissionAmount(totalMissionAmount);
     }

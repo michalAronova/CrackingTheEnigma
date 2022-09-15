@@ -47,7 +47,7 @@ public class BruteForcePlayComponentController {
 
     private Engine engine;
 
-    private IntegerProperty totalMissionAmountProperty;
+    private DoubleProperty totalMissionAmountProperty;
 
     private String currentDecryption;
 
@@ -58,7 +58,7 @@ public class BruteForcePlayComponentController {
         missionsDoneProperty = new SimpleIntegerProperty(0);
         taskPaused = new SimpleBooleanProperty(false);
         taskCancelled = new SimpleBooleanProperty(false);
-        totalMissionAmountProperty = new SimpleIntegerProperty(0);
+        totalMissionAmountProperty = new SimpleDoubleProperty(0);
     }
 
     @FXML public void initialize(){
@@ -74,6 +74,7 @@ public class BruteForcePlayComponentController {
 //                .bind(Bindings.format("%f", progressPercentageProperty));
         missionDoneLabel.textProperty()
                 .bind(Bindings.format("%d", missionsDoneProperty));
+
     }
 
     public void setMainApplicationController(MainApplicationController mainApplicationController){
@@ -148,7 +149,8 @@ public class BruteForcePlayComponentController {
                     createTiles(missionResult.getCandidates(), missionResult.getAgentID());
                 },
                 (delta) -> { //Consumer<Integer> updateTotalMissionDone
-                    totalMissionAmountProperty.set(totalMissionAmountProperty.get() + 1);
+                    missionsDoneProperty.set(missionsDoneProperty.get() + 1);
+                    currentRunningTask.updateProgress(missionsDoneProperty.get());
                 }
         );
     }
@@ -178,7 +180,7 @@ public class BruteForcePlayComponentController {
     public void bindTaskToUIComponents(Task<Boolean> aTask, Runnable onFinish) {
         // task progress bar
         progressBar.progressProperty().bind(aTask.progressProperty());
-
+        System.out.println("is progress bar bound? " +progressBar.progressProperty().isBound());
         // task percent label
 //        progressPercentageLabel.textProperty().bind(
 //                Bindings.concat(
@@ -190,9 +192,14 @@ public class BruteForcePlayComponentController {
 //                        " %"));
 
         // task cleanup upon finish
-        aTask.valueProperty().addListener((observable, oldValue, newValue) -> {
-            onTaskFinished(Optional.ofNullable(onFinish));
-        });
+        aTask.progressProperty().addListener(((observable, oldValue, newValue) -> {
+            if(newValue.equals(1.0)){
+                onTaskFinished(Optional.ofNullable(onFinish));
+            }
+        }));
+//        aTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+//
+//        });
     }
 
     public void onTaskFinished(Optional<Runnable> onFinish) {
@@ -201,7 +208,7 @@ public class BruteForcePlayComponentController {
         onFinish.ifPresent(Runnable::run);
     }
 
-    public void updateTotalMissionAmount(int totalMissionAmount) {
+    public void updateTotalMissionAmount(double totalMissionAmount) {
         this.totalMissionAmountProperty.set(totalMissionAmount);
     }
 }
