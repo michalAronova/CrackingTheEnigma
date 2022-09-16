@@ -16,9 +16,9 @@
 
 <ScrollPane fx:id="mainScrollPane" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minViewportHeight="100.0" minViewportWidth="200.0" minWidth="-Infinity" prefHeight="806.0" prefViewportHeight="500.0" prefViewportWidth="900.0" prefWidth="1000.0" stylesheets="@mainApplication.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainApplicationController">
    <content>
-      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+      <BorderPane id="mainBorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
          <center>
-            <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
+            <TabPane id="mainTabPane" fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Machine">
                   <content>
@@ -37,8 +37,8 @@
                                 </rowConstraints>
                                  <children>
                                     <fx:include fx:id="machineDetails" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="110.0" minWidth="200.0" source="../components/machineDetails/machineDetails.fxml" BorderPane.alignment="CENTER_LEFT" GridPane.columnIndex="1" />
-                                    <fx:include fx:id="codeObjDisplayComponent" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="2" />
-                                    <fx:include fx:id="currentCodeDisplayComponent1" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="3" />
+                                    <fx:include fx:id="codeObjDisplayComponent" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="2" />
+                                    <fx:include fx:id="currentCodeDisplayComponent1" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="3" />
                                     <fx:include fx:id="codeConfigComponent" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeConfigurationComponent/codeConfigComponent.fxml" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
@@ -63,7 +63,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <fx:include fx:id="currentCodeDisplayComponent2" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="2" />
+                                    <fx:include fx:id="currentCodeDisplayComponent2" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="2" />
                                     <fx:include fx:id="processComponent" source="../components/processComponent/processComponent.fxml" />
                                     <HBox prefHeight="84.0" prefWidth="386.0" GridPane.rowIndex="2">
                                        <children>
@@ -83,10 +83,10 @@
                            <children>
                               <GridPane layoutX="1.0" layoutY="3.0" prefHeight="624.0" prefWidth="942.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="412.0" minWidth="10.0" prefWidth="391.0" />
-                                    <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="256.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="424.0" minWidth="10.0" prefWidth="341.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="467.0" minWidth="10.0" prefWidth="414.0" />
+                                    <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="231.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="206.0" minWidth="0.0" prefWidth="20.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="424.0" minWidth="10.0" prefWidth="321.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints maxHeight="237.0" minHeight="165.0" prefHeight="232.0" vgrow="SOMETIMES" />
@@ -96,7 +96,7 @@
                                 </rowConstraints>
                                  <children>
                                     <fx:include fx:id="candidatesComponent" source="../components/candidatesComponent/candidatesComponent.fxml" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
-                                    <fx:include fx:id="currentCodeDisplayComponent3" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="3" />
+                                    <fx:include fx:id="currentCodeDisplayComponent3" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="3" />
                                     <fx:include fx:id="processForBruteForce" source="../components/processComponent/processComponent.fxml" GridPane.columnIndex="0" />
                                     <fx:include fx:id="bruteForceSetup" source="../components/bruteForceSetupComponent/BruteForceSetup.fxml" GridPane.columnSpan="2" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
                                     <fx:include fx:id="bruteForcePlayComponent" source="../components/BruteForcePlayComponent/bruteForcePlayComponent.fxml" GridPane.columnSpan="2147483647" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.vgrow="NEVER" />
@@ -112,14 +112,14 @@
             </TabPane>
          </center>
          <top>
-            <HBox alignment="CENTER_LEFT" spacing="5.0" BorderPane.alignment="CENTER_LEFT">
+            <HBox id="mainUpperBorderPane" alignment="CENTER_LEFT" spacing="5.0" BorderPane.alignment="CENTER_LEFT">
                <children>
                   <Button fx:id="loadFileButton" mnemonicParsing="false" onAction="#loadFileButtonClicked" styleClass="simpleButton" text="Load File...">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Label fx:id="fileChosenLabel" text="Chosen file will display here (or error)">
+                  <Label id="mainUpperBorderPane" fx:id="fileChosenLabel" text="Chosen file will display here (or error)">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

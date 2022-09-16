@@ -29,7 +29,7 @@
       <HBox fx:id="toggleContainer" prefWidth="300.0">
          <children>
               <ToggleButton fx:id="automatToggle" selected="true" text="Automat" />
-              <ToggleButton fx:id="singleToggle"  text="Single" />
+              <ToggleButton fx:id="singleToggle" text="Single" />
          </children>
       </HBox>
       <TextField fx:id="userTextField" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">

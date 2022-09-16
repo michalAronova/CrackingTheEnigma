@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+
 <ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@codeObjDisplay.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeObjDisplayComponent.CodeObjDisplayComponentController">
     <content>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="grid-pane">
@@ -100,7 +101,8 @@
                         <HBox fx:id="rotorsDataHBox" fillHeight="false" layoutX="64.0">
                             <padding>
                                 <Insets left="10.0" />
-                            </padding></HBox>
+                            </padding>
+                  </HBox>
                     </children>
                     <GridPane.margin>
                         <Insets />

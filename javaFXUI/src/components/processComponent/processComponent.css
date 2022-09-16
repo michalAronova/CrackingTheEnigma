@@ -1,4 +1,6 @@
 .error-message{
-    -fx-text-fill: red;
+    -fx-text-fill: red !important;
     -fx-font-weight: bold;
 }
+
+

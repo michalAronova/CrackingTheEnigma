@@ -9,7 +9,7 @@
 }
 
 .label{
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
     -fx-font-family: "Lucida Sans Typewriter";
     -fx-text-fill: white;
 }
@@ -23,20 +23,17 @@
 }
 
 .title-label{
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
     -fx-font-family: "Lucida Sans Typewriter";
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
 .simpleButton {
-    -fx-background-color:
-            #000000,
-            linear-gradient(#eabb7e, #ac7e60),
-            linear-gradient(#956a4e, #704f3a),
-            linear-gradient(#75533d, #553c2c);
+    -fx-background-color: linear-gradient(#94694e, #553c2c);
+    -fx-border-color: #342010;
     -fx-background-insets: 0,1,2,3;
-    -fx-background-radius: 3,2,2,2;
+    -fx-border-radius: 3,3,3,3;
     -fx-text-fill: white;
     -fx-font-size: 12px;
     -fx-font-family: "Lucida Sans Typewriter";
@@ -51,7 +48,34 @@
             linear-gradient(#a67f65, #7e5d48);
     -fx-effect: innershadow( three-pass-box , #1a0e06, 6, 0.0 , 0 , 2 );
 }
+.text-field{
+    -fx-background-color: linear-gradient(#d2b6aa, #d3a793);
+    -fx-border-color: #000000;
+    -fx-effect: innershadow( three-pass-box , #1a0e06, 6, 0.0 , 0 , 2 );
+}
 
 .keyboard-button{
     -fx-background-radius: 5em;
 }
+
+#mainBorderPane{
+    -fx-background-color: #a26c4b;
+    -fx-border-color: #a26c4b;
+}
+
+#mainTabPane>*.tab-header-area>*.tab-header-background
+{
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, #d2b6aa;
+}
+
+.tab{
+    -fx-background-color: linear-gradient(#94694e, #553c2c);
+    -fx-border-color: #342010;
+    -fx-border-radius: 3,3,3,3;
+    -fx-background-radius: 3,3,3,3;
+    -fx-text-fill: #ffffff;
+}
+.table-view.column-header-background {
+    -fx-background-color: red;
+}
+
