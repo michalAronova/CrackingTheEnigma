@@ -74,7 +74,9 @@ public class DictionaryComponentController {
     }
 
     public void fillDictionaryTable(List<String> words){
+        dataList.clear();
         dataList.addAll(words);
     }
+
 }
 

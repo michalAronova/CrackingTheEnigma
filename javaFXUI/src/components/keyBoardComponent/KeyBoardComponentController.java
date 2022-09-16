@@ -31,7 +31,6 @@ public class KeyBoardComponentController {
 
     public void activateKeyAnimation(Character lastProcessedChar) {
         Button b =  getButtonByChar(lastProcessedChar);
-        Rectangle rect = new Rectangle(400, 200, Color.CYAN);
 
         final Color startColor = Color.web("#ececec");
         final Color endColor = Color.web("#fdee00");
@@ -41,15 +40,11 @@ public class KeyBoardComponentController {
         // String that represents the color above as a JavaFX CSS function:
         // -fx-body-color: rgb(r, g, b);
         // with r, g, b integers between 0 and 255
-        final StringBinding cssColorSpec = Bindings.createStringBinding(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                return String.format("-fx-body-color: rgb(%d, %d, %d);",
-                        (int) (256*color.get().getRed()),
-                        (int) (256*color.get().getGreen()),
-                        (int) (256*color.get().getBlue()));
-            }
-        }, color);
+        final StringBinding cssColorSpec = Bindings.createStringBinding(
+                () -> String.format("-fx-body-color: rgb(%d, %d, %d);",
+                (int) (256*color.get().getRed()),
+                (int) (256*color.get().getGreen()),
+                (int) (256*color.get().getBlue())), color);
 
         // bind the button's style property
         b.styleProperty().bind(cssColorSpec);

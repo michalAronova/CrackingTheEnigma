@@ -16,8 +16,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.util.StringConverter;
-import utils.AutoCompleteComboBox;
-import utils.AutoCompleteComboBox.HideableItem;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

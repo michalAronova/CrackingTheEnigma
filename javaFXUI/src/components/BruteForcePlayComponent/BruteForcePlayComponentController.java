@@ -232,7 +232,7 @@ public class BruteForcePlayComponentController {
     }
 
     public void onTaskFinished(Optional<Runnable> onFinish) {
-        //this.progressPercentageLabel.textProperty().unbind();
+        this.progressPercentageLabel.textProperty().unbind();
         this.progressBar.progressProperty().unbind();
         taskCancelled.setValue(false);
         taskPaused.setValue(false);

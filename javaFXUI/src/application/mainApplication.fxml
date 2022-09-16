@@ -114,7 +114,7 @@
          <top>
             <HBox alignment="CENTER_LEFT" spacing="5.0" BorderPane.alignment="CENTER_LEFT">
                <children>
-                  <Button fx:id="loadFileButton" mnemonicParsing="false" onAction="#loadFileButtonClicked" text="Load File...">
+                  <Button fx:id="loadFileButton" mnemonicParsing="false" onAction="#loadFileButtonClicked" styleClass="simpleButton" text="Load File...">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
