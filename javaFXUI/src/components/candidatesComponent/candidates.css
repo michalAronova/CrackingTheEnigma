@@ -1,37 +1,10 @@
-.grid-pane{
-    -fx-background-color: #5b402f,
-    #000000,
-    linear-gradient(#75533d, #ac7e60),
-    linear-gradient(#a97a5b, #704f3a),
-    linear-gradient(#704f3a, #553c2c);
-    -fx-border-color: #5b402f;
-    -fx-fill: #5b402f;
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+.flow-pane > .viewport{
+    -fx-background-color: transparent;
 }
 
 .scroll-pane{
-    -fx-background-color: #5b402f,
-    #000000,
-    linear-gradient(#75533d, #ac7e60),
-    linear-gradient(#a97a5b, #704f3a),
-    linear-gradient(#704f3a, #553c2c);
-    -fx-border-color: #5b402f;
-    -fx-fill: #5b402f;
-}
-#bruteForcePotentialCandidates{
-    -fx-background-color: #5b402f,
-    #000000,
-    linear-gradient(#75533d, #ac7e60),
-    linear-gradient(#a97a5b, #704f3a),
-    linear-gradient(#704f3a, #553c2c);
-    -fx-border-color: #5b402f;
-    -fx-fill: #5b402f;
-}
-#potentialCandidatesFlowPane{
-    -fx-background-color: #5b402f,
-    #000000,
-    linear-gradient(#75533d, #ac7e60),
-    linear-gradient(#a97a5b, #704f3a),
-    linear-gradient(#704f3a, #553c2c);
-    -fx-border-color: #5b402f;
-    -fx-fill: #5b402f;
+    -fx-background-color: transparent;
 }
