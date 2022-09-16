@@ -59,7 +59,7 @@
             </Label>
          </children>
       </FlowPane>
-      <Label styleClass="rotorMessage" text="Choose a rotor and drag" GridPane.columnIndex="1">
+      <Label styleClass="rotor-message" text="Choose a rotor and drag"  GridPane.columnIndex="1">
          <GridPane.margin>
             <Insets top="20.0" />
          </GridPane.margin>
@@ -67,7 +67,7 @@
             <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
          </padding>
       </Label>
-      <Label styleClass="rotorMessage" text="to desired placement" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Label styleClass="rotor-message"  text="to desired placement" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <padding>
             <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
          </padding>
