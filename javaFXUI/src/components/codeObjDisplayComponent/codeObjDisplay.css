@@ -1,0 +1,8 @@
+.grid-pane{
+    -fx-background-color: #704f3a;
+    -fx-border-color: #704f3a;
+    -fx-fill: #704f3a;
+}
+.scroll-pane{
+    -fx-background-color: #704f3a;
+}
