@@ -14,12 +14,12 @@
     <children>
         <HBox alignment="CENTER_LEFT">
             <children>
-                <Button fx:id="setByManualButton" mnemonicParsing="false" onAction="#onSetByManualClicked" text="Set by manual">
+                <Button fx:id="setByManualButton" mnemonicParsing="false" onAction="#onSetByManualClicked" styleClass="simpleButton" text="Set by manual">
                     <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="setByRandomButton" mnemonicParsing="false" onAction="#onSetByRandomClicked" text="Set by random">
+                <Button fx:id="setByRandomButton" mnemonicParsing="false" onAction="#onSetByRandomClicked" styleClass="simpleButton" text="Set by random">
                     <HBox.margin>
                         <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                     </HBox.margin>
@@ -69,11 +69,11 @@
                 </Accordion>
                 <AnchorPane>
                     <children>
-                        <Button fx:id="setButton" disable="true" layoutX="9.0" layoutY="50.0" mnemonicParsing="false" onAction="#onSetClicked" text="Set!">
+                        <Button fx:id="setButton" disable="true" layoutX="9.0" layoutY="50.0" mnemonicParsing="false" onAction="#onSetClicked" styleClass="simpleButton" text="Set!">
                      <padding>
                         <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
                      </padding></Button>
-                  <Button fx:id="clearButton" layoutX="9.0" layoutY="87.0" mnemonicParsing="false" onAction="#onClearButtonClicked" text="Clear">
+                  <Button fx:id="clearButton" layoutX="9.0" layoutY="87.0" mnemonicParsing="false" onAction="#onClearButtonClicked" styleClass="simpleButton" text="Clear">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding></Button>

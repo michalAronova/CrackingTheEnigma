@@ -74,6 +74,7 @@ public class KeyBoardComponentController {
         }
         for (Character c: ABC) {
             Button button = createNewButton(c.toString());
+            button.getStyleClass().add("keyboard-button");
             button.setOnAction(e -> onKeyButtonPressed(button.getText()));
             keyBoardFlowPane.getChildren().add(button);
         }

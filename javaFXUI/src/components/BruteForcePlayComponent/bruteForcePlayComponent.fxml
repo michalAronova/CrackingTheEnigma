@@ -31,17 +31,17 @@
       </Label>
       <FlowPane GridPane.columnSpan="2">
          <children>
-            <Button fx:id="stopButton" mnemonicParsing="false" onAction="#onStopClicked" text="STOP">
+            <Button fx:id="stopButton" mnemonicParsing="false" onAction="#onStopClicked" styleClass="simpleButton" text="STOP">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin>
             </Button>
-            <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#onPauseClicked" text="Pause">
+            <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#onPauseClicked" styleClass="simpleButton" text="Pause">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin>
             </Button>
-            <Button fx:id="resumeButton" mnemonicParsing="false" onAction="#onResumeClicked" text="Resume">
+            <Button fx:id="resumeButton" mnemonicParsing="false" onAction="#onResumeClicked" styleClass="simpleButton" text="Resume">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin>
