@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,11 +13,10 @@
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="159.0" prefWidth="169.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="63.0" prefWidth="63.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="63.0" prefWidth="63.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="63.0" />
       <ColumnConstraints hgrow="NEVER" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints vgrow="SOMETIMES" />
       <RowConstraints vgrow="SOMETIMES" />
       <RowConstraints vgrow="SOMETIMES" />
     <RowConstraints vgrow="NEVER" />
@@ -26,20 +24,12 @@
       <RowConstraints minHeight="100.0" prefHeight="100.0" vgrow="NEVER" />
   </rowConstraints>
    <children>
-      <Label text="Brute Force">
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
+      <Label text="Missions Done:" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <Label text="Missions Done:" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </GridPane.margin>
-      </Label>
-      <FlowPane GridPane.columnSpan="2" GridPane.rowIndex="1">
+      <FlowPane GridPane.columnSpan="2">
          <children>
             <Button fx:id="stopButton" mnemonicParsing="false" onAction="#onStopClicked" text="STOP">
                <FlowPane.margin>
@@ -61,32 +51,32 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </FlowPane>
-      <Label text="Potential Candidates:" GridPane.rowIndex="3">
+      <Label text="Potential Candidates:" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <Label text="Total TIme:" GridPane.rowIndex="4">
+      <Label text="Total TIme:" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="missionDoneLabel" prefHeight="17.0" prefWidth="66.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Label fx:id="missionDoneLabel" prefHeight="17.0" prefWidth="66.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="totalPotentialCandidatesNumberLabel" prefHeight="17.0" prefWidth="63.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Label fx:id="totalPotentialCandidatesNumberLabel" prefHeight="17.0" prefWidth="63.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="totalTimeLabel" prefHeight="17.0" prefWidth="67.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Label fx:id="totalTimeLabel" prefHeight="17.0" prefWidth="67.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <FlowPane GridPane.columnIndex="3" GridPane.rowIndex="1">
+      <FlowPane GridPane.columnSpan="3" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
@@ -104,15 +94,5 @@
             <Label fx:id="progressPercentageLabel" text="Label" />
          </children>
       </FlowPane>
-      <Label text="All Potential Candidates:" GridPane.columnIndex="3" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
-         </GridPane.margin>
-      </Label>
-      <ScrollPane fitToWidth="true" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS">
-         <content>
-            <FlowPane fx:id="potentialCandidatesFlowPane" hgap="2.0" vgap="2.0" />
-         </content>
-      </ScrollPane>
    </children>
 </GridPane>
