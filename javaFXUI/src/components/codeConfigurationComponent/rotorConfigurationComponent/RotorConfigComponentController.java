@@ -188,6 +188,7 @@ public class RotorConfigComponentController {
     private Label createDraggableRotorLabel(int number){
         Label label = new Label(number + "");
         label.setId("draggableRotorLabel"+number);
+        label.getStyleClass().add("draggable-rotor-label");
 
         label.setOnDragDetected((event) -> {
             WritableImage snapshot = label.snapshot(new SnapshotParameters(), null);
