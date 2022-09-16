@@ -7,6 +7,7 @@ import components.codeConfigurationComponent.CodeConfigComponentController;
 import components.codeHistoryComponent.CodeHistoryComponentController;
 import components.codeHistoryComponent.StatisticData;
 import components.codeObjDisplayComponent.CodeObjDisplayComponentController;
+import components.dictionaryComponent.DictionaryComponentController;
 import components.keyBoardComponent.KeyBoardComponentController;
 import components.processComponent.ProcessComponentController;
 import engine.Engine;
@@ -26,6 +27,8 @@ import javafx.stage.FileChooser;
 
 import javax.jnlp.IntegrationService;
 import java.io.File;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class MainApplicationController {
 
@@ -33,6 +36,7 @@ public class MainApplicationController {
     private Engine engine;
     private CodeObj currentCode;
     private IntegerProperty codeChanges;
+
 
     @FXML private MachineDetailsController machineDetailsController;
     @FXML private CodeConfigComponentController codeConfigComponentController;
@@ -47,6 +51,7 @@ public class MainApplicationController {
     @FXML private BruteForceSetupController bruteForceSetupController;
     @FXML private BruteForcePlayComponentController bruteForcePlayComponentController;
 
+    @FXML private DictionaryComponentController dictionaryComponentController;
     @FXML private GridPane machineDetails;
     @FXML private Button loadFileButton;
     @FXML private Label fileChosenLabel;
@@ -74,7 +79,8 @@ public class MainApplicationController {
                 && keyBoardComponentController != null
                 && codeHistoryComponentController != null
                 && bruteForceSetupController != null
-                && bruteForcePlayComponentController != null){
+                && bruteForcePlayComponentController != null
+                && dictionaryComponentController != null){
             machineDetailsController.setMainApplicationController(this);
             codeConfigComponentController.setMainApplicationController(this);
             codeObjDisplayComponentController.setMainApplicationController(this);
@@ -87,6 +93,7 @@ public class MainApplicationController {
             codeHistoryComponentController.setMainApplicationController(this);
             bruteForceSetupController.setMainApplicationController(this);
             bruteForcePlayComponentController.setMainApplicationController(this);
+            dictionaryComponentController.setMainApplicationController(this);
             handleDuplicateComponents();
         }
         else {
@@ -127,6 +134,8 @@ public class MainApplicationController {
                 encryptTabPane.setDisable(true);
                 bruteForceTabPane.setDisable(true);
                 codeObjDisplayComponentController.onCodeChosen(null);
+                dictionaryComponentController
+                        .fillDictionaryTable(new LinkedList<>(engine.getDM().getDictionary().getWords()));
             }
             catch(InvalidXMLException | OutOfBoundInputException e){
                 fileChosenLabel.getStyleClass().add("error-message");
@@ -174,6 +183,11 @@ public class MainApplicationController {
 
     public void keyBoardButtonPressed(String text) {
         processComponentController.keyPressed(text);
+        Character lastProcessedChar = processComponentController.getLastProcessedChar();
+        keyBoardComponentController.activateKeyAnimation(lastProcessedChar);
+    }
+
+    public void notifyKeyBoardOfInput(){
         Character lastProcessedChar = processComponentController.getLastProcessedChar();
         keyBoardComponentController.activateKeyAnimation(lastProcessedChar);
     }
@@ -256,5 +270,9 @@ public class MainApplicationController {
 
     public void startBruteForce(String decryption) {
         bruteForcePlayComponentController.onBruteForceStarted(decryption);
+    }
+
+    public void injectWordToProcess(String rowData) {
+        processForBruteForceController.injectWord(rowData);
     }
 }

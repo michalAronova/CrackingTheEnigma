@@ -54,24 +54,6 @@ public class BruteForceSetupController {
         missionSizeTextBox.setTextFormatter(
                 new TextFormatter<>(new IntegerStringConverter(), 0, integerFilter));
 
-//        missionSizeTextBox.textProperty().addListener((obs,oldv,newv) -> {
-//            try {
-//                missionSizeTextBox.getTextFormatter().getValueConverter().fromString(newv);
-//                // no exception above means valid
-//                missionSizeTextBox.setBorder(null);
-//            } catch (RuntimeException e) {
-//                missionSizeTextBox.setBorder(new Border(new BorderStroke(
-//                        Color.RED, BorderStrokeStyle.SOLID,
-//                        new CornerRadii(3), new BorderWidths(2), new Insets(-2))));
-//            }
-//        });
-
-        bindSetButton();
-
-        bruteForceStartButton.setDisable(true);
-    }
-
-    private void bindSetButton() {
         Bindings.bindBidirectional(missionSizeTextBox.textProperty(),
                 missionSizeProperty,
                 new NumberStringConverter());
@@ -80,6 +62,13 @@ public class BruteForceSetupController {
                 agentAmountChosenProperty,
                 new NumberStringConverter());
 
+
+        bindSetButton();
+
+        bruteForceStartButton.setDisable(true);
+    }
+
+    private void bindSetButton() {
         bruteForceSetButton.disableProperty()
                 .bind(Bindings.createBooleanBinding(
                         () -> decryptionProperty.getValue() == null
@@ -145,12 +134,12 @@ public class BruteForceSetupController {
     }
 
     public void toggleSetUpToAction(boolean isActive) {
-        bruteForceSetButton.disableProperty().unbind();
-        bruteForceSetButton.setDisable(isActive);
+        //bruteForceSetButton.disableProperty().unbind();
+        //bruteForceSetButton.setDisable(isActive);
         bruteForceStartButton.setDisable(isActive);
-        if(bruteForceSetButton.isDisabled()){
-            bindSetButton();
-        }
+//        if(bruteForceSetButton.isDisabled()){
+//            bindSetButton();
+//        }
     }
 
     public void setDecryptionString(String output) {

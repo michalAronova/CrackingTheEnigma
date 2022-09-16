@@ -7,13 +7,17 @@ import java.util.function.Consumer;
 
 public class UIAdapter {
 
-    private Consumer<MissionResult> addCandidate;
-    private Consumer<Integer> updateTotalMissionDone;
+    private final Consumer<MissionResult> addCandidate;
+    private final Consumer<Integer> updateTotalMissionDone;
+
+    private final Consumer<Long> updateTotalTime;
 
     public UIAdapter(Consumer<MissionResult> addCandidate,
-                     Consumer<Integer> updateTotalMissionDone) {
+                     Consumer<Integer> updateTotalMissionDone,
+                     Consumer<Long> updateTotalTime) {
         this.addCandidate = addCandidate;
         this.updateTotalMissionDone = updateTotalMissionDone;
+        this.updateTotalTime = updateTotalTime;
     }
 
     public void addNewCandidate(MissionResult missionResult) {
@@ -22,9 +26,12 @@ public class UIAdapter {
         );
     }
 
-    public void updateTotalMissionDone(int delta){
+    public void updateTotalMissionDone(int delta, long timeDelta){
         Platform.runLater(
                 () -> updateTotalMissionDone.accept(delta)
+        );
+        Platform.runLater(
+                () -> updateTotalTime.accept(timeDelta)
         );
     }
 }

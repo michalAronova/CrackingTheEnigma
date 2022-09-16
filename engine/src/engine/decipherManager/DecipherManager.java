@@ -22,6 +22,7 @@ import schema.generated.CTEDecipher;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class DecipherManager {
@@ -52,7 +53,7 @@ public class DecipherManager {
 
     private Consumer<MissionResult> transferMissionResult;
 
-    private Consumer<Integer> updateTotalMissionDone;
+    private BiConsumer<Integer, Long> updateTotalMissionDone;
 
 
     public DecipherManager(CTEDecipher cteDecipher, Machine machine,
@@ -127,7 +128,7 @@ public class DecipherManager {
         this.transferMissionResult = transferMissionResult;
     }
 
-    public void setUpdateTotalMissionDone(Consumer<Integer> updateTotalMissionDone){
+    public void setUpdateTotalMissionDone(BiConsumer<Integer, Long> updateTotalMissionDone){
         this.updateTotalMissionDone = updateTotalMissionDone;
     }
 

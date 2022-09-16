@@ -42,7 +42,7 @@ public class BruteForceTask extends Task<Boolean> {
             engine.getDM().setIsPaused(isPaused);
             engine.getDM().setCurrentRunningTask(this);
             engine.getDM().setTransferMissionResult((result) -> uiAdapter.addNewCandidate(result));
-            engine.getDM().setUpdateTotalMissionDone((delta) -> uiAdapter.updateTotalMissionDone(delta));
+            engine.getDM().setUpdateTotalMissionDone((delta, timeDelta) -> uiAdapter.updateTotalMissionDone(delta, timeDelta));
 
             //new Thread(() -> engine.manageAgents(decryption), "Manage Agents Thread").start();
             engine.manageAgents(decryption);

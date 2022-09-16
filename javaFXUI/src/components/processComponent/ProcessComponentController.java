@@ -121,10 +121,11 @@ public class ProcessComponentController {
                 errorTransition.play();
             }
             else if(change == 1){
-                resultText.append(mainApplicationController.processSingleCharacter(newValue.toUpperCase().charAt(0)));
+                resultText.append(mainApplicationController.processSingleCharacter(newValue.toUpperCase().charAt(newValue.length() - 1)));
                 resultTextField.setText(resultText.toString());
                 mainApplicationController.getCodeChangesProperty()
                         .setValue(mainApplicationController.getCodeChangesProperty().getValue() + 1);
+                mainApplicationController.notifyKeyBoardOfInput();
                 //call the keyboard component... notify - animation ensues!
             }
             else{
@@ -169,5 +170,9 @@ public class ProcessComponentController {
 
     public void changeLabelForBruteForce() {
         promptTextLabel.setText("Enter your desired dictionary words below: ");
+    }
+
+    public void injectWord(String rowData) {
+        userTextField.setText(userTextField.getText() + rowData);
     }
 }

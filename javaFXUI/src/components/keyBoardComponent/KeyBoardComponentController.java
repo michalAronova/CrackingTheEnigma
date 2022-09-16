@@ -2,6 +2,10 @@ package components.keyBoardComponent;
 
 import application.MainApplicationController;
 import javafx.animation.*;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -16,6 +20,7 @@ import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 public class KeyBoardComponentController {
 
@@ -28,19 +33,34 @@ public class KeyBoardComponentController {
         Button b =  getButtonByChar(lastProcessedChar);
         Rectangle rect = new Rectangle(400, 200, Color.CYAN);
 
-        /*FillTransition fillTransition = new FillTransition(Duration.seconds(2), rect);
-        fillTransition.setFromValue(Color.BLUEVIOLET);
-        fillTransition.setToValue(Color.AZURE);
-        fillTransition.setCycleCount(FillTransition.INDEFINITE);
-        fillTransition.play();*/
-        //String style = b.getStyle();
-        //b.setStyle("-fx-background-color: #fffb00");
-        //b.setStyle(style);
-        //Shape buttonShape = getButtonByChar(lastProcessedChar).getShape();
-        /*FillTransition ft = new FillTransition(Duration.millis(3000), buttonShape , Color.RED, Color.BLUE);
-        ft.setCycleCount(3);
-        ft.setAutoReverse(true);
-        ft.play();*/
+        final Color startColor = Color.web("#ececec");
+        final Color endColor = Color.web("#fdee00");
+
+        final ObjectProperty<Color> color = new SimpleObjectProperty<Color>(startColor);
+
+        // String that represents the color above as a JavaFX CSS function:
+        // -fx-body-color: rgb(r, g, b);
+        // with r, g, b integers between 0 and 255
+        final StringBinding cssColorSpec = Bindings.createStringBinding(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return String.format("-fx-body-color: rgb(%d, %d, %d);",
+                        (int) (256*color.get().getRed()),
+                        (int) (256*color.get().getGreen()),
+                        (int) (256*color.get().getBlue()));
+            }
+        }, color);
+
+        // bind the button's style property
+        b.styleProperty().bind(cssColorSpec);
+
+        final Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(color, startColor)),
+                new KeyFrame(Duration.seconds(1), new KeyValue(color, endColor)));
+        timeline.setAutoReverse(true);
+        timeline.setCycleCount(2);
+
+        timeline.play();
     }
     public Button getButtonByChar(Character lastProcessedChar){
         ObservableList<Node> buttonsList = keyBoardFlowPane.getChildren();

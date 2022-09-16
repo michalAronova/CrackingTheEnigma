@@ -174,6 +174,9 @@ public class BruteForcePlayComponentController {
                 (delta) -> { //Consumer<Integer> updateTotalMissionDone
                     missionsDoneProperty.set(missionsDoneProperty.get() + 1);
                     currentRunningTask.updateProgress(missionsDoneProperty.get());
+                },
+                (timeDelta) ->{ //Consumer<Long> updateTotalTime;
+                    totalTimeProperty.set(totalTimeProperty.get() + timeDelta);
                 }
         );
     }
@@ -183,10 +186,9 @@ public class BruteForcePlayComponentController {
     }
 
     private void createTile(String candidate, CodeObj code, String agentID){
-        System.out.println("Creating tile for: " + code +", " + agentID + ", "+ candidate);
         try {
             /*
-        URL url = getClass().getResource("/filteredDictionary/filteredDictionary.fxml");
+        URL url = getClass().getResource("/filteredDictionary/dictionaryComponent.fxml");
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(url.openStream());
 
@@ -195,7 +197,6 @@ public class BruteForcePlayComponentController {
             FXMLLoader loader = new FXMLLoader();
 
             URL url = getClass().getResource("/components/singleCandidateComponent/singleCandidateComponent.fxml");
-            System.out.println("Value URL = " + url);
             loader.setLocation(url);
             Node singleCandidateTile = loader.load();
 
@@ -238,7 +239,10 @@ public class BruteForcePlayComponentController {
     public void onTaskFinished(Optional<Runnable> onFinish) {
         //this.progressPercentageLabel.textProperty().unbind();
         this.progressBar.progressProperty().unbind();
-        onFinish.ifPresent(Runnable::run);
+        taskCancelled.setValue(false);
+        taskPaused.setValue(false);
+        //onFinish.ifPresent(Runnable::run);
+        toggleTaskButtons(false);
     }
 
     public void updateTotalMissionAmount(double totalMissionAmount) {
