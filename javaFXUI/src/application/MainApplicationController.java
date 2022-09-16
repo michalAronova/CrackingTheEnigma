@@ -3,6 +3,7 @@ package application;
 import DTO.codeObj.CodeObj;
 import components.BruteForcePlayComponent.BruteForcePlayComponentController;
 import components.bruteForceSetupComponent.BruteForceSetupController;
+import components.candidatesComponent.CandidatesComponentController;
 import components.codeConfigurationComponent.CodeConfigComponentController;
 import components.codeHistoryComponent.CodeHistoryComponentController;
 import components.codeHistoryComponent.StatisticData;
@@ -19,6 +20,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import components.machineDetails.MachineDetailsController;
@@ -52,6 +54,8 @@ public class MainApplicationController {
     @FXML private BruteForcePlayComponentController bruteForcePlayComponentController;
 
     @FXML private DictionaryComponentController dictionaryComponentController;
+
+    @FXML private CandidatesComponentController candidatesComponentController;
     @FXML private GridPane machineDetails;
     @FXML private Button loadFileButton;
     @FXML private Label fileChosenLabel;
@@ -80,7 +84,8 @@ public class MainApplicationController {
                 && codeHistoryComponentController != null
                 && bruteForceSetupController != null
                 && bruteForcePlayComponentController != null
-                && dictionaryComponentController != null){
+                && dictionaryComponentController != null
+                && candidatesComponentController != null){
             machineDetailsController.setMainApplicationController(this);
             codeConfigComponentController.setMainApplicationController(this);
             codeObjDisplayComponentController.setMainApplicationController(this);
@@ -94,6 +99,7 @@ public class MainApplicationController {
             bruteForceSetupController.setMainApplicationController(this);
             bruteForcePlayComponentController.setMainApplicationController(this);
             dictionaryComponentController.setMainApplicationController(this);
+            candidatesComponentController.setMainApplicationController(this);
             handleDuplicateComponents();
         }
         else {
@@ -274,5 +280,14 @@ public class MainApplicationController {
 
     public void injectWordToProcess(String rowData) {
         processForBruteForceController.injectWord(rowData);
+    }
+
+    public void addNewCandidate(Node singleCandidateTile) {
+        System.out.println("JAT adding tile");
+        candidatesComponentController.addCandidate(singleCandidateTile);
+    }
+
+    public void clearCandidates() {
+        candidatesComponentController.removeAllCandidates();
     }
 }

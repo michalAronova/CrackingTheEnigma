@@ -4,6 +4,7 @@ import DTO.codeObj.CodeObj;
 import application.MainApplicationController;
 import components.singleCandidateComponent.SingleCandidateComponentController;
 import engine.Engine;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.concurrent.Task;
@@ -39,7 +40,6 @@ public class BruteForcePlayComponentController {
     @FXML private Label progressPercentageLabel;
 
     private DoubleProperty progressPercentageProperty;
-    @FXML private FlowPane potentialCandidatesFlowPane;
     private MainApplicationController mainApplicationController;
 
     private BruteForceTask currentRunningTask;
@@ -132,7 +132,7 @@ public class BruteForcePlayComponentController {
     }
 
     private void cleanOldResults() {
-        potentialCandidatesFlowPane.getChildren().clear();
+        mainApplicationController.clearCandidates();
         progressBar.setProgress(0);
         totalPotentialCandidatesProperty.set(0);
         missionsDoneProperty.set(0);
@@ -169,7 +169,8 @@ public class BruteForcePlayComponentController {
         return new UIAdapter(
                 missionResult -> { //Consumer<MissionResult> addCandidate
                     totalPotentialCandidatesProperty.set(totalPotentialCandidatesProperty.get() + missionResult.getCandidates().size());
-                    createTiles(missionResult.getCandidates(), missionResult.getAgentID());
+                    new Thread(() -> createTiles(missionResult.getCandidates(), missionResult.getAgentID()), "Tile creator Thread").start();
+                    //createTiles(missionResult.getCandidates(), missionResult.getAgentID());
                 },
                 (delta) -> { //Consumer<Integer> updateTotalMissionDone
                     missionsDoneProperty.set(missionsDoneProperty.get() + 1);
@@ -187,13 +188,6 @@ public class BruteForcePlayComponentController {
 
     private void createTile(String candidate, CodeObj code, String agentID){
         try {
-            /*
-        URL url = getClass().getResource("/filteredDictionary/dictionaryComponent.fxml");
-        fxmlLoader.setLocation(url);
-        Parent root = fxmlLoader.load(url.openStream());
-
-
-             */
             FXMLLoader loader = new FXMLLoader();
 
             URL url = getClass().getResource("/components/singleCandidateComponent/singleCandidateComponent.fxml");
@@ -205,7 +199,8 @@ public class BruteForcePlayComponentController {
             singleCandidateController.setCandidate(candidate);
             singleCandidateController.setCode(code.toString());
 
-            potentialCandidatesFlowPane.getChildren().add(singleCandidateTile);
+            System.out.println(Thread.currentThread().getName() + " is offering tile to JAT");
+            Platform.runLater(() -> mainApplicationController.addNewCandidate(singleCandidateTile));
         } catch (IOException e) {
             e.printStackTrace();
         }

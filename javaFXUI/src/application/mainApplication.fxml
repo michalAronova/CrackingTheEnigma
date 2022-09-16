@@ -95,6 +95,7 @@
                                   <RowConstraints maxHeight="280.0" vgrow="NEVER" />
                                 </rowConstraints>
                                  <children>
+                                    <fx:include fx:id="candidatesComponent" source="../components/candidatesComponent/candidatesComponent.fxml" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
                                     <fx:include fx:id="currentCodeDisplayComponent3" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="3" />
                                     <fx:include fx:id="processForBruteForce" source="../components/processComponent/processComponent.fxml" GridPane.columnIndex="0" />
                                     <fx:include fx:id="bruteForceSetup" source="../components/bruteForceSetupComponent/BruteForceSetup.fxml" GridPane.columnSpan="2" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
