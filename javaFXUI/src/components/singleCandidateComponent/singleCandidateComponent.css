@@ -1,6 +1,8 @@
 .singleCandidateComponent {
-    -fx-background-color: lightblue;
+    /*-fx-background-color: #553c2c;*/
+    -fx-background-color: linear-gradient(#94694e, #553c2c);
+
     -fx-border-width: 5px;
-    -fx-border-color: #2e8b57;
+    -fx-border-color: #342010;
     -fx-background-radius: 5.0;
 }
