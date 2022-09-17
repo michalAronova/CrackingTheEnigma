@@ -5,6 +5,7 @@ import application.MainApplicationController;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -12,13 +13,14 @@ import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
 public class CodeObjDisplayComponentController {
+    @FXML public ScrollPane rootScrollPane;
     @FXML private AnchorPane reflectorDataAnchorPane;
     @FXML private HBox plugsConfiguredHBox;
     @FXML private FlowPane plugsFlowPane;
     @FXML private HBox rotorsDataHBox;
     @FXML private Label HeaderLabel;
     private MainApplicationController mainApplicationController;
-    private final String myStyleSheet = "codeObjDisplay.css";
+    private final String myStyleSheet = "codeObjDisplay";
 
     @FXML public void initialize(){
     }
@@ -92,10 +94,11 @@ public class CodeObjDisplayComponentController {
     }
 
     public void changeTheme(Object cssPrefix) {
-        HeaderLabel.getScene().getStylesheets().clear();
+        rootScrollPane.getStylesheets().clear();
         if(cssPrefix != null){
             String css = cssPrefix + myStyleSheet;
-            HeaderLabel.getScene().getStylesheets().add(css);
+            rootScrollPane.getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
         }
     }
 }

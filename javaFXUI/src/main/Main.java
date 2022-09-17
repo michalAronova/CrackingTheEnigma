@@ -23,7 +23,7 @@ public class Main extends Application {
         fxmlLoader.setLocation(url);
         Parent root = fxmlLoader.load(url.openStream());
 
-        primaryStage.getIcons().add(new Image("/resources/alan_turing_icon.jpg"));
+        primaryStage.getIcons().add(new Image("/main/resources/alan_turing_icon.jpg"));
         primaryStage.setTitle("Enigma Machine Simulator");
 
         Scene scene = new Scene(root, 1100, 800);

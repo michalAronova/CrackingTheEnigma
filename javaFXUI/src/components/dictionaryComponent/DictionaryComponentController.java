@@ -11,11 +11,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 
 public class DictionaryComponentController {
 
+    @FXML public VBox rootVBox;
     @FXML private TableView<String> wordsTableView;
 
     @FXML private TableColumn<String, String> wordColumn;
@@ -25,7 +27,7 @@ public class DictionaryComponentController {
     private final ObservableList<String> dataList = FXCollections.observableArrayList();
 
     private MainApplicationController mainApplicationController;
-    private String myStyleSheet = "dictionary.css";
+    private String myStyleSheet = "dictionary";
 
     @FXML
     public void initialize(){
@@ -71,10 +73,11 @@ public class DictionaryComponentController {
     }
 
     public void changeTheme(Object cssPrefix) {
-        wordsTableView.getScene().getStylesheets().clear();
+        rootVBox.getStylesheets().clear();
         if(cssPrefix != null){
             String css = cssPrefix + myStyleSheet;
-            wordsTableView.getScene().getStylesheets().add(css);
+            rootVBox.getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
         }
     }
 }

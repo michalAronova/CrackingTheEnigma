@@ -25,6 +25,7 @@ import java.util.function.UnaryOperator;
 import static java.lang.Integer.parseInt;
 
 public class BruteForceSetupController {
+    @FXML public GridPane rootGrid;
     @FXML private Label totalMissionNumLabel;
     @FXML private Label agentsNumLabel;
     @FXML private Slider numberOfAgentsSlider;
@@ -37,6 +38,7 @@ public class BruteForceSetupController {
     private IntegerProperty agentAmountChosenProperty;
     private StringProperty decryptionProperty;
     private IntegerProperty missionSizeProperty;
+    private final String myStyleSheet = "bruteForceSetup";
 
     public BruteForceSetupController(){
         decryptionProperty = new SimpleStringProperty(null);
@@ -149,5 +151,14 @@ public class BruteForceSetupController {
 
     public void setDecryptionString(String output) {
         decryptionProperty.set(output);
+    }
+
+    public void changeTheme(Object cssPrefix) {
+        rootGrid.getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            rootGrid.getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
+        }
     }
 }

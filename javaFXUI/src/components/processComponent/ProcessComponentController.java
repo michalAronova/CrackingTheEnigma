@@ -27,7 +27,7 @@ public class ProcessComponentController {
     private MainApplicationController mainApplicationController;
     private StringBuilder resultText;
     private FadeTransition errorTransition;
-    private String myStyleSheet = "processComponent.css";
+    private String myStyleSheet = "processComponent";
 
     public Boolean isBruteForceProcess() { return bruteForceProcess; }
     public void setBruteForceProcess(Boolean bruteForceProcess) {

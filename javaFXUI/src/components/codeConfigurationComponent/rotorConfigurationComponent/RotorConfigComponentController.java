@@ -14,10 +14,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.util.*;
 import java.util.function.UnaryOperator;
@@ -26,6 +23,7 @@ import java.util.stream.Stream;
 
 public class RotorConfigComponentController {
 
+    @FXML public GridPane rootGrid;
     @FXML private FlowPane rotorChoicesFlowPane;
     @FXML private HBox rotorConfigHBox;
 
@@ -37,7 +35,7 @@ public class RotorConfigComponentController {
     private int rotorsSet = 0;
     private CodeConfigComponentController codeConfigComponentController;
     private final String DEFAULT_ROTOR_ID = "ID";
-    private final String myStyleSheet = "rotorConfigComponent.css";
+    private final String myStyleSheet = "rotorConfigComponent";
 
     public RotorConfigComponentController(){
         singleRotorComponentList = new ArrayList<>();
@@ -323,10 +321,11 @@ public class RotorConfigComponentController {
     }
 
     public void changeTheme(Object cssPrefix) {
-        rotorChoicesFlowPane.getScene().getStylesheets().clear();
+        rootGrid.getStylesheets().clear();
         if(cssPrefix != null){
             String css = cssPrefix + myStyleSheet;
-            rotorChoicesFlowPane.getScene().getStylesheets().add(css);
+            rootGrid.getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
         }
     }
 }
