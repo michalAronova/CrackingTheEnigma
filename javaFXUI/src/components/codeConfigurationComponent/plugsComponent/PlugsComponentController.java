@@ -98,6 +98,9 @@ public class PlugsComponentController {
         Label plug1 = new Label(plug1Name);
         Label plug2 = new Label(plug2Name);
         Label separator = new Label("|");
+        plug1.setStyle("-fx-text-fill: black;");
+        plug2.setStyle("-fx-text-fill: black;");
+        separator.setStyle("-fx-text-fill: black;");
         Button removePlugButton = new Button("X");
         removePlugButton.getStyleClass().add("xButton");
         removePlugButton.getStyleClass().add("removePlugButton");

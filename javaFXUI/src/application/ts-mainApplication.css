@@ -1,0 +1,351 @@
+.error-message{
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+.tab-pane{
+    -fx-background-image: url("../resources/totallySpiesResources/3736452.jpg") ;
+    -fx-background-size: 1100px 800px;
+}
+
+.label{
+    -fx-font-size: 14px;
+    -fx-font-family: "Lucida Sans Typewriter";
+    -fx-text-fill: white;
+}
+
+.main-title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Ariel";
+    -fx-text-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+.title-label{
+    -fx-font-size: 14px;
+    -fx-font-family: "Ariel";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+/*
+#F81D9D
+#F030A7
+#F562BA
+ */
+
+.simpleButton {
+    -fx-background-color: linear-gradient(#F562BA, #F81D9D);
+    -fx-border-color: #342010;
+    -fx-background-insets: 0,1,2,3;
+    -fx-border-radius: 3,3,3,3;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: "Ariel";
+}
+
+.simpleButton:hover{
+    -fx-background-color: linear-gradient(#f584c7, #d0358e);
+    -fx-effect: innershadow( three-pass-box , #542640, 6, 0.0 , 0 , 2 );
+}
+.text-field{
+    -fx-background-color: linear-gradient(#ffa8fb, #ffa9d0);
+    -fx-border-color: #000000;
+    -fx-border-width: 2.5px;
+    -fx-effect: innershadow( three-pass-box , #542640, 6, 0.0 , 3 , 3 );
+}
+
+.keyboard-button{
+    -fx-background-radius: 5em;
+}
+
+#mainBorderPane{
+    -fx-background-color: #d959a5;
+    -fx-border-color: #d959a5;
+}
+
+#mainTabPane>*.tab-header-area>*.tab-header-background
+{
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, #FDCCE9;
+}
+
+.tab{
+    -fx-background-color: linear-gradient(#F562BA, #F81D9D);
+    -fx-border-color: #542640;
+    -fx-border-radius: 3,3,3,3;
+    -fx-background-radius: 3,3,3,3;
+    -fx-text-fill: #ffffff;
+}
+
+.tab:hover{
+    -fx-background-color: linear-gradient(#f584c7, #e554a8);
+    -fx-effect: innershadow( three-pass-box , #542640, 6, 0.0 , 0 , 2 );
+}
+
+.combo-box .list-cell
+{
+    -fx-background: #7a2bd9;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em;
+}
+
+.combo-box-popup .list-view
+{
+    -fx-background-color: #542640;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
+}
+
+.combo-box-popup .list-view .list-cell
+{
+    -fx-padding: 4 0 4 5;
+    -fx-background-color: #FDCCE9;
+
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: #C763AC;
+    -fx-text-fill: -fx-text-inner-color;
+    -fx-effect: innershadow( three-pass-box , #a14089, 6, 0.0 , 0 , 2 );
+
+}
+
+.combo-box-base
+{
+    -fx-background-color: linear-gradient(#FFE0F6, #FFBFF2);
+    -fx-effect: innershadow( three-pass-box , #c02f85, 2, 0.0 , 0 , 2 );
+    -fx-border-color: #c02f85;
+    -fx-background-radius: 5, 5, 4, 3;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-padding: 0;
+}
+
+.combo-box-base:hover {
+    -fx-color: -fx-hover-base;
+}
+
+.combo-box-base:showing {
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused {
+    -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-radius: 6.4, 4, 5, 3;
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: .4;
+}
+
+/*!* Styling the slider track *!*/
+.slider > .track {
+    -fx-background-color: #FFBFF2;
+    -fx-effect: innershadow( three-pass-box , #c02f85, 6, 0.0 , 0 , 2 );
+
+}
+
+/*!* Styling the slider thumb *!*/
+.slider .axis {
+    -fx-stroke: white;
+    -fx-text-fill: white;
+    -fx-tick-label-fill: white;
+}
+
+.slider > .thumb {
+   -fx-background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 55% , #F562BA, #F81D9D);
+}
+
+/*!* Styling the animated thumb *!*/
+.slider > .thumb:hover{
+    -fx-background-color: linear-gradient(#f584c7, #e554a8);
+    -fx-effect: innershadow( three-pass-box , #542640, 6, 0.0 , 0 , 2 );
+}
+
+
+.table-view .column-header-background{
+    -fx-background-color:  linear-gradient(#f584c7, #e554a8);
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #ffdef9;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #fff3fa;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-row-cell:hover, .table-row-cell:pressed{
+    -fx-background-color: #c748b2;
+    -fx-text-fill: -fx-text-inner-color;
+    -fx-effect: innershadow( three-pass-box , #d938aa, 6, 0.0 , 0 , 2 );
+}
+.table-view{
+    -fx-background-color: -fx-table-cell-border-color, #ffdef9;
+    -fx-effect: innershadow( gaussian , #9b297a, 10, 0.0 , 5 , 5 );
+    -fx-border-color: #4f1c40;
+    -fx-border-width: 4,4,4,4;
+}
+
+.scroll-pane {
+    -fx-background-color: black;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+.corner {
+    -fx-background-color: transparent;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #a14089;
+    -fx-background-radius: 5em;
+}
+.progress-bar > .bar {
+    -fx-background-color: linear-gradient(#e864c8, #a14089);
+    -fx-background-insets: 3 3 4 3;
+    /*-fx-background-radius: 0.583em; *//* 7 */
+    -fx-background-radius: 2;
+    -fx-padding: 0.75em;
+}
+* {
+    -fx-darkest-grey-color: #570158;
+}
+
+.radio-button .radio  {
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-background-image: null;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 2.5px;
+}
+.radio-button .radio:selected {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:armed {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:determinate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:indeterminate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button .dot {
+    -fx-background-radius: 15px;
+    -fx-padding: 6px;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: -fx-darkest-grey-color;
+    -fx-background-insets: 0;
+}
+
+.radio-button {
+    -fx-text-fill: white;
+    -fx-font-family: "Ariel";
+    -fx-font-size: 14px;
+}
+
+.accordion {
+    -fx-background-color: #ffdef9;
+    -fx-effect: innershadow( gaussian , #772477, 10, 0.0 , 5 , 5 );
+}
+
+.accordion > .titled-pane {
+    -fx-text-fill:  #ffdef9;
+}
+
+.accordion > .titled-pane > .title {
+    -fx-background-color: linear-gradient(#de68ae, #d93a96);
+    -fx-background-insets: -1 0 0 0, 0 1 1 1, 1 2 2 2;
+    -fx-background-radius: 0, 0, 0;
+}
+
+.accordion .title {
+    -fx-alignment: center-left;
+    -fx-cursor: "hand";
+    -fx-focus-color: #555555;
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+    -fx-text-fill:  #ffede0;
+}
+
+.accordion .titled-pane > *.content{
+    -fx-background-color: #ffede0;
+    -fx-text-fill: black;
+}
+.accordion:expanded {
+    -fx-background-color: #ffede0;
+    -fx-text-fill: black;
+
+}
+
+.accordion:expanded {
+    /*-fx-base: #555555;*/
+    -fx-text-fill: black;
+}
+
+
+.accordion:hover > .title {
+    -fx-font-weight: bold;
+
+}
+
+.accordion .arrow {
+    -fx-opacity: 1;
+    -fx-border-color: #ffede0;
+}
+
+.check-box .box{
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.check-box {
+    -fx-text-fill: white;
+}

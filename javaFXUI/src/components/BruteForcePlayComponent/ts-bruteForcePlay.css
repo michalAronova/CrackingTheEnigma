@@ -1,0 +1,29 @@
+.vbox{
+    -fx-background-color: linear-gradient(#750152, #630146);
+    -fx-border-color: #460131;
+    -fx-fill: #460131;
+
+}
+
+#potentialCandidatesFlowPane{
+    -fx-background-color: linear-gradient(#750152, #630146);
+    -fx-border-color: #460131;
+    -fx-fill: #460131;
+}
+
+.progress-bar{
+    -fx-background-color: linear-gradient(#FFE0F6, #FFBFF2);
+    -fx-progress-color: #E30095;
+    -fx-border-color: #000000;
+    -fx-effect: innershadow( three-pass-box , #E30095, 6, 0.0 , 0 , 2 );
+}
+.grid-pane{
+    -fx-background-color:  linear-gradient(#9C0269, #75014F, #59013C);
+    -fx-border-color: #41002b;
+    -fx-fill: #41002b;
+}
+/*.scroll-pane{
+    -fx-background-color:  linear-gradient(#9C0269, #75014F, #59013C);
+    -fx-border-color: #41002b;
+    -fx-fill: #41002b;
+}*/

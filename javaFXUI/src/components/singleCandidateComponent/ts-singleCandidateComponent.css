@@ -1,0 +1,7 @@
+.singleCandidateComponent {
+    -fx-background-color: linear-gradient(#c267ad, #81435f);
+    -fx-font-family: Arial;
+    -fx-border-width: 5px;
+    -fx-border-color: #34102e;
+    -fx-background-radius: 5.0;
+}

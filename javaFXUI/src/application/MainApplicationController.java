@@ -20,8 +20,6 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -30,9 +28,7 @@ import components.machineDetails.MachineDetailsController;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
-import javax.jnlp.IntegrationService;
 import java.io.File;
-import java.util.Collections;
 import java.util.LinkedList;
 
 public class MainApplicationController {

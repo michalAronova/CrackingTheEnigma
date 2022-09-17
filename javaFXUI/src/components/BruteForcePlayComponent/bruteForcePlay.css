@@ -17,9 +17,7 @@
     -fx-border-color: #5b402f;
     -fx-fill: #5b402f;
 }
-#bruteForcePotentialCandidates{
 
-}
 .progress-bar{
     -fx-background-color: linear-gradient(#d2b6aa, #d3a793);
     -fx-progress-color: #553c2c;

@@ -1,0 +1,30 @@
+
+.split-pane >*{
+    -fx-background-color: #ffede0;
+    -fx-text-fill: black;
+}
+.flow-pane{
+    -fx-background-color: #ffede0;
+    -fx-text-fill: black;
+}
+
+.anchor-pane{
+    -fx-background-color: #ffede0;
+    -fx-text-fill: black;
+}
+
+.xButton {
+    -fx-font-size: 11px;
+    -fx-background-color: linear-gradient(#f584c7, #d0358e);
+    -fx-border-color: #341022;
+    -fx-background-insets: 0,1,2,3;
+    -fx-border-radius: 3,3,3,3;
+    -fx-text-fill: white;
+}
+
+.xButton:hover{
+    -fx-background-color: linear-gradient(#d30000, #9a0000);
+}
+.Label{
+    -fx-text-fill: black;
+}

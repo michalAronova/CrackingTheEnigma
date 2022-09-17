@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@codeObjDisplay.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeObjDisplayComponent.CodeObjDisplayComponentController">
+<ScrollPane fitToHeight="true" fitToWidth="true" stylesheets="@ts-codeObjDisplay.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.codeObjDisplayComponent.CodeObjDisplayComponentController">
     <content>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="grid-pane">
             <columnConstraints>

@@ -1,0 +1,5 @@
+.grid-pane{
+    -fx-background-color:  linear-gradient(#9C0269, #75014F, #59013C);
+    -fx-border-color: #41002b;
+    -fx-fill: #41002b;
+}
