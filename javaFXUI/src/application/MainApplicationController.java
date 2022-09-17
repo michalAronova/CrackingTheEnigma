@@ -283,7 +283,6 @@ public class MainApplicationController {
     }
 
     public void addNewCandidate(Node singleCandidateTile) {
-        System.out.println("JAT adding tile");
         candidatesComponentController.addCandidate(singleCandidateTile);
     }
 

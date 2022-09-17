@@ -151,6 +151,9 @@ public class BruteForcePlayComponentController {
         progressPercentageProperty.set(0);
         if (currentRunningTask != null) {
             currentRunningTask.updateProgress(0);
+            progressPercentageLabel.textProperty().unbind();
+            progressPercentageLabel.setText("0 %");
+            progressBar.progressProperty().unbind();
             progressBar.setProgress(0);
         }
     }
@@ -199,7 +202,6 @@ public class BruteForcePlayComponentController {
             singleCandidateController.setCandidate(candidate);
             singleCandidateController.setCode(code.toString());
 
-            System.out.println(Thread.currentThread().getName() + " is offering tile to JAT");
             Platform.runLater(() -> mainApplicationController.addNewCandidate(singleCandidateTile));
         } catch (IOException e) {
             e.printStackTrace();
