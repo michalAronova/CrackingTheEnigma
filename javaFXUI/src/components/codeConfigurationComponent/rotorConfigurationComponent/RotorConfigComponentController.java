@@ -155,6 +155,7 @@ public class RotorConfigComponentController {
     private AnchorPane createButtonAnchorPane(Label rotorIDLabel, int index) {
         AnchorPane buttonAnchorPane = new AnchorPane();
         Button undoButton = new Button("x");
+        undoButton.getStyleClass().add("xButton");
         undoButton.setOnAction(e -> handleUndoButton(rotorIDLabel, index));
         undoButton.setLayoutX(55.0);
         undoButton.setMaxHeight(22.0);
@@ -175,6 +176,8 @@ public class RotorConfigComponentController {
             rotorRemoved(index, Integer.parseInt(rotorID.getText()));
         }
         rotorID.setText(DEFAULT_ROTOR_ID); //set the chosen id to default id
+        rotorID.getStyleClass().clear();
+        rotorID.getStyleClass().add("rotorIDDragBox");
     }
 
     public void reset(){
@@ -246,7 +249,7 @@ public class RotorConfigComponentController {
         dragBox.setPadding(new Insets(10, 10, 10, 10));
         dragBox.setAlignment(Pos.CENTER_RIGHT);
         dragBox.getStyleClass().add("rotorIDDragBox");
-
+        dragBox.setStyle("-fx-font-fill: black");
         dragBox.setOnDragOver((event) -> {
             if (event.getDragboard().hasString()) {
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
@@ -258,12 +261,15 @@ public class RotorConfigComponentController {
             if (event.getDragboard().hasString()) {
                 dragBox.getStyleClass().remove("rotorIDDragBox");
                 dragBox.getStyleClass().add("onDragEntered");
+
             }
             event.consume();
         });
 
         dragBox.setOnDragExited((event) -> {
-            dragBox.getStyleClass().remove("onDragEntered");
+            dragBox.getStyleClass().clear();
+            dragBox.getStyleClass().add("rotorIDDragBox");
+
             event.consume();
         });
 
@@ -276,6 +282,8 @@ public class RotorConfigComponentController {
                 success = true;
                 rotorSet(index, Integer.parseInt(db.getString()));
             }
+            dragBox.getStyleClass().clear();
+            dragBox.getStyleClass().add("draggable-rotor-label");
             event.setDropCompleted(success);
             event.consume();
         });
@@ -305,6 +313,8 @@ public class RotorConfigComponentController {
             for (int i = 0; i < vBox.getChildren().size(); i++) {
                 if(vBox.getChildren().get(i) instanceof Label){
                     ((Label) vBox.getChildren().get(i)).setText(DEFAULT_ROTOR_ID);
+                    ((Label) vBox.getChildren().get(i)).getStyleClass().clear();
+                    ((Label) vBox.getChildren().get(i)).getStyleClass().add("rotorIDDragBox");
                 }
             }
         });

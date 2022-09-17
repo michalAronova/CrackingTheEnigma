@@ -43,6 +43,7 @@ public class PlugsComponentController {
 
         for (Character c: ABC) {
             ToggleButton TG = new ToggleButton(c.toString());
+            TG.getStyleClass().add("keyButton");
             toggleButtons.put(TG.getText(), TG);
             TG.setOnAction(e -> onPlugButtonToggled(TG.getText()));
             plugsFlowPane.getChildren().add(TG);
@@ -98,6 +99,7 @@ public class PlugsComponentController {
         Label plug2 = new Label(plug2Name);
         Label separator = new Label("|");
         Button removePlugButton = new Button("X");
+        removePlugButton.getStyleClass().add("xButton");
         removePlugButton.getStyleClass().add("removePlugButton");
         HBox hBox = new HBox(plug1, separator,plug2,removePlugButton);
         removePlugButton.setOnAction(e-> onRemovePlugClicked(plug1Name, plug2Name, hBox));
