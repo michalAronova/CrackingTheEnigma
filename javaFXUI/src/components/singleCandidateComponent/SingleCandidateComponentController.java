@@ -12,15 +12,25 @@ public class SingleCandidateComponentController {
     @FXML private Label codeLabel;
     @FXML private Label candidateLabel;
     @FXML private Label agentIDLabel;
+
+    private String cssPrefix;
+
+    private final String myStyleSheet = "singleCandidateComponent";
     public SingleCandidateComponentController() {};
     public SingleCandidateComponentController(String code, String candidate, String agentID) {
         this.codeLabel.setText(code);
         this.candidateLabel.setText(candidate);
         this.agentIDLabel.setText(agentID);
     }
+    @FXML
     private void initialize() {
-        //codeLabel.textProperty().bind(Bindings.concat("<", word, ">"));
-        //countLabel.textProperty().bind(count.asString());
+        rootVBox.getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            System.out.println(String.format("%s.css", css));
+            rootVBox.getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
+        }
     }
     public void setCode(String code) {
         this.codeLabel.setText(code);
@@ -33,4 +43,9 @@ public class SingleCandidateComponentController {
     public Parent getRoot() {
         return rootVBox;
     }
+
+    public void setCssPrefix(Object cssPrefix){
+        this.cssPrefix = (String) cssPrefix;
+    }
+
 }
