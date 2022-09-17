@@ -27,7 +27,7 @@
         </HBox>
         <HBox>
             <children>
-                <Accordion fx:id="codeConfigurationAccordion" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="263.0" prefWidth="556.0">
+                <Accordion fx:id="codeConfigurationAccordion" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="650.0">
                     <panes>
                         <TitledPane animated="false" prefHeight="178.0" prefWidth="400.0" text="Rotor Configuration">
                             <content>

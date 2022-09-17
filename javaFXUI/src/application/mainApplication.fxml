@@ -35,14 +35,14 @@
                                     <ColumnConstraints hgrow="ALWAYS" maxWidth="346.0" minWidth="10.0" prefWidth="346.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints maxHeight="303.0" minHeight="10.0" prefHeight="254.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="368.0" minHeight="10.0" prefHeight="368.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="240.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="382.0" minHeight="10.0" prefHeight="382.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <fx:include fx:id="machineDetails" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="110.0" minWidth="200.0" source="../components/machineDetails/machineDetails.fxml" BorderPane.alignment="CENTER_LEFT" GridPane.columnIndex="1" />
                                     <fx:include fx:id="codeObjDisplayComponent" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="2" />
                                     <fx:include fx:id="currentCodeDisplayComponent1" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeObjDisplayComponent/codeObjDisplayComponent.fxml" GridPane.columnIndex="3" />
-                                    <fx:include fx:id="codeConfigComponent" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeConfigurationComponent/codeConfigComponent.fxml" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                                    <fx:include fx:id="codeConfigComponent" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeConfigurationComponent/codeConfigComponent.fxml" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
