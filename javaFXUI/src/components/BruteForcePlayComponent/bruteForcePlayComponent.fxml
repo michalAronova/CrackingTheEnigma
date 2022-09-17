@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="274.0" prefWidth="404.0" stylesheets="@bruteForcePlay.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.BruteForcePlayComponent.BruteForcePlayComponentController">
+<GridPane fx:id ="rootGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="274.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.BruteForcePlayComponent.BruteForcePlayComponentController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="240.0" minWidth="159.0" prefWidth="208.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="63.0" prefWidth="133.0" />

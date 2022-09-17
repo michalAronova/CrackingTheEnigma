@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -14,6 +15,7 @@ import javafx.util.Pair;
 import java.util.*;
 
 public class PlugsComponentController {
+    @FXML public SplitPane rootSplitPane;
     @FXML
     private FlowPane plugsFlowPane;
     @FXML private VBox PlugsVBox;
@@ -24,6 +26,8 @@ public class PlugsComponentController {
     private int plugsSelected = 0;
     private Map<String, String> selectedDoublePlugs;
     private CodeConfigComponentController codeConfigComponentController;
+
+    private final String myStyleSheet = "plugsComponent";
 
     @FXML public void initialize(){
         toggleButtons = new HashMap<>();
@@ -160,5 +164,14 @@ public class PlugsComponentController {
         plugsSelected = 0;
         selectedDoublePlugs.clear();
         addPlugsButton.setDisable(true);
+    }
+
+    public void changeTheme(Object cssPrefix) {
+        rootSplitPane.getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            rootSplitPane.getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
+        }
     }
 }

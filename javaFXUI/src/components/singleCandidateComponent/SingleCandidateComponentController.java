@@ -2,10 +2,13 @@ package components.singleCandidateComponent;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 public class SingleCandidateComponentController {
 
+    @FXML public VBox rootVBox;
     @FXML private Label codeLabel;
     @FXML private Label candidateLabel;
     @FXML private Label agentIDLabel;
@@ -26,4 +29,8 @@ public class SingleCandidateComponentController {
         this.candidateLabel.setText(candidate);
     }
     public void setAgent(String agentID) { this.agentIDLabel.setText(agentID);}
+
+    public Parent getRoot() {
+        return rootVBox;
+    }
 }

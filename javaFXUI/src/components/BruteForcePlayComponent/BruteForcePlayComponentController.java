@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import logic.bruteForceTask.BruteForceTask;
 import logic.uiAdapter.UIAdapter;
@@ -26,6 +27,8 @@ import java.util.Optional;
 
 
 public class BruteForcePlayComponentController {
+
+    @FXML private GridPane rootGrid;
     @FXML private Button stopButton;
     @FXML private Button pauseButton;
     @FXML private Button resumeButton;
@@ -54,7 +57,7 @@ public class BruteForcePlayComponentController {
 
     private String currentDecryption;
 
-    private final String myStyleSheet = "bruteForcePlay.css";
+    private final String myStyleSheet = "bruteForcePlay";
 
     public BruteForcePlayComponentController(){
         totalPotentialCandidatesProperty = new SimpleIntegerProperty(0);
@@ -204,7 +207,7 @@ public class BruteForcePlayComponentController {
             singleCandidateController.setCandidate(candidate);
             singleCandidateController.setCode(code.toString());
 
-            Platform.runLater(() -> mainApplicationController.addNewCandidate(singleCandidateTile));
+            Platform.runLater(() -> mainApplicationController.addNewCandidate(singleCandidateTile, singleCandidateController));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -253,10 +256,11 @@ public class BruteForcePlayComponentController {
     }
 
     public void changeTheme(Object cssPrefix) {
-        stopButton.getScene().getStylesheets().clear();
+        rootGrid.getStylesheets().clear();
         if(cssPrefix != null){
             String css = cssPrefix + myStyleSheet;
-            stopButton.getScene().getStylesheets().add(css);
+            rootGrid.getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
         }
     }
 

@@ -11,6 +11,7 @@ import components.codeObjDisplayComponent.CodeObjDisplayComponentController;
 import components.dictionaryComponent.DictionaryComponentController;
 import components.keyBoardComponent.KeyBoardComponentController;
 import components.processComponent.ProcessComponentController;
+import components.singleCandidateComponent.SingleCandidateComponentController;
 import engine.Engine;
 import engine.TheEngine;
 import exceptions.InputException.InputException;
@@ -27,8 +28,10 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import components.machineDetails.MachineDetailsController;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.jnlp.IntegrationService;
 import java.io.File;
@@ -69,8 +72,8 @@ public class MainApplicationController {
     private BooleanProperty animationEnabled;
 
     //for CSS changes:
-    private final String myPath = "/application/";
-    private final String myStyleSheet = "mainApplication.css";
+    private final String cssPath = "main/resources/";
+    private final String myStyleSheet = "mainApplication";
     private final String wwiiStyleSheetPrefix = "wwii-";
     private final String tsStyleSheetPrefix = "ts-";
     private ToggleGroup cssChoiceGroup;
@@ -146,23 +149,39 @@ public class MainApplicationController {
     public BooleanProperty getAnimationEnabledProperty(){ return animationEnabled; }
 
     private void changeTheme(Object cssPrefix) {
-        loadFileButton.getScene().getStylesheets().clear();
+        mainScrollPane.getStylesheets().clear();
         if(cssPrefix != null){
+            cssPrefix = cssPath + cssPrefix;
             String css = cssPrefix + myStyleSheet;
-            System.out.println(css);
-            loadFileButton.getScene().getStylesheets().add(css);
+            mainScrollPane.getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
+            if(cssPrefix.toString().equals(tsStyleSheetPrefix)){
+                Stage stage = (Stage) mainScrollPane.getScene().getWindow();
+                stage.getIcons().clear();
+                stage.getIcons().add(new Image("/main/resources/totallySpiesResources/jerry-square.jpg"));
+            }
+            else{
+                Stage stage = (Stage) mainScrollPane.getScene().getWindow();
+                stage.getIcons().clear();
+                stage.getIcons().add(new Image("/main/resources/alan_turing_icon.jpg"));
+            }
+        }
+        else{
+            Stage stage = (Stage) mainScrollPane.getScene().getWindow();
+            stage.getIcons().clear();
+            stage.getIcons().add(new Image("/main/resources/alan_turing_icon.jpg"));
         }
 
         bruteForcePlayComponentController.changeTheme(cssPrefix);
         candidatesComponentController.changeTheme(cssPrefix);
-        codeConfigComponentController.changeTheme(cssPrefix);
         codeObjDisplayComponentController.changeTheme(cssPrefix);
+        codeConfigComponentController.changeTheme(cssPrefix);
         currentCodeDisplayComponent1Controller.changeTheme(cssPrefix);
         currentCodeDisplayComponent2Controller.changeTheme(cssPrefix);
         currentCodeDisplayComponent3Controller.changeTheme(cssPrefix);
         dictionaryComponentController.changeTheme(cssPrefix);
-        processComponentController.changeTheme(cssPrefix);
-        processForBruteForceController.changeTheme(cssPrefix);
+        //processComponentController.changeTheme(cssPrefix);
+        //processForBruteForceController.changeTheme(cssPrefix);
     }
 
     private void handleDuplicateComponents() {
@@ -335,8 +354,8 @@ public class MainApplicationController {
         processForBruteForceController.injectWord(rowData);
     }
 
-    public void addNewCandidate(Node singleCandidateTile) {
-        candidatesComponentController.addCandidate(singleCandidateTile);
+    public void addNewCandidate(Node singleCandidateTile, SingleCandidateComponentController controller) {
+        candidatesComponentController.addCandidate(singleCandidateTile, controller);
     }
 
     public void clearCandidates() {

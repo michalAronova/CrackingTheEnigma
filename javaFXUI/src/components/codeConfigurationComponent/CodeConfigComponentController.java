@@ -16,6 +16,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class CodeConfigComponentController {
     @FXML public Accordion codeConfigurationAccordion;
     @FXML public Button setButton;
     @FXML public Button clearButton;
+    @FXML public VBox rootVBox;
     @FXML private ComboBox<String> reflectorComboBox;
 
     @FXML private PlugsComponentController plugsComponentController;
@@ -42,7 +44,6 @@ public class CodeConfigComponentController {
 
     private RotateTransition setButtonRotate;
 
-    private final String myStyleSheet = "codeConfigComponent.css";
 
     public CodeConfigComponentController(){
         rotorsFilled = new SimpleBooleanProperty(false);
@@ -165,12 +166,7 @@ public class CodeConfigComponentController {
     }
 
     public void changeTheme(Object cssPrefix) {
-        setByManualButton.getScene().getStylesheets().clear();
-        if(cssPrefix != null){
-            String css = cssPrefix + myStyleSheet;
-            setByManualButton.getScene().getStylesheets().add(css);
-        }
-
         rotorConfigComponentController.changeTheme(cssPrefix);
+        plugsComponentController.changeTheme(cssPrefix);
     }
 }

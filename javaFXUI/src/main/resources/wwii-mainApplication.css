@@ -4,7 +4,7 @@
 }
 
 .tab-pane{
-    -fx-background-image: url("../resources/WWIIThemeResources/wooden-background.jpg") ;
+    -fx-background-image: url("WWIIThemeResources/wooden-background.jpg") ;
     -fx-background-size: 1100px 800px;
 }
 
