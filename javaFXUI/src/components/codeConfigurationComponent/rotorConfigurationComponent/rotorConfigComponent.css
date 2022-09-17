@@ -20,7 +20,6 @@
 }
 
 .rotor-message{
-    -fx-padding: 5px;
     -fx-font-family: "Lucida Sans Typewriter";
     -fx-font-fill: black;
 }
