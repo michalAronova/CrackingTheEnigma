@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="rootGrid" prefHeight="192.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.bruteForceSetupComponent.BruteForceSetupController">
+<GridPane fx:id="rootGrid" prefHeight="192.0" prefWidth="632.0" styleClass="grid-pane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="components.bruteForceSetupComponent.BruteForceSetupController">
   <columnConstraints>
       <ColumnConstraints fillWidth="false" maxWidth="163.0" minWidth="129.0" prefWidth="163.0" />
       <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="262.0" minWidth="194.0" prefWidth="248.0" />
