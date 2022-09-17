@@ -1,0 +1,56 @@
+.onDragEntered{
+    -fx-background-color: #8bcc8b;
+    -fx-border-color: #7e5d49;
+    -fx-border-width: 1;
+    -fx-font-family: "Lucida Sans Typewriter";
+    -fx-font-weight: bold;
+    -fx-font-fill: black;
+}
+
+.rotorIDDragBox {
+    -fx-background-color: none;
+    -fx-border-color: #7e5d49;
+    -fx-border-width: 1;
+    -fx-font-family: "Lucida Sans Typewriter";
+    -fx-font-weight: bold;
+    -fx-font-fill: black !important;
+}
+
+.draggable-rotor-label{
+    -fx-background-color: #8f6950;
+    -fx-border-color: #483224;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 1em;
+}
+
+.rotor-message{
+    -fx-font-family: "Lucida Sans Typewriter";
+    -fx-font-fill: black;
+}
+
+.xButton {
+    -fx-font-size: 11px;
+    -fx-background-color: linear-gradient(#94694e, #553c2c);
+    -fx-border-color: #342010;
+    -fx-background-insets: 0,1,2,3;
+    -fx-border-radius: 3,3,3,3;
+    -fx-text-fill: white;
+}
+
+.xButton:hover{
+    -fx-background-color: linear-gradient(#d30000, #9a0000);
+}
+
+.grid-pane{
+    -fx-background-color: #ffede0;
+    -fx-border-color: #342010;
+
+}
+
+.myBackground {
+    -fx-background-color: #ffede0;
+}
+.rotorIDLabel{
+    -fx-text-fill: #342010;
+}
