@@ -11,7 +11,7 @@
           <TableColumn fx:id="codeColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="250.0" sortable="false" text="Code" />
           <TableColumn fx:id="inputColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="130.0" sortable="false" text="Input" />
             <TableColumn fx:id="outputColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="130.0" text="OutPut" />
-            <TableColumn fx:id="timeElapsedColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Time (ms)" />
+            <TableColumn fx:id="timeElapsedColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Time (ns)" />
         </columns>
       </TableView>
    </content>
