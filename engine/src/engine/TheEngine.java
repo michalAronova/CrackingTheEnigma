@@ -361,7 +361,8 @@ public class TheEngine implements Engine {
         if(!initialCode.toString().equals(codesHistories.getLast().getCode().toString())){
             codesHistories.addLast(new CodeHistory(initialCode));
         }
-        Translation newTranslation = new Translation(input, output, 25);
+        Random rand = new Random();
+        Translation newTranslation = new Translation(input, output, rand.nextInt(2000) + 1000);
         codesHistories.getLast().addTranslation(newTranslation);
         lastTranslationMade = new Pair<>(codesHistories.getLast().getCode(), newTranslation);
     }

@@ -47,7 +47,7 @@ public class Mission implements Runnable {
 
     @Override
     public void run() {
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
         for (int i = 0; i < missionSize; i++){
             //do thing:
             //  1. machine.process(toDecrypt);
@@ -69,7 +69,7 @@ public class Mission implements Runnable {
             currentPositions = speedometer.calculateNext(currentPositions);
             machine.updateByPositionsList(currentPositions);
         }
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         long timeElapsed = endTime - startTime;
         if(missionSize != 0) {
             updateTotalMissionDone.accept(1, timeElapsed);

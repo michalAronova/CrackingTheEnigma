@@ -70,13 +70,13 @@ public class BruteForcePlayComponentController {
         stopButton.setDisable(true);
         initializeDataLabels();
         totalPotentialCandidatesNumberLabel.textProperty()
-                .bind(Bindings.format("%d", totalPotentialCandidatesProperty));
+                .bind(Bindings.format("%,d", totalPotentialCandidatesProperty));
         totalTimeLabel.textProperty()
-                .bind(Bindings.format("%.2f", totalTimeProperty));
+                .bind(Bindings.format("%,.2f", totalTimeProperty));
         progressPercentageLabel.textProperty()
                 .bind(Bindings.format("%.2f", progressPercentageProperty));
         missionDoneLabel.textProperty()
-                .bind(Bindings.format("%d", missionsDoneProperty));
+                .bind(Bindings.format("%,d", missionsDoneProperty));
 
     }
 

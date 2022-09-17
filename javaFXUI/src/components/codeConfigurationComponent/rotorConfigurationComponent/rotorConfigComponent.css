@@ -2,7 +2,7 @@
     -fx-background-color: #8bcc8b;
 }
 
-.rotorIDDragBox, #rotorIDChosenLabel{
+.rotorIDDragBox{
     -fx-background-color: none;
     -fx-border-color: #7e5d49;
     -fx-border-width: 1;
