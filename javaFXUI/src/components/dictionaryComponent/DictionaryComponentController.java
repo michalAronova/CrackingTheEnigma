@@ -25,18 +25,10 @@ public class DictionaryComponentController {
     private final ObservableList<String> dataList = FXCollections.observableArrayList();
 
     private MainApplicationController mainApplicationController;
+    private String myStyleSheet = "dictionary.css";
 
     @FXML
     public void initialize(){
-
-//        List<String> words = new ArrayList<>();
-//        words.add("hello");
-//        words.add("world");
-//        words.add("howdy");
-//        words.add("tonight");
-//
-//        fillDictionaryTable(words);
-
         wordColumn.setCellValueFactory(param -> new SimpleStringProperty(param.getValue()));
 
         FilteredList<String> filteredData = new FilteredList<>(dataList, b -> true);
@@ -78,5 +70,12 @@ public class DictionaryComponentController {
         dataList.addAll(words);
     }
 
+    public void changeTheme(Object cssPrefix) {
+        wordsTableView.getScene().getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            wordsTableView.getScene().getStylesheets().add(css);
+        }
+    }
 }
 

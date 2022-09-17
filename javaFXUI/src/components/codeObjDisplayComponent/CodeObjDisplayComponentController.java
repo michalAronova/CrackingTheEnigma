@@ -18,6 +18,7 @@ public class CodeObjDisplayComponentController {
     @FXML private HBox rotorsDataHBox;
     @FXML private Label HeaderLabel;
     private MainApplicationController mainApplicationController;
+    private final String myStyleSheet = "codeObjDisplay.css";
 
     @FXML public void initialize(){
     }
@@ -90,4 +91,11 @@ public class CodeObjDisplayComponentController {
         HeaderLabel.setText(headerLabel);
     }
 
+    public void changeTheme(Object cssPrefix) {
+        HeaderLabel.getScene().getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            HeaderLabel.getScene().getStylesheets().add(css);
+        }
+    }
 }

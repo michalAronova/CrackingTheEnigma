@@ -61,17 +61,17 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="missionDoneLabel" prefHeight="17.0" prefWidth="66.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Label fx:id="missionDoneLabel" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="totalPotentialCandidatesNumberLabel" prefHeight="17.0" prefWidth="63.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <Label fx:id="totalPotentialCandidatesNumberLabel" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="totalTimeLabel" prefHeight="17.0" prefWidth="67.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Label fx:id="totalTimeLabel" text="Label" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>

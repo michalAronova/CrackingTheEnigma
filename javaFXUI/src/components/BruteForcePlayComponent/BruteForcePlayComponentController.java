@@ -54,6 +54,8 @@ public class BruteForcePlayComponentController {
 
     private String currentDecryption;
 
+    private final String myStyleSheet = "bruteForcePlay.css";
+
     public BruteForcePlayComponentController(){
         totalPotentialCandidatesProperty = new SimpleIntegerProperty(0);
         totalTimeProperty = new SimpleDoubleProperty(0);
@@ -249,4 +251,13 @@ public class BruteForcePlayComponentController {
     public void setDecryptionString(String currentDecryption) {
         this.currentDecryption = currentDecryption;
     }
+
+    public void changeTheme(Object cssPrefix) {
+        stopButton.getScene().getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            stopButton.getScene().getStylesheets().add(css);
+        }
+    }
+
 }

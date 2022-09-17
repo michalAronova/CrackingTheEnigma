@@ -27,6 +27,7 @@ public class ProcessComponentController {
     private MainApplicationController mainApplicationController;
     private StringBuilder resultText;
     private FadeTransition errorTransition;
+    private String myStyleSheet = "processComponent.css";
 
     public Boolean isBruteForceProcess() { return bruteForceProcess; }
     public void setBruteForceProcess(Boolean bruteForceProcess) {
@@ -76,7 +77,12 @@ public class ProcessComponentController {
             if(!mainApplicationController.checkForKeyInKeyBoard(characterTyped.charAt(0))
             && !characterTyped.equals(System.lineSeparator())){
                 errorLabel.setText(ke.getCharacter() + " is not part of this machine's keyboard");
-                errorTransition.play();
+                if(mainApplicationController.getAnimationEnabledProperty().getValue()){
+                    errorTransition.play();
+                }
+                else{
+                    errorLabel.setOpacity(1.0);
+                }
                 ke.consume();
             }
         });
@@ -169,10 +175,18 @@ public class ProcessComponentController {
     }
 
     public void changeLabelForBruteForce() {
-        promptTextLabel.setText("Enter your desired dictionary words below: ");
+        promptTextLabel.setText("Enter dictionary words below: ");
     }
 
     public void injectWord(String rowData) {
         userTextField.setText(userTextField.getText() + rowData);
+    }
+
+    public void changeTheme(Object cssPrefix) {
+        toggleContainer.getScene().getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            toggleContainer.getScene().getStylesheets().add(css);
+        }
     }
 }

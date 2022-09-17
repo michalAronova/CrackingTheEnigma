@@ -37,6 +37,7 @@ public class RotorConfigComponentController {
     private int rotorsSet = 0;
     private CodeConfigComponentController codeConfigComponentController;
     private final String DEFAULT_ROTOR_ID = "ID";
+    private final String myStyleSheet = "rotorConfigComponent.css";
 
     public RotorConfigComponentController(){
         singleRotorComponentList = new ArrayList<>();
@@ -309,5 +310,13 @@ public class RotorConfigComponentController {
         });
 
         codeConfigComponentController.getRotorsFilledProperty().setValue(false);
+    }
+
+    public void changeTheme(Object cssPrefix) {
+        rotorChoicesFlowPane.getScene().getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            rotorChoicesFlowPane.getScene().getStylesheets().add(css);
+        }
     }
 }

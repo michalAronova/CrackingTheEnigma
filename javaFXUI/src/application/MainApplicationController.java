@@ -16,8 +16,11 @@ import engine.TheEngine;
 import exceptions.InputException.InputException;
 import exceptions.InputException.OutOfBoundInputException;
 import exceptions.XMLException.InvalidXMLException;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -38,8 +41,6 @@ public class MainApplicationController {
     private Engine engine;
     private CodeObj currentCode;
     private IntegerProperty codeChanges;
-
-
     @FXML private MachineDetailsController machineDetailsController;
     @FXML private CodeConfigComponentController codeConfigComponentController;
     @FXML private CodeObjDisplayComponentController codeObjDisplayComponentController;
@@ -52,9 +53,7 @@ public class MainApplicationController {
     @FXML private CodeHistoryComponentController codeHistoryComponentController;
     @FXML private BruteForceSetupController bruteForceSetupController;
     @FXML private BruteForcePlayComponentController bruteForcePlayComponentController;
-
     @FXML private DictionaryComponentController dictionaryComponentController;
-
     @FXML private CandidatesComponentController candidatesComponentController;
     @FXML private GridPane machineDetails;
     @FXML private Button loadFileButton;
@@ -62,14 +61,28 @@ public class MainApplicationController {
     @FXML private Tab encryptTabPane;
     @FXML private Tab bruteForceTabPane;
 
-    private boolean isFirstCodeSet = true;
+    @FXML private RadioButton noThemeRadioButton;
+    @FXML private RadioButton wwiiThemeRadioButton;
+    @FXML private RadioButton tsThemeRadioButton;
+    @FXML CheckBox animationCheckBox;
+
+    private BooleanProperty animationEnabled;
+
+    //for CSS changes:
+    private final String myPath = "/application/";
+    private final String myStyleSheet = "mainApplication.css";
+    private final String wwiiStyleSheetPrefix = "wwii-";
+    private final String tsStyleSheetPrefix = "ts-";
+    private ToggleGroup cssChoiceGroup;
     public MainApplicationController(){
         codeChanges = new SimpleIntegerProperty(0);
+        animationEnabled = new SimpleBooleanProperty(false);
     }
 
     public IntegerProperty getCodeChangesProperty(){
         return codeChanges;
     }
+
 
     @FXML
     public void initialize(){
@@ -110,6 +123,46 @@ public class MainApplicationController {
         encryptTabPane.setDisable(true);
         bruteForceTabPane.setDisable(true);
 
+        cssChoiceGroup = new ToggleGroup();
+        noThemeRadioButton.setToggleGroup(cssChoiceGroup);
+        noThemeRadioButton.setUserData(null);
+        noThemeRadioButton.setSelected(true);
+
+        wwiiThemeRadioButton.setToggleGroup(cssChoiceGroup);
+        wwiiThemeRadioButton.setUserData(wwiiStyleSheetPrefix);
+
+        tsThemeRadioButton.setToggleGroup(cssChoiceGroup);
+        tsThemeRadioButton.setUserData(tsStyleSheetPrefix);
+
+        cssChoiceGroup.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
+            if (cssChoiceGroup.getSelectedToggle() != null) {
+                changeTheme(cssChoiceGroup.getSelectedToggle().getUserData());
+            }
+        });
+
+        animationEnabled.bind(animationCheckBox.selectedProperty());
+    }
+
+    public BooleanProperty getAnimationEnabledProperty(){ return animationEnabled; }
+
+    private void changeTheme(Object cssPrefix) {
+        loadFileButton.getScene().getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            System.out.println(css);
+            loadFileButton.getScene().getStylesheets().add(css);
+        }
+
+        bruteForcePlayComponentController.changeTheme(cssPrefix);
+        candidatesComponentController.changeTheme(cssPrefix);
+        codeConfigComponentController.changeTheme(cssPrefix);
+        codeObjDisplayComponentController.changeTheme(cssPrefix);
+        currentCodeDisplayComponent1Controller.changeTheme(cssPrefix);
+        currentCodeDisplayComponent2Controller.changeTheme(cssPrefix);
+        currentCodeDisplayComponent3Controller.changeTheme(cssPrefix);
+        dictionaryComponentController.changeTheme(cssPrefix);
+        processComponentController.changeTheme(cssPrefix);
+        processForBruteForceController.changeTheme(cssPrefix);
     }
 
     private void handleDuplicateComponents() {

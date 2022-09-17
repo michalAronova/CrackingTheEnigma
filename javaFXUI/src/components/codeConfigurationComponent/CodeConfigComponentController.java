@@ -5,6 +5,7 @@ import application.MainApplicationController;
 import components.codeConfigurationComponent.plugsComponent.PlugsComponentController;
 import components.codeConfigurationComponent.rotorConfigurationComponent.RotorConfigComponentController;
 import enigmaMachine.reflector.ReflectorID;
+import javafx.animation.RotateTransition;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -15,6 +16,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 import javafx.util.StringConverter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +40,10 @@ public class CodeConfigComponentController {
 
     private MainApplicationController mainApplicationController;
 
+    private RotateTransition setButtonRotate;
+
+    private final String myStyleSheet = "codeConfigComponent.css";
+
     public CodeConfigComponentController(){
         rotorsFilled = new SimpleBooleanProperty(false);
     }
@@ -56,7 +62,23 @@ public class CodeConfigComponentController {
         reflectorComboBox.setPromptText("Reflector ID");
         setByRandomButton.setDisable(true);
         setByManualButton.setDisable(true);
+
+        setButtonRotate = createRotationTransition();
+
+        setButton.disableProperty().addListener(((observable, oldValue, newValue) -> {
+            if(!newValue && mainApplicationController.getAnimationEnabledProperty().getValue()){
+                setButtonRotate.play();
+            }
+        }));
     }
+
+    private RotateTransition createRotationTransition() {
+        RotateTransition rt = new RotateTransition(Duration.seconds(1));
+        rt.setNode(setButton);
+        rt.setByAngle(360);
+        return rt;
+    }
+
     public void setMainApplicationController(MainApplicationController mainApplicationController){
         this.mainApplicationController = mainApplicationController;
     }
@@ -140,5 +162,15 @@ public class CodeConfigComponentController {
                 .observableArrayList(ReflectorID.getListToLimit(reflectorAmount)));
         plugsComponentController.setComponent(keys);
         rotorConfigComponentController.setComponent(rotorsRequired, totalRotorAmount, keys);
+    }
+
+    public void changeTheme(Object cssPrefix) {
+        setByManualButton.getScene().getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            setByManualButton.getScene().getStylesheets().add(css);
+        }
+
+        rotorConfigComponentController.changeTheme(cssPrefix);
     }
 }
