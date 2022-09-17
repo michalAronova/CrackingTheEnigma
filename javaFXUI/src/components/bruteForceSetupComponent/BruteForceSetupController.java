@@ -38,7 +38,7 @@ public class BruteForceSetupController {
     private IntegerProperty agentAmountChosenProperty;
     private StringProperty decryptionProperty;
     private IntegerProperty missionSizeProperty;
-    private final String myStyleSheet = "bruteForceSetup";
+    private final String myStyleSheet = "bruteForceSetUp";
 
     public BruteForceSetupController(){
         decryptionProperty = new SimpleStringProperty(null);

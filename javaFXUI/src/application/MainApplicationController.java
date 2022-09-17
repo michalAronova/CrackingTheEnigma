@@ -156,7 +156,7 @@ public class MainApplicationController {
             if(cssPrefix.toString().equals(tsStyleSheetPrefix)){
                 Stage stage = (Stage) mainScrollPane.getScene().getWindow();
                 stage.getIcons().clear();
-                stage.getIcons().add(new Image("/main/resources/totallySpiesResources/jerry-square.jpg"));
+                stage.getIcons().add(new Image("/main/resources/jerry-square.jpg"));
             }
             else{
                 Stage stage = (Stage) mainScrollPane.getScene().getWindow();
@@ -178,8 +178,14 @@ public class MainApplicationController {
         currentCodeDisplayComponent2Controller.changeTheme(cssPrefix);
         currentCodeDisplayComponent3Controller.changeTheme(cssPrefix);
         dictionaryComponentController.changeTheme(cssPrefix);
+        bruteForceSetupController.changeTheme(cssPrefix);
+        machineDetailsController.changeTheme(cssPrefix);
         //processComponentController.changeTheme(cssPrefix);
         //processForBruteForceController.changeTheme(cssPrefix);
+    }
+
+    public String getCssPath() {
+        return cssPath;
     }
 
     private void handleDuplicateComponents() {

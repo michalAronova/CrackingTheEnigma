@@ -13,6 +13,7 @@ public class SingleCandidateComponentController {
     @FXML private Label candidateLabel;
     @FXML private Label agentIDLabel;
 
+
     private String cssPrefix;
 
     private final String myStyleSheet = "singleCandidateComponent";
@@ -44,6 +45,9 @@ public class SingleCandidateComponentController {
         return rootVBox;
     }
 
+    public String getCssPrefix() {
+        return cssPrefix;
+    }
     public void setCssPrefix(Object cssPrefix){
         this.cssPrefix = (String) cssPrefix;
     }

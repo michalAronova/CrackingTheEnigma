@@ -5,11 +5,13 @@ import application.MainApplicationController;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 public class MachineDetailsController {
 
+    @FXML public GridPane machineDetails;
     @FXML private Label rotorInUseData;
     @FXML private Label totalRotorsData;
     @FXML private Label totalReflectorsData;
@@ -17,6 +19,8 @@ public class MachineDetailsController {
     @FXML private Label machineDetailsTitleLabel;
     private ParallelTransition titleTransition;
     private MainApplicationController mainApplicationController;
+
+    private final String myStyleSheet = "machineDetails";
 
     @FXML
     public void initialize(){
@@ -53,5 +57,14 @@ public class MachineDetailsController {
         pt.setAutoReverse(true);
 
         return pt;
+    }
+
+    public void changeTheme(Object cssPrefix) {
+        machineDetails.getStylesheets().clear();
+        if(cssPrefix != null){
+            String css = cssPrefix + myStyleSheet;
+            machineDetails.getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
+        }
     }
 }

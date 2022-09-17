@@ -29,6 +29,12 @@ public class CandidatesComponentController {
     public void addCandidate(Node singleCandidateTile, SingleCandidateComponentController controller){
         potentialCandidatesFlowPane.getChildren().add(singleCandidateTile);
         singleControllerList.add(controller);
+        controller.getRoot().getStylesheets().clear();
+        if(controller.getCssPrefix() != null){
+            String css = mainApplicationController.getCssPath()+ controller.getCssPrefix() + singleCandidateStyleSheet;
+            controller.getRoot().getStylesheets()
+                    .add(getClass().getClassLoader().getResource(String.format("%s.css", css)).toExternalForm());
+        }
     }
 
     public void removeAllCandidates(){
