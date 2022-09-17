@@ -81,13 +81,6 @@
     -fx-effect: innershadow( three-pass-box , #1a0e06, 6, 0.0 , 0 , 2 );
 }
 
-.table-view.column-header-background {
-    -fx-background-color: red;
-}
-
-
-
-
 .combo-box .list-cell
 {
     -fx-background: #7a2bd9;
@@ -130,7 +123,6 @@
 {
     -fx-background-color: linear-gradient(#e3b790, #bd936e);
     -fx-effect: innershadow( three-pass-box , #a26c4b , 6, 0.0 , 0 , 2 );
-
     -fx-border-color: #a26c4b;
     -fx-background-radius: 5, 5, 4, 3;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
@@ -237,7 +229,9 @@
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #342010;
+    /*-fx-background-color: #996633;*/
+    -fx-background-color: #694628;
+
     -fx-background-radius: 5em;
 
 }
@@ -248,3 +242,47 @@
     -fx-background-radius: 2;
     -fx-padding: 0.75em;
 }
+* {
+    -fx-darkest-grey-color: #5e3b1e;
+}
+
+.radio-button .radio  {
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-background-image: null;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-padding: 2.5px;
+}
+.radio-button .radio:selected {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:armed {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:determinate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:indeterminate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button .dot {
+    -fx-background-radius: 15px;
+    -fx-padding: 6px;
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: -fx-darkest-grey-color;
+    -fx-background-insets: 0;
+}
+
+/*
+.radio-button {
+    -fx-text-fill: white;
+    -fx-font-family: "Lucida Sans Typewriter";
+    -fx-font-size: 14px;
+}*/

@@ -151,6 +151,9 @@ public class BruteForcePlayComponentController {
         progressPercentageProperty.set(0);
         if (currentRunningTask != null) {
             currentRunningTask.updateProgress(0);
+            progressPercentageLabel.textProperty().unbind();
+            progressPercentageLabel.setText("0 %");
+            progressBar.progressProperty().unbind();
             progressBar.setProgress(0);
         }
     }
