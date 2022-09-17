@@ -58,6 +58,7 @@ public class BruteForcePlayComponentController {
     private String currentDecryption;
 
     private final String myStyleSheet = "bruteForcePlay";
+    private Object cssPrefix;
 
     public BruteForcePlayComponentController(){
         totalPotentialCandidatesProperty = new SimpleIntegerProperty(0);
@@ -206,11 +207,16 @@ public class BruteForcePlayComponentController {
             singleCandidateController.setAgent(agentID);
             singleCandidateController.setCandidate(candidate);
             singleCandidateController.setCode(code.toString());
+            singleCandidateController.setCssPrefix(cssPrefix);
 
             Platform.runLater(() -> mainApplicationController.addNewCandidate(singleCandidateTile, singleCandidateController));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setCssPrefixForCandidates(Object cssPrefix){
+        this.cssPrefix = cssPrefix;
     }
 
     public void bindTaskToUIComponents(Task<Boolean> aTask, Runnable onFinish) {

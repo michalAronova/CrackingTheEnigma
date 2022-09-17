@@ -149,6 +149,8 @@ public class MainApplicationController {
     public BooleanProperty getAnimationEnabledProperty(){ return animationEnabled; }
 
     private void changeTheme(Object cssPrefix) {
+        bruteForcePlayComponentController.setCssPrefixForCandidates(cssPrefix);
+
         mainScrollPane.getStylesheets().clear();
         if(cssPrefix != null){
             cssPrefix = cssPath + cssPrefix;

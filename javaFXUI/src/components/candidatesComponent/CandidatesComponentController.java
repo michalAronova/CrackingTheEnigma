@@ -16,7 +16,6 @@ public class CandidatesComponentController {
     @FXML private ScrollPane rootScrollPane;
     @FXML private FlowPane potentialCandidatesFlowPane;
     private final String myStyleSheet = "candidates";
-    private final String singleCandidatePath = "/components/singleCandidateComponent/";
     private final String singleCandidateStyleSheet = "singleCandidateComponent";
 
     private final List<SingleCandidateComponentController> singleControllerList;
