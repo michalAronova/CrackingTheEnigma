@@ -49,7 +49,7 @@
     -fx-effect: innershadow( three-pass-box , #1a0e06, 6, 0.0 , 0 , 2 );
 }
 .text-field{
-    -fx-background-color: linear-gradient(#d2b6aa, #d3a793);
+    -fx-background-color: linear-gradient(#eabb7e, #ac7e60);
     -fx-border-color: #000000;
     -fx-effect: innershadow( three-pass-box , #1a0e06, 6, 0.0 , 0 , 2 );
 }
@@ -65,7 +65,7 @@
 
 #mainTabPane>*.tab-header-area>*.tab-header-background
 {
-    -fx-background-color: -fx-outer-border, -fx-text-box-border, #d2b6aa;
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, rgba(236, 194, 139, 0.87);
 }
 
 .tab{
@@ -75,6 +75,12 @@
     -fx-background-radius: 3,3,3,3;
     -fx-text-fill: #ffffff;
 }
+
+.tab:hover{
+    -fx-background-color: linear-gradient(#a67f65, #7e5d48);
+    -fx-effect: innershadow( three-pass-box , #1a0e06, 6, 0.0 , 0 , 2 );
+}
+
 .table-view.column-header-background {
     -fx-background-color: red;
 }
@@ -101,9 +107,8 @@
 .combo-box-popup .list-view .list-cell
 {
     -fx-padding: 4 0 4 5;
-
-    /* No alternate highlighting */
     -fx-background-color: #eabb7e;
+
 }
 
 .combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
@@ -115,25 +120,28 @@
 
 .combo-box-popup .list-view .list-cell:filled:hover
 {
-    -fx-background-color: #94694e;
+    -fx-background-color: #a26c4b;
     -fx-text-fill: -fx-text-inner-color;
+    -fx-effect: innershadow( three-pass-box , #855a3f, 6, 0.0 , 0 , 2 );
+
 }
 
 .combo-box-base
 {
-    -fx-background-color: #e3b790, #c79f88, #c79f88, #a26c4b;
+    -fx-background-color: linear-gradient(#e3b790, #bd936e);
+    -fx-effect: innershadow( three-pass-box , #a26c4b , 6, 0.0 , 0 , 2 );
+
+    -fx-border-color: #a26c4b;
     -fx-background-radius: 5, 5, 4, 3;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;
     -fx-padding: 0;
 }
 
-.combo-box-base:hover
-{
+.combo-box-base:hover {
     -fx-color: -fx-hover-base;
 }
 
-.combo-box-base:showing
-{
+.combo-box-base:showing {
     -fx-color: -fx-pressed-base;
 }
 
@@ -145,4 +153,98 @@
 
 .combo-box-base:disabled {
     -fx-opacity: .4;
+}
+
+/*!* Styling the slider track *!*/
+.slider > .track {
+    -fx-background-color: #e3b790;
+    -fx-effect: innershadow( three-pass-box , #342010, 6, 0.0 , 0 , 2 );
+
+}
+
+/*!* Styling the slider thumb *!*/
+.slider > .thumb {
+   -fx-background-color: radial-gradient(focus-distance 0% , center 50% 50% , radius 55% , #a26c4b, #553c2c);
+}
+
+/*!* Styling the animated thumb *!*/
+.slider > .thumb:hover{
+    -fx-background-color: linear-gradient(#a67f65, #7e5d48);
+    -fx-effect: innershadow( three-pass-box , #1a0e06, 6, 0.0 , 0 , 2 );
+}
+
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(#a67f65, #7e5d48);
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #fcd5b7;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #ffe1c7;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:hover{
+    -fx-background-color: #a26c4b;
+    -fx-text-fill: -fx-text-inner-color;
+    -fx-effect: innershadow( three-pass-box , #855a3f, 6, 0.0 , 0 , 2 );
+}
+.table-view{
+    -fx-background-color: -fx-table-cell-border-color, #ffe1c7;
+    -fx-effect: innershadow( gaussian , #855a3f, 10, 0.0 , 5 , 5 );
+    -fx-border-color: #342010;
+    -fx-border-width: 4,4,4,4;
+}
+
+.scroll-pane {
+    -fx-background-color: black;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+.corner {
+    -fx-background-color: transparent;
+}
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #342010;
+    -fx-background-radius: 5em;
+
+}
+.progress-bar > .bar {
+    -fx-background-color: linear-gradient(#996633, #5e3b1e);
+    -fx-background-insets: 3 3 4 3;
+    /*-fx-background-radius: 0.583em; *//* 7 */
+    -fx-background-radius: 2;
+    -fx-padding: 0.75em;
 }

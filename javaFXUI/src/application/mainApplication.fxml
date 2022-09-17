@@ -52,8 +52,8 @@
                            <children>
                               <GridPane layoutX="4.0" layoutY="6.0" prefHeight="525.0" prefWidth="936.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="6.0">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="NEVER" maxWidth="481.88885498046875" minWidth="10.0" />
-                                  <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="159.0" />
+                                  <ColumnConstraints hgrow="NEVER" maxWidth="481.88885498046875" minWidth="10.0" prefWidth="365.0" />
+                                  <ColumnConstraints fillWidth="false" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="288.0" />
                                     <ColumnConstraints hgrow="NEVER" maxWidth="367.0" minWidth="253.0" prefWidth="333.0" />
                                 </columnConstraints>
                                 <rowConstraints>
@@ -70,7 +70,7 @@
                                           <fx:include fx:id="keyBoardComponent" source="../components/keyBoardComponent/keyBoardComponent.fxml" />
                                        </children>
                                     </HBox>
-                                     <fx:include fx:id="codeHistoryComponent" source="../components/codeHistoryComponent/CodeHistoryComponent.fxml" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                     <fx:include fx:id="codeHistoryComponent" maxHeight="-Infinity" maxWidth="-Infinity" source="../components/codeHistoryComponent/CodeHistoryComponent.fxml" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children>

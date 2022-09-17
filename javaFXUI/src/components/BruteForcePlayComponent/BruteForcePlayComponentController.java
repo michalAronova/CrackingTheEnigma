@@ -199,7 +199,6 @@ public class BruteForcePlayComponentController {
             singleCandidateController.setCandidate(candidate);
             singleCandidateController.setCode(code.toString());
 
-            System.out.println(Thread.currentThread().getName() + " is offering tile to JAT");
             Platform.runLater(() -> mainApplicationController.addNewCandidate(singleCandidateTile));
         } catch (IOException e) {
             e.printStackTrace();
