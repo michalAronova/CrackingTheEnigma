@@ -1,12 +1,19 @@
 package components.codeHistoryComponent;
 
 import application.MainApplicationController;
+import etc.columnFormatter.ColumnFormatter;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+
+import java.text.*;
 
 public class CodeHistoryComponentController {
     @FXML private TableView<StatisticData> codeHistoryTableView;
@@ -20,7 +27,7 @@ public class CodeHistoryComponentController {
     ObservableList<StatisticData> codes = FXCollections.observableArrayList();
     private MainApplicationController mainApplicationController;
 
-    @FXML private TableColumn<StatisticData, Long> timeElapsedColumn;
+    @FXML private TableColumn<StatisticData, String> timeElapsedColumn;
 
     public void initialize() {
         codeHistoryTableView.setEditable(false);
@@ -34,7 +41,11 @@ public class CodeHistoryComponentController {
         outputColumn.setCellValueFactory(new PropertyValueFactory<>("output"));
         outputColumn.setEditable(false);
         outputColumn.setSortable(false);
-        timeElapsedColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        //timeElapsedColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        timeElapsedColumn.setCellValueFactory(cellData -> {
+            String formattedData = new DecimalFormat("#,###").format(cellData.getValue().getTime());
+            return new SimpleStringProperty(formattedData);
+        });
         timeElapsedColumn.setEditable(false);
         timeElapsedColumn.setSortable(false);
     }

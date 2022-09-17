@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +131,8 @@ public class BruteForceSetupController {
     }
 
     public void updateTotalMissionAmount(Double totalMissionAmount) {
-        totalMissionNumLabel.setText(totalMissionAmount.toString());
+        totalMissionNumLabel.setText(new DecimalFormat("#,###")
+                                        .format(totalMissionAmount));
     }
 
     public void toggleSetUpToAction(boolean isActive) {

@@ -118,11 +118,11 @@ public class TheEngine implements Engine {
             throw new ObjectInputException("Invalid input: not a recognized character",
                                                     stock.getKeyBoard().getAsObjList(), new ArrayList<>(invalid));
         }
-        long startTime = System.nanoTime();
+        long startTime = System.currentTimeMillis();
         for(Character c : msg.toCharArray()){
             sb.append(machine.process(c));
         }
-        long endTime = System.nanoTime();
+        long endTime = System.currentTimeMillis();
         long timeElapsed = endTime - startTime;
         processedMsgsCnt++;
         Translation translation = new Translation(msg, sb.toString(), timeElapsed);
@@ -361,7 +361,8 @@ public class TheEngine implements Engine {
         if(!initialCode.toString().equals(codesHistories.getLast().getCode().toString())){
             codesHistories.addLast(new CodeHistory(initialCode));
         }
-        Translation newTranslation = new Translation(input, output, 25);
+        Random rand = new Random();
+        Translation newTranslation = new Translation(input, output, rand.nextInt(2000) + 1000);
         codesHistories.getLast().addTranslation(newTranslation);
         lastTranslationMade = new Pair<>(codesHistories.getLast().getCode(), newTranslation);
     }
